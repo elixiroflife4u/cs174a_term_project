@@ -1,3 +1,4 @@
-this is the first commit of an empty project.
-this is the modification from the the branching feature.
-
+These are the files for texture management and a smart pointer class.
+Assumes that the includes for freeglut, glew are under a folder "GL/"
+and devil related stuff is under "IL/".
+Working on vertex management stuff.
