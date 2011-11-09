@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\objLoader">
+      <UniqueIdentifier>{0dcee9de-59e8-4280-81d8-60b25758630c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objLoader">
+      <UniqueIdentifier>{a4bba7be-1d4d-4461-84c8-28ab4185edb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gameObjects">
+      <UniqueIdentifier>{aa47bebe-2708-441c-b48e-0014829acd4b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Angel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_loader\list.h">
+      <Filter>Header Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_loader\obj_parser.h">
+      <Filter>Header Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_loader\objLoader.h">
+      <Filter>Header Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="obj_loader\string_extra.h">
+      <Filter>Header Files\objLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="General.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBox.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvironmentEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MobileEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InitShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_loader\objTester.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_loader\string_extra.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_loader\list.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_loader\obj_parser.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="obj_loader\objLoader.cpp">
+      <Filter>Source Files\objLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\PhongShader_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="resources\PhongShader_fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
