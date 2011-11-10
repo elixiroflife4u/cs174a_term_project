@@ -5,15 +5,9 @@
 
 class DrawableEntity:public WorldEntity{
 private:
-	char* _textureName;
-	char* _modelName;
+	//hold texture name
+	//hold model name
 public:
-	DrawableEntity(char* mName, char* tName);
-	DrawableEntity(char* mName);
-
-	void setModel(char* mName);
-	void setTexture(char* tName);
-	void draw() const;
 };
 
 #endif

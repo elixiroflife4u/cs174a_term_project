@@ -22,41 +22,35 @@
     <Filter Include="Header Files\gameObjects">
       <UniqueIdentifier>{aa47bebe-2708-441c-b48e-0014829acd4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gameObjects">
+      <UniqueIdentifier>{b5f080d1-12fb-4d3e-8400-19e492cbf30e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\globals">
+      <UniqueIdentifier>{7624f95d-0618-427b-8b42-f5d41b46ca9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Globals">
+      <UniqueIdentifier>{00b3c9e3-71c7-4ffe-a909-a00204386e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TextureMangement">
+      <UniqueIdentifier>{eb81b936-da51-4e1e-b92c-9cbb356efd8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\RenderObjectManagement">
+      <UniqueIdentifier>{fc7eef08-ea7c-4c40-9dfe-4a0e44bae712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Helper Classes">
+      <UniqueIdentifier>{473f4d32-8a79-48d9-ad76-cc8f63bab4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Helper Classes">
+      <UniqueIdentifier>{bcadd70b-a6dc-46e8-a968-96ce77a93940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\RenderObjectManagement">
+      <UniqueIdentifier>{ec88fe03-35de-462f-a7f5-3dce4c4e1cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TextureObjectManagement">
+      <UniqueIdentifier>{00ae65dd-4d46-4781-b3d5-f7a83b457241}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartPointer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vec.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Angel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckError.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="obj_loader\list.h">
       <Filter>Header Files\objLoader</Filter>
     </ClInclude>
@@ -68,12 +62,6 @@
     </ClInclude>
     <ClInclude Include="obj_loader\string_extra.h">
       <Filter>Header Files\objLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="General.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionBox.h">
       <Filter>Header Files\gameObjects</Filter>
@@ -96,24 +84,48 @@
     <ClInclude Include="CameraEntity.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="General.h">
+      <Filter>Header Files\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\TextureMangement</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\TextureMangement</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObjectManager.h">
+      <Filter>Header Files\RenderObjectManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Header Files\RenderObjectManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalIncludes.h">
+      <Filter>Header Files\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Angel.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckError.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="mat.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointer.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="vec.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InitShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderObjectManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="test_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="obj_loader\objTester.cpp">
@@ -133,6 +145,42 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionBox.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEntity.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MobileEntity.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldEntity.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>Source Files\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="general.cpp">
+      <Filter>Source Files\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="InitShader.cpp">
+      <Filter>Source Files\Helper Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObjectManager.cpp">
+      <Filter>Source Files\RenderObjectManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Source Files\RenderObjectManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\TextureObjectManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\TextureObjectManagement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

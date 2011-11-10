@@ -2,51 +2,46 @@
 #define _WORLD
 
 #include "Angel.h"
+namespace Globals
+{
+	//ENGINE BASICS//
+	extern GLuint sProgram;
 
-//ENGINE BASICS//
-GLuint sProgram=-1;
+	//Key States
+	extern bool KEY_W;
+	extern bool KEY_A;
+	extern bool KEY_S;
+	extern bool KEY_D;
+	extern bool KEY_Q;
+	extern bool KEY_E;
+	extern bool KEY_SPACE;
 
-//Key States
-bool KEY_W=false;
-bool KEY_A=false;
-bool KEY_S=false;
-bool KEY_D=false;
-bool KEY_Q=false;
-bool KEY_E=false;
-bool KEY_SPACE=false;
+	extern int mouseX;
+	extern int mouseY;
 
-int mouseX=0;
-int mouseY=0;
+	//set texture offset
+	//set texture scale
+	//set position of lights/amount of lights/color of lights/falloff of lights
+	//set shininess
+	//set transformation matrix
+	//set camera position
+	
+	//FOR OUR GAME//
+	//Include Bullets
+	//Include Walls
+	//Include MainChar
+	//Include GameEntity
 
-//set texture offset
-//set texture scale
-//set position of lights/amount of lights/color of lights/falloff of lights
-//set shininess
-//set transformation matrix
-//set camera position
+	//Array of Walls
+	//Array of Bullets
+	//Array of GameEntities
+	//Array of Scenes
+	//transparent object heap
 
+	extern vec3 grav;
 
-
-//FOR OUR GAME//
-
-//Include Bullets
-//Include Walls
-//Include MainChar
-//Include GameEntity
-
-//Array of Walls
-//Array of Bullets
-//Array of GameEntities
-//Array of Scenes
-//transparent object heap
-
-vec3 grav;
-
-int currentLevel=0;
-//pointer to the current camera
-
-
-
-
+	extern int currentLevel;
+	//pointer to the current camera
+}
 
 #endif //_WORLD

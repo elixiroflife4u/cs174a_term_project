@@ -37,18 +37,25 @@
     <ClInclude Include="WorldEntity.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionBox.cpp" />
+    <ClCompile Include="GameEntity.cpp" />
+    <ClCompile Include="general.cpp" />
     <ClCompile Include="InitShader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MobileEntity.cpp" />
     <ClCompile Include="obj_loader\list.cpp" />
     <ClCompile Include="obj_loader\objLoader.cpp" />
     <ClCompile Include="obj_loader\objTester.cpp" />
     <ClCompile Include="obj_loader\obj_parser.cpp" />
     <ClCompile Include="obj_loader\string_extra.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="RenderObjectManager.cpp" />
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="world.cpp" />
+    <ClCompile Include="WorldEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\PhongShader_fragment.glsl" />

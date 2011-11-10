@@ -1,2 +1,1 @@
-The files for texture and render object stuff. This includes the whole visual studio project so that you don't have any trouble compiling. On compiling, it will actually display an object read from the maya obj file.
-(just doing some cleaning up)
+this file has a working example of render object using maya object reader. In this commit, also included the files from michael which include the doxygen stuff

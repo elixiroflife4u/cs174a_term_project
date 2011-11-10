@@ -19,8 +19,8 @@ public:
 	GameEntity(int id);
 	~GameEntity();
 
-	int getId() const;
-	const CollisionBox& getHitBox() const;
+	int getId() const { return _id; }
+	const CollisionBox& getHitBox() const { return _hitBox; }
 
 	virtual void onCollide(GameEntity);
 	bool setModel(const DrawableEntity& d, int num=0);
