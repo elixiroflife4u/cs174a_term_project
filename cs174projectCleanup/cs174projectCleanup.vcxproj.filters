@@ -152,9 +152,6 @@
     <ClCompile Include="GameEntity.cpp">
       <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="MobileEntity.cpp">
-      <Filter>Source Files\gameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\gameObjects</Filter>
     </ClCompile>

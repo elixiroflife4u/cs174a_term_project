@@ -42,7 +42,6 @@
     <ClCompile Include="general.cpp" />
     <ClCompile Include="InitShader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MobileEntity.cpp" />
     <ClCompile Include="obj_loader\list.cpp" />
     <ClCompile Include="obj_loader\objLoader.cpp" />
     <ClCompile Include="obj_loader\objTester.cpp" />
