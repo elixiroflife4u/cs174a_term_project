@@ -37,6 +37,7 @@
     <ClInclude Include="WorldEntity.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraEntity.cpp" />
     <ClCompile Include="CollisionBox.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="general.cpp" />

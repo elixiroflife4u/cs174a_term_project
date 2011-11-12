@@ -179,6 +179,9 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>Source Files\TextureObjectManagement</Filter>
     </ClCompile>
+    <ClCompile Include="CameraEntity.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\PhongShader_vertex.glsl">

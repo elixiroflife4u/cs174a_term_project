@@ -48,13 +48,6 @@ namespace Globals
 	void setLightPositions(vec3* lightPos,GLuint num);
 	void setLightColors(Angel::vec3* lightCol,GLuint num);
 	void setLightFalloff(float* lightFO, GLuint num);
-
-	//set texture offset
-	//set texture scale
-	//set position of lights/amount of lights/color of lights/falloff of lights
-	//set shininess
-	//set transformation matrix
-	//set camera position
 	
 	//FOR OUR GAME//
 	//Include Bullets

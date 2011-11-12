@@ -15,16 +15,7 @@ out vec4 fNormal;
 out vec2 fUV;
 
 void main(){
-	//DELETE//
-	vec4 v=vPosition*.4;
-	v.w=1;
-	gl_Position=v;
-	//END DELETE//
-
 	fPosition=vPosition*vTransform;
-	//DELETE//
-	fPosition=v;
-	//END DELETE//
 	fNormal=normalize(vNormal*vTransform);
 	fUV=vUV;
 
