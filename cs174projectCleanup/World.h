@@ -19,12 +19,35 @@ namespace Globals
 	extern int mouseX;
 	extern int mouseY;
 
-	//set texture offset
-	//set texture scale
-	//set position of lights/amount of lights/color of lights/falloff of lights
-	//set shininess
-	//set transformation matrix
-	//set camera position
+	extern GLuint loc_modelTransMat;
+	extern GLuint loc_camTransMat;
+
+	//material property locations
+	extern GLuint loc_texOffset;
+	extern GLuint loc_texScale;
+	extern GLuint loc_shininess;
+	extern GLuint loc_texture;
+
+	//light property locations
+	extern GLuint loc_ambLightColor;
+	extern GLuint loc_lightPos;
+	extern GLuint loc_lightColor;
+	extern GLuint loc_lightFalloff;
+
+	void initShaderVariables(GLuint p);
+
+	void setModelTransMatrix(mat4 m);
+	void setCameraTransMatrix(mat4 m);
+
+	void setTextureOffset(vec2 v);
+	void setTextureScale(vec2 v);
+	void setShininess(float f);
+	void setUseTexture();
+
+	void setAmbientLightColor(vec3 v);
+	void setLightPositions(vec3* lightPos,GLuint num);
+	void setLightColors(Angel::vec3* lightCol,GLuint num);
+	void setLightFalloff(float* lightFO, GLuint num);
 	
 	//FOR OUR GAME//
 	//Include Bullets
