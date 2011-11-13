@@ -4,22 +4,70 @@ namespace Globals
 {
 	void initApp(){
 
-			sProgram=InitShader("Resources/PhongShader_vertex.glsl","Resources/PhongShader_fragment.glsl");
+		sProgram=InitShader("Resources/PhongShader_vertex.glsl","Resources/PhongShader_fragment.glsl");
+		initShaderVariables(sProgram);
 
 		glClearColor( .05f, .075f, .1f, 1.f );
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
-		CRenderObjectManager::GetInstance()->GetRenderObject("Resources/test.obj")->activateObject(sProgram);
+		//INIT THE LIGHTS
+		for(int i=0;i<10;i++){
+			lightPositions[i]=vec3(10,10,-10);
+			lightColors[i]=vec3(1,0,0);
+			lightFalloff[i]=0;
+		}
 	}
+
 	void animate(){
 
+		int xDelta=mouseX-glutGet(GLUT_WINDOW_WIDTH)/2;
+		int yDelta=mouseY-glutGet(GLUT_WINDOW_HEIGHT)/2;
+
+		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
+
+		camera.rotate(0,-xDelta/10,0);
+		camera.rotate(-yDelta/10,0,0);
+
+
+		if(KEY_Q)camera.translate(0,-.5,0);
+		if(KEY_E)camera.translate(0,.5,0);
+		if(KEY_W)camera.translate(0,0,-.5);
+		if(KEY_S)camera.translate(0,0,.5);
+		if(KEY_D)camera.translate(.5,0,0);
+		if(KEY_A)camera.translate(-.5,0,0);
 	}
 	void callbackDisplay()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
 		//std::cout<<"TEST"<<std::endl;
-		CRenderObjectManager::GetInstance()->GetRenderObject("Resources/test.obj")->draw();
+		
+		setCameraTransMatrix(camera.getCameraTransformationMatrix());
+		setPerspectiveMatrix(camera.getPerspectiveMatrix());
+		setCameraPosition(camera.getTranslate());
+
+		setLightPositions(lightPositions,10);
+		setLightColors(lightColors,10);
+		setLightFalloff(lightFalloff, 10);
+
+
+		glutSetCursor(GLUT_CURSOR_NONE); //hide the cursor 
+
+		//setCameraTransMatrix(mat4());
+		//setPerspectiveMatrix(mat4());
+
+		DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj",NULL);
+		d.setTranslate(0,0,-10);
+		//d.setScale(1,4,1);
+
+		d.rotate(0,90,0);
+		d.draw();
+
+		d.setTranslate(10,10,-10);
+		d.setScale(.2,.2,.2);
+		d.draw();
+
+
 		glutSwapBuffers();
 	}
 
@@ -28,11 +76,11 @@ namespace Globals
 		switch (key){
 		case 'A':
 		case 'a':
-			Globals::KEY_W = val;
+			Globals::KEY_A = val;
 			break;
 		case 'W':
 		case 'w':
-			Globals::KEY_A = val;
+			Globals::KEY_W = val;
 			break;
 		case 'S':
 		case 's':
@@ -83,6 +131,7 @@ namespace Globals
 	void callbackTimer(int) // Called when the timer expires
 	{
 		glutTimerFunc(1000/30, callbackTimer, 0);
+		animate();
 		glutPostRedisplay();
 	}
 }

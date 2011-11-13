@@ -102,6 +102,13 @@ public:
 	 *         with those of its ancestors.
 	 */
 	mat4 getTransformationMatrix() const;
+
+	//TransformationMatrix
+	/** @brief Computes the reverse transformation for the camera. Does
+	 *         Does not use scale modifier and takes into account traslation and rotation
+	 *         of its ancestors.
+	 */
+	mat4 getCameraTransformationMatrix() const;
 };
 
 

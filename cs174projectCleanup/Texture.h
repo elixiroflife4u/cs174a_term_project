@@ -31,6 +31,8 @@ public:
   // the 'active' texture in openGL.
   void Bind() const;
 
+  inline GLuint getGlID(){return m_glId;}
+
 protected:
   // Constructor which takes the filename as argument.
   // It loads the file and throw an exception if the load

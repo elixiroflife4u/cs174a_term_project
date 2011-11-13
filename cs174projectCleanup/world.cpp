@@ -1,8 +1,15 @@
 #include "World.h"
+
 namespace Globals
 {
 	//ENGINE BASICS//
 	GLuint sProgram=0;
+	CameraEntity camera=CameraEntity();
+
+	vec3 lightPositions[10];
+	float lightFalloff[10];
+	vec3 lightColors[10];
+
 
 	//Key States
 	bool KEY_W=false;
@@ -19,6 +26,8 @@ namespace Globals
 	//transformation locations
 	GLuint loc_modelTransMat=0;
 	GLuint loc_camTransMat=0;
+	GLuint loc_perspTransMat=0;
+	GLuint loc_camPosition=0;
 
 	//material property locations
 	GLuint loc_texOffset=0;
@@ -35,6 +44,8 @@ namespace Globals
 	void initShaderVariables(GLuint p){
 		loc_modelTransMat=glGetUniformLocation(p, "vTransform");
 		loc_camTransMat=glGetUniformLocation(p, "camTransform");
+		loc_perspTransMat=glGetUniformLocation(p, "perspTransform");
+		loc_camPosition=glGetUniformLocation(p, "camPos");
 
 		loc_texOffset=glGetUniformLocation(p, "uvOffset");
 		loc_texScale=glGetUniformLocation(p, "uvScale");
@@ -53,6 +64,12 @@ namespace Globals
 	void setCameraTransMatrix(mat4 m){
 		glUniformMatrix4fv(loc_camTransMat,1,GL_FALSE,m);
 	}
+	void setPerspectiveMatrix(mat4 m){
+		glUniformMatrix4fv(loc_perspTransMat,1,GL_FALSE,m);
+	}
+	void setCameraPosition(vec3 v){
+		glUniform4f(loc_camPosition,v.x,v.y,v.z,1.0);
+	}
 
 	void setTextureOffset(vec2 v){
 		glUniform2f(loc_texOffset,(GLfloat)v.x,(GLfloat)v.y);
@@ -63,8 +80,17 @@ namespace Globals
 	void setShininess(float f){
 		glUniform1f(loc_shininess,(GLfloat)f);
 	}
-	void setUseTexture(){
+	void setUseTexture(GLuint i){
+		glUniform1i(loc_texture,i);
 	}
+	void setUseTexture(char* t){
+		setUseTexture(CTextureManager::GetInstance()->GetTexture(t)->getGlID());
+	}
+
+	void drawModel(char* m){
+		CRenderObjectManager::GetInstance()->GetRenderObject(m)->draw();
+	}
+
 
 	void setAmbientLightColor(vec3 v){
 		glUniform4f(loc_texScale,(GLfloat)v.x,(GLfloat)v.y,(GLfloat)v.z,0.0);
