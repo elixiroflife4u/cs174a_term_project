@@ -18,6 +18,3 @@ void CameraEntity::setFov(float fov){
 void CameraEntity::setAspectRatio(float ar){
 	_aspect=ar;
 }
-mat4 CameraEntity::getReverseTransformationMatrix() const{
-	return mat4();
-}

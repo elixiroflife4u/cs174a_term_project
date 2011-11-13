@@ -8,6 +8,7 @@ in vec2 vUV;
 //transformations
 uniform mat4 vTransform;
 uniform mat4 camTransform;
+uniform mat4 perspTransform;
 
 //interpolated pixel properties
 out vec4 fPosition;
@@ -16,9 +17,11 @@ out vec2 fUV;
 
 void main(){
 	fPosition=vPosition*vTransform;
-	fNormal=normalize(vNormal*vTransform);
+	fNormal=vNormal;
+	fNormal.w=0;
+	fNormal=normalize(fNormal*vTransform);
 	fUV=vUV;
 
-	//gl_Position=fPosition*camTransform;
+	gl_Position=fPosition*camTransform*perspTransform;
 }
 
