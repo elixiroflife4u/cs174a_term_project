@@ -2,10 +2,19 @@
 #define _WORLD
 
 #include "Angel.h"
+#include "TextureManager.h"
+#include "RenderObjectManager.h"
+#include "CameraEntity.h"
+
 namespace Globals
 {
 	//ENGINE BASICS//
 	extern GLuint sProgram;
+	extern CameraEntity camera;
+	extern vec3 lightPositions[10];
+	extern float lightFalloff[10];
+	extern vec3 lightColors[10];
+
 
 	//Key States
 	extern bool KEY_W;
@@ -38,11 +47,15 @@ namespace Globals
 
 	void setModelTransMatrix(mat4 m);
 	void setCameraTransMatrix(mat4 m);
+	void setPerspectiveMatrix(mat4 m);
+	void setCameraPosition(vec3 v);
 
 	void setTextureOffset(vec2 v);
 	void setTextureScale(vec2 v);
 	void setShininess(float f);
-	void setUseTexture();
+	void setUseTexture(int i);
+	void setUseTexture(char* t);
+	void drawModel(char* m);
 
 	void setAmbientLightColor(vec3 v);
 	void setLightPositions(vec3* lightPos,GLuint num);

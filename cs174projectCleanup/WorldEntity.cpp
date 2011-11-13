@@ -5,18 +5,18 @@ WorldEntity::WorldEntity(WorldEntity* parent)
 	_parent = parent;
 	_position = vec3(0, 0, 0);
 	_rotation = vec3(0, 0, 0);
-	_scale    = vec3(0, 0, 0);
+	_scale    = vec3(1, 1, 1);
 }
 
 //Translation
 void WorldEntity::translate(vec3 v)
 {
-	_position = _position + v;
+	_position += v;
 }
 
 void WorldEntity::translate(float x, float y, float z)
 {
-	_position = _position + vec3(x, y, z);
+	_position += vec3(x, y, z);
 }
 
 void WorldEntity::setTranslate(float x, float y, float z)
@@ -26,15 +26,15 @@ void WorldEntity::setTranslate(float x, float y, float z)
 
 void WorldEntity::setTranslateX(float x)
 {
-	_position = vec3(x, 0, 0);
+	_position.x=x;
 }
 void WorldEntity::setTranslateY(float y)
 {
-	_position = vec3(0, y, 0);
+	_position.y=y;
 }
 void WorldEntity::setTranslateZ(float z)
 {
-	_position = vec3(0, 0, z);
+	_position.z = z;
 }
 vec3 WorldEntity::getTranslate() const
 {
@@ -52,7 +52,7 @@ vec3 WorldEntity::getTranslate() const
 //Rotation
 void WorldEntity::rotate(float x, float y, float z)
 {
-	_rotation = _rotation + vec3(x, y, z);
+	_rotation += vec3(x, y, z);
 }
 void WorldEntity::setRotate(float x, float y, float z)
 {
@@ -73,7 +73,9 @@ vec3 WorldEntity::getRotate() const
 //Scale
 void WorldEntity::scale(float x, float y, float z)
 {
-	_scale = _scale + vec3(x, y, z);
+	_scale.x*=x;
+	_scale.y*=y;
+	_scale.z*=z;
 }
 void WorldEntity::setScale(float x, float y, float z)
 {
@@ -85,7 +87,7 @@ vec3 WorldEntity::getScale() const
 	if (_parent == NULL)
 		s = _scale;
 	else
-		s = _parent->getScale() + _scale;
+		s = vec3(_parent->getScale().x*_scale.x,_parent->getScale().y*_scale.y,_parent->getScale().z*_scale.z);
 	
 	return s;
 }
@@ -94,10 +96,26 @@ vec3 WorldEntity::getScale() const
 //TransformationMatrix
 mat4 WorldEntity::getTransformationMatrix() const
 {
-	mat4 m = Angel::Translate(_position.x, _position.y, _position.z) * RotateX(_rotation.x) * RotateY(_rotation.y) * RotateZ(_rotation.z);
+
+	mat4 scaleMat=mat4();
+	scaleMat[0][0]=_scale.x;
+	scaleMat[1][1]=_scale.y;
+	scaleMat[2][2]=_scale.z;
+	scaleMat[3][3]=1;
+
+	mat4 m = Translate(_position.x, _position.y, _position.z) * RotateX(_rotation.x) * RotateY(_rotation.y) * RotateZ(_rotation.z) * scaleMat;
+
 	if(_parent == NULL)
 		return m;
-
 	else
 		return _parent->getTransformationMatrix() * m;
+}
+
+mat4 WorldEntity::getCameraTransformationMatrix() const{
+	mat4 m = RotateX(-_rotation.x) * RotateY(-_rotation.y) * RotateZ(-_rotation.z)*Translate(-_position.x, -_position.y, -_position.z) ;
+
+	if(_parent == NULL)
+		return m;
+	else
+		return _parent->getCameraTransformationMatrix() * m;
 }
