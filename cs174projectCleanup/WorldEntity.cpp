@@ -1,6 +1,6 @@
 #include "WorldEntity.h"
 
-WorldEntity::WorldEntity(WorldEntity* parent)
+WorldEntity::WorldEntity(const WorldEntity* parent)
 {
 	_parent = parent;
 	_position = vec3(0, 0, 0);
@@ -39,11 +39,12 @@ void WorldEntity::setTranslateZ(float z)
 vec3 WorldEntity::getTranslate() const
 {
 	vec3 t;
-	if (_parent == NULL)
+	if (_parent == NULL){
 		t = _position;
-	else
-		t = _parent->getTranslate() + _position;
-	
+	}else{
+		vec4 temp = _parent->getTransformationMatrix()*vec4(_position,1.0);
+		t=vec3(temp.x,temp.y,temp.z);
+	}
 	return t;
 }
 
@@ -117,5 +118,5 @@ mat4 WorldEntity::getCameraTransformationMatrix() const{
 	if(_parent == NULL)
 		return m;
 	else
-		return _parent->getCameraTransformationMatrix() * m;
+		return  m * _parent->getCameraTransformationMatrix();
 }

@@ -9,6 +9,11 @@
 class Player:public MobileEntity{
 private:
 public:
+	Player()
+		:MobileEntity(ID_PLAYER)
+	{
+		GameEntity::setModel(DrawableEntity(NULL,"Resources/cube.obj",this));
+	}
 	void update();
 };
 
