@@ -1,5 +1,5 @@
 #include "General.h"
-
+#include "World.h"
 namespace Globals
 {
 	void initApp(){
@@ -12,53 +12,120 @@ namespace Globals
 		glDepthFunc(GL_LEQUAL);
 
 		//INIT THE LIGHTS
-		for(int i=0;i<10;i++){
-			lightPositions[i]=vec3(10,10,-10);
-			lightColors[i]=vec3(1,0,0);
-			lightFalloff[i]=0;
+		for(int i=0;i<LIGHT_COUNT;i++){
+			wLights[i]=NULL;
 		}
+		//Null Walls
+		for(int i=0;i<WALL_COUNT;i++){
+			wWalls[i]=NULL;
+		}
+		//Null GameEntities
+		for(int i=0;i<GAMEENTITY_COUNT;i++){
+			wEntities[i]=NULL;
+		}
+		//Null Scenes
+		for(int i=0;i<SCENE_COUNT;i++){
+			wScenes[i]=NULL;
+		}
+		//viewFullscreen();
+		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
+		glutSetCursor(GLUT_CURSOR_NONE);
+
+		//setup scenes
+		wScenes[0]=new Scene_1();
+
+		wScenes[currentLevel]->setup();
 	}
 
 	void animate(){
+		//Update every gameEntity
+		for(int i=0;i<GAMEENTITY_COUNT;i++){
+			if(wEntities[i]!=NULL){
+				wEntities[i]->update();
+			}
+		}
+		//Udpate every wall
+		for(int i=0;i<WALL_COUNT;i++){
+			if(wWalls[i]!=NULL){
+				wWalls[i]->update();
+			}
+		}
+
+		//Check for collision between every gameEntity
+		for(int i=0;i<GAMEENTITY_COUNT;i++){
+			if(wEntities[i]!=NULL){
+				//check against every gameentity for a collision
+				for(int j=i+1;j<GAMEENTITY_COUNT;j++){
+					if(wEntities[j]!=NULL){
+						//if one occurs then complete the action for both
+						if(wEntities[i]->didCollide(*wEntities[j])){
+							wEntities[i]->onCollide(*wEntities[j]);
+							wEntities[j]->onCollide(*wEntities[i]);
+						}
+					}else{
+						break;
+					}
+				}
+			}else{
+				break;
+			}
+		}
+
+		//update everything in the level that needs to be updated
+		wScenes[currentLevel]->update();
+		if(wScenes[currentLevel]->levelEnd()){
+
+		}
+
 
 		int xDelta=mouseX-glutGet(GLUT_WINDOW_WIDTH)/2;
 		int yDelta=mouseY-glutGet(GLUT_WINDOW_HEIGHT)/2;
 
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
 
-		camera.rotate(0,-xDelta/10,0);
-		camera.rotate(-yDelta/10,0,0);
+		currentCamera->rotate(0,-xDelta/10,0);
+		currentCamera->rotate(-yDelta/10,0,0);
 
-
-		if(KEY_Q)camera.translate(0,-.5,0);
-		if(KEY_E)camera.translate(0,.5,0);
-		if(KEY_W)camera.translate(0,0,-.5);
-		if(KEY_S)camera.translate(0,0,.5);
-		if(KEY_D)camera.translate(.5,0,0);
-		if(KEY_A)camera.translate(-.5,0,0);
+		if(KEY_Q)currentCamera->translate(0,-.5,0);
+		if(KEY_E)currentCamera->translate(0,.5,0);
+		if(KEY_W)currentCamera->translate(0,0,-.5);
+		if(KEY_S)currentCamera->translate(0,0,.5);
+		if(KEY_D)currentCamera->translate(.5,0,0);
+		if(KEY_A)currentCamera->translate(-.5,0,0);
 	}
 	void callbackDisplay()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
-		//std::cout<<"TEST"<<std::endl;
 		
-		setCameraTransMatrix(camera.getCameraTransformationMatrix());
-		setPerspectiveMatrix(camera.getPerspectiveMatrix());
-		setCameraPosition(camera.getTranslate());
+		currentCamera->setAspectRatio(resolution.x/resolution.y);
+		setCameraTransMatrix(currentCamera->getCameraTransformationMatrix());
+		setPerspectiveMatrix(currentCamera->getPerspectiveMatrix());
+		setCameraPosition(currentCamera->getTranslate());
+		setLights(wLights,LIGHT_COUNT);
 
-		setLightPositions(lightPositions,10);
-		setLightColors(lightColors,10);
-		setLightFalloff(lightFalloff, 10);
+		//DrawCode goes Here
+		//Draw Every GameEntity
+		for(int i=0;i<GAMEENTITY_COUNT;i++){
+			if(wEntities[i]!=NULL){
+				wEntities[i]->draw();
+			}else{
+				break;
+			}
+		}
+		//Draw Every Wall
+		for(int i=0;i<WALL_COUNT;i++){
+			if(wWalls[i]!=NULL){
+				wWalls[i]->draw();
+			}else{
+				break;
+			}
+		}
 
-
-		glutSetCursor(GLUT_CURSOR_NONE); //hide the cursor 
-
-		//setCameraTransMatrix(mat4());
-		//setPerspectiveMatrix(mat4());
 
 		DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj",NULL);
 		d.setTranslate(0,0,-10);
 		//d.setScale(1,4,1);
+		d.setDiffuseColor(vec3(1,0,0));
 
 		d.rotate(0,90,0);
 		d.draw();
@@ -71,7 +138,9 @@ namespace Globals
 		glutSwapBuffers();
 	}
 
-	void callbackReshape(int width, int height){}
+	void callbackReshape(int width, int height){
+		setResolution(width,height);
+	}
 	static void setKey(unsigned char key, bool val) {
 		switch (key){
 		case 'A':

@@ -10,23 +10,37 @@ private:
 	vec3 _vel; ///< The current velocity.
 
 public:
+	MobileEntity(unsigned int id)
+		:GameEntity(id)
+	{}
 	/** @brief Sets the acceleration, discarding the current value. */
 	void setAcc(float x, float y, float z) { _acc = vec3(x, y, z); }
+	void setAcc(vec3 v){setAcc(v.x,v.y,v.z);}
+	void setAccX(float x){_acc.x=x;}
+	void setAccY(float y){_acc.y=y;}
+	void setAccZ(float z){_acc.z=z;}
 	/** @brief Adds a new acceleration vector to the current one. */
-	void accelerate(float x, float y, float z) { _acc += vec3(x, y, z); }
+	void increaseAcc(float x, float y, float z) { _acc += vec3(x, y, z); }
+	void increaseAcc(vec3 v){ increaseAcc(v.x,v.y,v.z);}
 	/** @brief Returns the current acceleration. */
 	vec3 getAcc() const { return _acc; }
 	
 	/** @brief Sets the velocity, discarding the current value. */
 	void setVel(float x, float y, float z) { _vel = vec3(x, y, z); }
+	void setVel(vec3 v){setVel(v.x,v.y,v.z);}
+	void setVelX(float x){_vel.x=x;}
+	void setVelY(float y){_vel.y=y;}
+	void setVelZ(float z){_vel.z=z;}
 	/** @brief Adds a new velocity vector to the current one. */
-	void velocity (float x, float y, float z) { _vel += vec3(x, y, z); }
+	void increaseVel (float x, float y, float z) { _vel += vec3(x, y, z); }
+	void increaseVel (vec3 v){increaseVel(v.x,v.y,v.z);}
 	/** @brief Returns the current velocity. */
 	vec3 getVel() const { return _vel; }
 	
 	/** @brief Updates the state of the object every frame. 
 	  * Must be provided by subclasses. */
 	virtual void update() = 0;
+	virtual void onCollide(const GameEntity& g)=0;
 };
 
 

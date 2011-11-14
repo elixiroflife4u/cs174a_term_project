@@ -17,7 +17,7 @@ private:
 	vec3 _rotation; ///< The rotation of the object relative to the parent.
 	vec3 _scale; ///< The scale of the object relative to the parent.
 
-	WorldEntity* _parent; ///< The object's parent or NULL if none.
+	const WorldEntity* _parent; ///< The object's parent or NULL if none.
 
 public:
 	/** @brief Constructs a new WorldEntity object.
@@ -25,7 +25,7 @@ public:
 	 *   The object's local transformations are concatenated with
 	 *   its ancestors' before finally being rendered.
 	 */
-	WorldEntity(WorldEntity* parent = NULL);
+	WorldEntity(const WorldEntity* parent = NULL);
 
 	//Translation
 	/** @brief Translates the object in addition to any previous
@@ -94,7 +94,9 @@ public:
 
 	//Parent
 	/** @brief Returns the parent object or NULL if none. */
-	WorldEntity* getParent() const { return _parent; }
+	inline const WorldEntity* getParent() const { return _parent; }
+	inline void setParent(const WorldEntity* p){_parent=p;}
+
 
 	//TransformationMatrix
 	/** @brief Computes the total transformation matrix by concatenating
