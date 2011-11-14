@@ -15,6 +15,7 @@ public:
 		GameEntity::setModel(DrawableEntity(NULL,"Resources/cube.obj",this));
 	}
 	void update();
+	void onCollide(const GameEntity& g);
 };
 
 

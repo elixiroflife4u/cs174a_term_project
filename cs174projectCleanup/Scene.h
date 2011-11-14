@@ -24,8 +24,8 @@ namespace Globals{
 	public:
 		void setup(){
 			Player* pl=new Player();
-			camera.setParent(pl);
-			
+			currentCamera->setParent(pl);
+			currentCamera->translate(0,2.5,5);
 
 			Globals::addEntity(pl);
 

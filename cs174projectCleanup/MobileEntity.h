@@ -40,6 +40,7 @@ public:
 	/** @brief Updates the state of the object every frame. 
 	  * Must be provided by subclasses. */
 	virtual void update() = 0;
+	virtual void onCollide(const GameEntity& g)=0;
 };
 
 

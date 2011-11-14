@@ -11,7 +11,8 @@ namespace Globals
 {
 	//ENGINE BASICS//
 	extern GLuint sProgram;
-	extern CameraEntity camera;
+	extern CameraEntity defaultCamera;
+	extern CameraEntity* currentCamera;
 
 	//Key States
 	extern bool KEY_W;

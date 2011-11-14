@@ -4,7 +4,9 @@ namespace Globals
 {	
 //ENGINE BASICS//
 	GLuint sProgram=0;
-	CameraEntity camera=CameraEntity();
+	CameraEntity defaultCamera;
+	CameraEntity* currentCamera=&defaultCamera;
+
 
 	vec3 lightPositions[10];
 	float lightFalloff[10];

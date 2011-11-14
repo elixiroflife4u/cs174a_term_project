@@ -41,7 +41,7 @@ public:
 	bool didCollide(const GameEntity&);
 	/** @brief Should be overloaded to allow for specific behavior when hit
 	 */
-	virtual void onCollide(const GameEntity&);
+	virtual void onCollide(const GameEntity&)=0;
 	/** @brief Allows for the ability to set the models of the entity
 	 */
 	bool setModel(const DrawableEntity& d, int num=0);

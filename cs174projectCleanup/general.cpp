@@ -83,24 +83,24 @@ namespace Globals
 
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
 
-		camera.rotate(0,-xDelta/10,0);
-		camera.rotate(-yDelta/10,0,0);
+		currentCamera->rotate(0,-xDelta/10,0);
+		currentCamera->rotate(-yDelta/10,0,0);
 
-		if(KEY_Q)camera.translate(0,-.5,0);
-		if(KEY_E)camera.translate(0,.5,0);
-		if(KEY_W)camera.translate(0,0,-.5);
-		if(KEY_S)camera.translate(0,0,.5);
-		if(KEY_D)camera.translate(.5,0,0);
-		if(KEY_A)camera.translate(-.5,0,0);
+		if(KEY_Q)currentCamera->translate(0,-.5,0);
+		if(KEY_E)currentCamera->translate(0,.5,0);
+		if(KEY_W)currentCamera->translate(0,0,-.5);
+		if(KEY_S)currentCamera->translate(0,0,.5);
+		if(KEY_D)currentCamera->translate(.5,0,0);
+		if(KEY_A)currentCamera->translate(-.5,0,0);
 	}
 	void callbackDisplay()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
 		
-		camera.setAspectRatio(resolution.x/resolution.y);
-		setCameraTransMatrix(camera.getCameraTransformationMatrix());
-		setPerspectiveMatrix(camera.getPerspectiveMatrix());
-		setCameraPosition(camera.getTranslate());
+		currentCamera->setAspectRatio(resolution.x/resolution.y);
+		setCameraTransMatrix(currentCamera->getCameraTransformationMatrix());
+		setPerspectiveMatrix(currentCamera->getPerspectiveMatrix());
+		setCameraPosition(currentCamera->getTranslate());
 		setLights(wLights,LIGHT_COUNT);
 
 		//DrawCode goes Here
