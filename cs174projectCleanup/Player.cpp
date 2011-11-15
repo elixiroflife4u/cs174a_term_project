@@ -16,7 +16,7 @@ void Player::update()
 
 	//std::cout<<getTranslate().y<<std::endl;
 	if(Globals::KEY_Q)increaseVel(0,-.55,0);
-	if(Globals::KEY_E)increaseVel(0,.55,0);
+	if(Globals::KEY_E)increaseVel(0,.5,0);
 	if(Globals::KEY_W)increaseVel(0,0,-.55);
 	if(Globals::KEY_S)increaseVel(0,0,.55);
 	if(Globals::KEY_D)increaseVel(.55,0,0);
@@ -36,14 +36,13 @@ void Player::onCollide(const GameEntity& g){
 	// collision detection for walls - so that the player can "land" on them and run into them
 	// perhaps abstract it to the Mobileentity level because other mobile entities will need hit detection for walls as well
 
-	//std::cout<<g.getId()<<std::endl;
 
 	CollisionBox b1=getHitBox();
 	CollisionBox b2=g.getHitBox();
 
 	//Tells whether or not the midpoint is at all within the mid point of the other box
-	vec3 d1=b1.getTranslate()-b1.getDimensions()/3-b2.getPoint1();
-	vec3 d2=b1.getTranslate()+b1.getDimensions()/3-b2.getPoint2();
+	vec3 d1=b1.getTranslate()-getVel()-b1.getDimensions()/3-b2.getPoint1();
+	vec3 d2=b1.getTranslate()-getVel()+b1.getDimensions()/3-b2.getPoint2();
 	vec3 midDist=b1.getTranslate()-b2.getTranslate();
 
 	bool midInX=(d1.x>0)!=(d2.x>0);
@@ -55,6 +54,9 @@ void Player::onCollide(const GameEntity& g){
 		!midInZ&&!midInY&&getVel().x==0
 		)
 		return;
+	
+
+
 	vec3 newPos;
 
 	//within the "x prism"
@@ -82,7 +84,7 @@ void Player::onCollide(const GameEntity& g){
 			setTranslateX(newPos.x);
 			setVelX(0);
 		}
-		 translate(EASE_VAL*dir,0,0);
+		translate(EASE_VAL*dir,0,0);
 	}
 	//within the "y prism"
 	if(midInX&&midInZ||!midInY){
@@ -137,11 +139,4 @@ void Player::onCollide(const GameEntity& g){
 	}
 
 	vec3 v=getTranslate()-newPos;
-
-	std::cout<<newPos<<std::endl;
-
-	//std::cout<<"C "<<v.x<<" "<<v.y<<" "<<v.z<<std::endl;
-
-
-
 }

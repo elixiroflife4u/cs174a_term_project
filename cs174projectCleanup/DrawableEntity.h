@@ -49,8 +49,8 @@ public:
 	inline void setAlpha(float a)
 		{
 			_alpha=a;
-			if(a<1.0){setAlphaRequired(false);}
-			else{setAlphaRequired(true);}
+			if(a<1.0){setAlphaRequired(true);}
+			else{setAlphaRequired(false);}
 		}
 	inline void setDiffuseColor(vec3 c){_diffuseColor=c;_texName=NULL;}
 	inline void setDiffuseColor(vec4 c){setDiffuseColor(vec3(c.x,c.y,c.z));setAlpha(c.w);}

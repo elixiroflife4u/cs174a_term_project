@@ -7,6 +7,9 @@
 
 const unsigned int ID_PLAYER=0;
 const unsigned int ID_WALL=1;
+const int ID_BULLET_STRAIGHT=2;
+const int ID_BULLET_BOUNCEGRENADE=3;
+
 
 //Potential IDs
 class GameEntity:public WorldEntity{

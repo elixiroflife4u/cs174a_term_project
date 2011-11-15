@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angel.h" />
+    <ClInclude Include="BulletEntity.h" />
     <ClInclude Include="CameraEntity.h" />
     <ClInclude Include="CheckError.h" />
     <ClInclude Include="CollisionBox.h" />
@@ -25,6 +26,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="mat.h" />
