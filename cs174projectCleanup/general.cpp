@@ -48,12 +48,14 @@ namespace {
 	void drawOpaqueEntities(const T* const arr[], int count, TransparencyQueue& transparencyQueue) {
 		for(int i = 0; i < count; ++i) {
 			if(arr[i] != NULL) {
-				for(int i = 0; i < T::MAX_MODELS; ++i) {
-					const DrawableEntity& model = arr[i]->getModelConst(i);
-					if(model.isAlphaRequired())
-						transparencyQueue.push(&model);
-					else
-						model.draw();
+				for(int c = 0; c < T::MAX_MODELS; ++c) {
+					const DrawableEntity& model = arr[i]->getModelConst(c);
+					if(&model != NULL) {
+						if(model.isAlphaRequired())
+							transparencyQueue.push(&model);
+						else
+							model.draw();
+					}
 				}
 			}
 		}
