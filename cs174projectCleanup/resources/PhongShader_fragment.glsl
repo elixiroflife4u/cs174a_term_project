@@ -4,6 +4,7 @@
 uniform sampler2D diffuseMap;
 uniform vec4 diffuseColor;
 uniform float shininess;
+uniform float alpha;
 
 //pixel properties
 in vec4 fNormal;
@@ -29,37 +30,37 @@ out vec4 fColor;
 
 void main(){
 	vec4 diffusePass=vec4(0,0,0,1);
-	vec4 specularPass=vec4(0,0,0,1);
+	vec4 specularPass=vec4(0,0,0,0);
 
 	vec4 viewVec=camPos-fPosition;
 	viewVec.w=0;
 	viewVec=normalize(viewVec);
 
-	for(int i=0;i<10;i++){
+	vec4 texColor=texture2D(diffuseMap,(fUV+uvOffset)*uvScale);
 
+	for(int i=0;i<10;i++){
 		vec4 lightVec=lightPos[i]-fPosition;
 		lightVec.w=0;
 		vec4 lightVecNorm=normalize(lightVec);
 
-
 		//Diffuse Pass
-		float diffuseMult=clamp(dot(fNormal,lightVecNorm),0,1);
-		diffusePass+=lightColor[i]*diffuseMult*(texture2D(diffuseMap,(fUV+uvOffset)*uvScale)+diffuseColor)*(1/pow(dot(lightVec,lightVec),lightFalloff[i]/2))*lightBrightness[i];
+		float diffuseMult=dot(fNormal,lightVecNorm);
+		diffusePass+=lightColor[i]*diffuseMult*(texColor+diffuseColor)*(1/pow(dot(lightVec,lightVec),lightFalloff[i]/2))*lightBrightness[i];
+		diffusePass=clamp(diffusePass,0.0,1.0);
 
-		
 
 		//Specular Pass
 		float specularMult;
 		if(shininess<=0){
 			specularMult=0;
 		}else{
-			specularMult=pow(dot(fNormal,normalize(viewVec+lightVecNorm)), shininess);
+			specularMult=pow(max(dot(viewVec,normalize(-reflect(lightVecNorm,fNormal))),0.0), shininess);
 		}
-		specularPass+=lightColor[i]*vec4(1,1,1,1)*specularMult*diffuseMult*lightBrightness[i];
-		specularPass.w=1;
-
+		specularPass+=lightColor[i]*specularMult*diffuseMult*lightBrightness[i];
+		specularPass=clamp(specularPass,0.0,1.0);
 	}
 
-	fColor=diffusePass+specularPass;
+	diffusePass.w=alpha;//*texColor.w;
 
+	fColor=ambientColor+diffusePass+specularPass;
 }

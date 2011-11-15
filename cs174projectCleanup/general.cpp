@@ -46,9 +46,9 @@ namespace {
 	  */
 	template<typename T>
 	void drawOpaqueEntities(const T* const arr[], int count, TransparencyQueue& transparencyQueue) {
-		for(int i = 0; i < count; ++i) {
+		for(int i = 0; i < count; i++) {
 			if(arr[i] != NULL) {
-				for(int c = 0; c < T::MAX_MODELS; ++c) {
+				for(int c = 0; c < T::MAX_MODELS; c++) {
 					const DrawableEntity& model = arr[i]->getModelConst(c);
 					if(&model != NULL) {
 						if(model.isAlphaRequired())
@@ -134,7 +134,6 @@ namespace Globals
 				for(int j=0;j<WALL_COUNT;j++){
 					if(wWalls[j]!=NULL){
 						if(wEntities[i]->didCollide(*wWalls[j])){
-							std::cout<<j<<": ";
 							wEntities[i]->onCollide(*wWalls[j]);
 							wWalls[j]->onCollide(*wEntities[i]);
 						}
@@ -149,7 +148,7 @@ namespace Globals
 
 		}
 
-
+		/* should be moved */
 		int xDelta=mouseX-glutGet(GLUT_WINDOW_WIDTH)/2;
 		int yDelta=mouseY-glutGet(GLUT_WINDOW_HEIGHT)/2;
 
@@ -158,17 +157,11 @@ namespace Globals
 		wEntities[0]->rotate(0,-xDelta/10,0);
 		wEntities[0]->rotate(-yDelta/10,0,0);
 
-		/*if(KEY_Q)wEntities[0]->translate(0,-.1,0);
-		if(KEY_E)wEntities[0]->translate(0,.1,0);
-		if(KEY_W)wEntities[0]->translate(0,0,-.1);
-		if(KEY_S)wEntities[0]->translate(0,0,.1);
-		if(KEY_D)wEntities[0]->translate(.1,0,0);
-		if(KEY_A)wEntities[0]->translate(-.1,0,0);*/
 	}
 	void callbackDisplay()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
-		
+
 		currentCamera->setAspectRatio(resolution.x/resolution.y);
 		setCameraTransMatrix(currentCamera->getCameraTransformationMatrix());
 		setPerspectiveMatrix(currentCamera->getPerspectiveMatrix());
@@ -184,25 +177,16 @@ namespace Globals
 		//Disable updating the z-buffer, but still conduct the
 		//test so that nearer opaque objects completely occlude
 		//farther transparent objects.
+
+		glEnable( GL_BLEND );
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDepthMask(GL_FALSE);
 		while(!transparencyQueue.empty()) {
 			transparencyQueue.top()->draw();
 			transparencyQueue.pop();
 		}
 		glDepthMask(GL_TRUE);
-
-		DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj",NULL);
-		d.setTranslate(0,0,-10);
-		//d.setScale(1,4,1);
-		d.setDiffuseColor(vec3(1,0,0));
-
-		d.rotate(0,90,0);
-		d.draw();
-
-		d.setTranslate(10,10,-10);
-		d.setScale(.2,.2,.2);
-		d.draw();
-
+		glDisable(GL_BLEND);
 
 		glutSwapBuffers();
 	}
