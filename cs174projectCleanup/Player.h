@@ -13,6 +13,7 @@ public:
 		:MobileEntity(ID_PLAYER)
 	{
 		GameEntity::setModel(DrawableEntity(NULL,"Resources/cube.obj",this));
+		setTranslate(0,0,-5);
 	}
 	void update();
 	void onCollide(const GameEntity& g);

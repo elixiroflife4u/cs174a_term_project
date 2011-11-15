@@ -22,6 +22,22 @@ namespace Globals
 		}
 		return false;
 	}
+	bool deleteWall(Wall* w){
+		//Removes a wall to the scene
+		if(w==NULL){
+			return false;
+		}
+
+		for(int i=0; i<WALL_COUNT;i++){
+			if(wWalls[i]==w){
+				wWalls[i]=NULL;
+				delete w;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool addEntity(GameEntity* g){
 		//Adds the passed GameEntity to the scene
 		//GameEntity should be dynamically allocated
@@ -33,6 +49,23 @@ namespace Globals
 		}
 		return false;
 	}
+
+	bool deleteEntity(GameEntity* g){
+		//Removes a entities to the scene
+		if(g==NULL){
+			return false;
+		}
+
+		for(int i=0; i<GAMEENTITY_COUNT;i++){
+			if(wEntities[i]==g){
+				wEntities[i]=NULL;
+				delete g;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	bool addLight(PointLight* pl){
 		//Adds the passed light to the scene
 		//light should be dynamically allocated
@@ -44,7 +77,21 @@ namespace Globals
 		}
 		return false;
 	}
+	bool deleteLight(PointLight* pl){
+		//Removes a entities to the scene
+		if(pl==NULL){
+			return false;
+		}
 
+		for(int i=0; i<LIGHT_COUNT;i++){
+			if(wLights[i]==pl){
+				wLights[i]=NULL;
+				delete pl;
+				return true;
+			}
+		}
+		return false;
+	}
 
 	void deleteAllWorld(){
 		//delete every wall adn set it to null
@@ -71,7 +118,7 @@ namespace Globals
 	}
 
 
-	vec3 grav=vec3(0,-.01,0);
+	vec3 grav=vec3(0,-.1,0);
 
 	int currentLevel=0;
 	//pointer to the current camera

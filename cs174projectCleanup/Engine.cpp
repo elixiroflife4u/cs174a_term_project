@@ -54,6 +54,7 @@ namespace Globals
 	GLuint loc_shininess=0;
 	GLuint loc_texture=0;
 	GLuint loc_diffColor=0;
+	GLuint loc_alpha=0;
 
 	//light property locations
 	GLuint loc_ambLightColor=0;
@@ -73,6 +74,7 @@ namespace Globals
 		loc_shininess=glGetUniformLocation(p, "shininess");
 		loc_texture=glGetUniformLocation(p, "diffuseMap");
 		loc_diffColor=glGetUniformLocation(p, "diffuseColor");
+		loc_alpha=glGetUniformLocation(p, "alpha");
 
 		loc_ambLightColor=glGetUniformLocation(p, "ambientColor");
 		loc_lightPos=glGetUniformLocation(p, "lightPos");
@@ -112,7 +114,9 @@ namespace Globals
 	void setDiffuseColor(vec3 c){
 		glUniform4f(loc_diffColor,c.x,c.y,c.z,0.0);
 	}
-
+	void setAlpha(float a){
+		glUniform1f(loc_alpha,a);
+	}
 
 	void drawModel(char* m){
 		CRenderObjectManager::GetInstance()->GetRenderObject(m)->draw();

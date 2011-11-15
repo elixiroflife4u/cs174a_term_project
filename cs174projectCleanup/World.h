@@ -24,8 +24,11 @@ namespace Globals
 	extern Scene* wScenes[SCENE_COUNT];//Array of Scenes
 	
 	bool addWall(Wall* w);
+	bool deleteWall(Wall* w);
 	bool addEntity(GameEntity* g);
+	bool deleteEntity(GameEntity* g);
 	bool addLight(PointLight* pl);
+	bool deleteLight(PointLight* pl);
 	void deleteAllWorld();
 	//transparent object heap
 

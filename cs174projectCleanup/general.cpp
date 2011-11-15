@@ -62,12 +62,22 @@ namespace Globals
 							wEntities[i]->onCollide(*wEntities[j]);
 							wEntities[j]->onCollide(*wEntities[i]);
 						}
-					}else{
-						break;
 					}
 				}
-			}else{
-				break;
+			}
+		}
+		//Check for collision between every gameEntity and a wall
+		for(int i=0;i<GAMEENTITY_COUNT;i++){
+			if(wEntities[i]!=NULL){
+				for(int j=0;j<WALL_COUNT;j++){
+					if(wWalls[j]!=NULL){
+						if(wEntities[i]->didCollide(*wWalls[j])){
+							std::cout<<j<<": ";
+							wEntities[i]->onCollide(*wWalls[j]);
+							wWalls[j]->onCollide(*wEntities[i]);
+						}
+					}
+				}
 			}
 		}
 
@@ -83,15 +93,15 @@ namespace Globals
 
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
 
-		currentCamera->rotate(0,-xDelta/10,0);
-		currentCamera->rotate(-yDelta/10,0,0);
+		wEntities[0]->rotate(0,-xDelta/10,0);
+		wEntities[0]->rotate(-yDelta/10,0,0);
 
-		if(KEY_Q)currentCamera->translate(0,-.5,0);
-		if(KEY_E)currentCamera->translate(0,.5,0);
-		if(KEY_W)currentCamera->translate(0,0,-.5);
-		if(KEY_S)currentCamera->translate(0,0,.5);
-		if(KEY_D)currentCamera->translate(.5,0,0);
-		if(KEY_A)currentCamera->translate(-.5,0,0);
+		/*if(KEY_Q)wEntities[0]->translate(0,-.1,0);
+		if(KEY_E)wEntities[0]->translate(0,.1,0);
+		if(KEY_W)wEntities[0]->translate(0,0,-.1);
+		if(KEY_S)wEntities[0]->translate(0,0,.1);
+		if(KEY_D)wEntities[0]->translate(.1,0,0);
+		if(KEY_A)wEntities[0]->translate(-.1,0,0);*/
 	}
 	void callbackDisplay()
 	{
