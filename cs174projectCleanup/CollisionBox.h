@@ -3,7 +3,7 @@
 
 #include "WorldEntity.h"
 
-class CollisionBox:private WorldEntity{
+class CollisionBox:public WorldEntity{
 private:
 	vec3 _dimensions;
 public:
@@ -31,6 +31,7 @@ public:
 	 */
 	vec3 getPoint1() const;
 	vec3 getPoint2() const;
+	vec3 getDimensions()const {return _dimensions*getScale();}
 };
 
 #endif //_COLLISIONOBJECT
