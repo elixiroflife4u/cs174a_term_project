@@ -6,12 +6,13 @@ CollisionBox::CollisionBox()
 
 bool CollisionBox::didCollide(const CollisionBox& b) const
 {
-	vec3 v1=b.getPoint1()-this->getPoint1();
-	vec3 v2=b.getPoint2()-this->getPoint2();
+	vec3 v1=b.getPoint1()-this->getPoint2();
+	vec3 v2=b.getPoint2()-this->getPoint1();
 
-	if((v1.x>=0)!=(v2.x>=0)){
-		if((v1.y>=0)!=(v2.y>=0)){
-			if((v1.z>=0)!=(v2.z>=0)){
+	if((v1.x>0)!=(v2.x>0)){
+		if((v1.y>0)!=(v2.y>0)){
+			if((v1.z>0)!=(v2.z>0)){
+				//std::cout<<"TEST"<<std::endl;
 				return true;
 			}
 		}
@@ -44,11 +45,11 @@ void CollisionBox::setTranslate(vec3 v)
 vec3 CollisionBox::getPoint1() const
 {
 	//get the positive side point
-	return getTranslate()+_dimensions/2 ;
+	return getTranslate()+(_dimensions/2)*getScale() ;
 }
 vec3 CollisionBox::getPoint2() const
 {
 	//get the negative side point
-	return getTranslate()-_dimensions/2 ;
+	return getTranslate()-(_dimensions/2)*getScale() ;
 }
 

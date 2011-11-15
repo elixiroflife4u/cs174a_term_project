@@ -43,6 +43,7 @@ namespace Globals
 	extern GLuint loc_shininess;
 	extern GLuint loc_texture;
 	extern GLuint loc_diffColor;
+	extern GLuint loc_alpha;
 
 	//light property locations
 	extern GLuint loc_ambLightColor;
@@ -64,6 +65,7 @@ namespace Globals
 	void setUseTexture(int i);
 	void setUseTexture(char* t);
 	void setDiffuseColor(vec3 c);
+	void setAlpha(float a);
 
 	void drawModel(char* m);
 
