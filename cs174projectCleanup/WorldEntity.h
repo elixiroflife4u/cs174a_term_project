@@ -41,6 +41,7 @@ public:
 	/** @brief Sets the local X position, disregarding any previous local
 	 *         translations.
 	 */
+	void setTranslate(vec3 v);
 	void setTranslateX(float x);
 	/** @brief Sets the local Y position, disregarding any previous local
 	 *         translations.

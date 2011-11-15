@@ -23,6 +23,9 @@ void WorldEntity::setTranslate(float x, float y, float z)
 {
 	_position = vec3(x, y, z);	
 }
+void WorldEntity::setTranslate(vec3 v){
+	_position=v;
+}
 
 void WorldEntity::setTranslateX(float x)
 {

@@ -8,13 +8,13 @@
 const unsigned int ID_PLAYER=0;
 const unsigned int ID_WALL=1;
 
-
-
 //Potential IDs
 class GameEntity:public WorldEntity{
+public:
+	static const int MAX_MODELS=5;
 private:
 	CollisionBox _hitBox;
-	DrawableEntity* _models[5];
+	DrawableEntity* _models[MAX_MODELS];
 	unsigned int _id;
 protected:
 	/** @brief Allows access to the CollisionBox of the GameEntity
@@ -22,12 +22,15 @@ protected:
 	void setHitbox(const CollisionBox &cb);
 	/** @brief Allows access to any DrawableEntity for animations
 	*/
-	DrawableEntity* getModel(int num=0);
+	DrawableEntity& getModel(int num=0) const;
 public:
 	/** @brief Constructs a GameEntity with id id
 	 */
 	GameEntity(unsigned int id);
 	~GameEntity();
+	/** @brief Allows access to any DrawableEntity for read only
+	*/
+	inline const DrawableEntity& getModelConst(int num=0) const{return getModel(num);}
 
 	/** @brief returns the id of the entity
 	 */
