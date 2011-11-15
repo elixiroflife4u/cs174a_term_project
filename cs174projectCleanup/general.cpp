@@ -1,5 +1,65 @@
 #include "General.h"
 #include "World.h"
+#include "Engine.h"
+
+#include <queue>
+
+/** This anonymous namespace holds definitions and declarations
+  * related to ordering and drawing transparent objects.
+  *
+  * All contents of an anonymous namespace are accessible within
+  * the same file (as if they were outside of the namespace)
+  * but are not exposed to other files. You can think of it as
+  * being equivalent to the "static" keyword, which cannot be used
+  * with classes and typedefs.
+  */
+namespace {
+	/** This functor compares two DrawableEntity objects
+	  * based on their distance from the current camera.
+	  * It is meant for use with std::priority_queue, which
+	  * will cause the creation of a max-heap.
+	  */
+	class DepthComparator {
+	public:
+		/** Compares two DrawableEntity objects based on their
+		  * position from the camera.
+		  * @return True if a is farther from the camera than b;
+		  *  false otherwise.
+		  */
+		bool operator()(const DrawableEntity* a, const DrawableEntity* b) {
+			const vec3 camPos = Globals::currentCamera->getTranslate();
+			const vec3 aToCam = camPos - a->getTranslate();
+			const vec3 bToCam = camPos - b->getTranslate();
+			
+			return dot(aToCam, aToCam) > dot(bToCam, bToCam);
+		}
+	};
+	/** A max-heap for transparent models to enable drawing them from farthest to nearest. */
+	typedef std::priority_queue<const DrawableEntity*, std::vector<const DrawableEntity*>, DepthComparator> TransparencyQueue;
+	/** Draws opaque models from an array of GameEntity pointers, pushing transparent
+	  * models onto a given queue.
+	  * @tparam T The actual type of GameEntities (use to permit iterating through
+	  *  an array of child class objects.
+	  * @param arr An array of GameEntity (or child class) object pointers.
+	  * @param count Length of the array.
+	  * @param transparencyQueue The queue onto which to push transparent models.
+	  */
+	template<typename T>
+	void drawOpaqueEntities(const T* const arr[], int count, TransparencyQueue& transparencyQueue) {
+		for(int i = 0; i < count; ++i) {
+			if(arr[i] != NULL) {
+				for(int i = 0; i < T::MAX_MODELS; ++i) {
+					const DrawableEntity* model = arr[i]->getModelConst(i);
+					if(model->getAlphaFlag())
+						transparencyQueue.push(model);
+					else
+						model->draw();
+				}
+			}
+		}
+	}
+}
+
 namespace Globals
 {
 	void initApp(){
@@ -103,24 +163,16 @@ namespace Globals
 		setCameraPosition(currentCamera->getTranslate());
 		setLights(wLights,LIGHT_COUNT);
 
-		//DrawCode goes Here
-		//Draw Every GameEntity
-		for(int i=0;i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]!=NULL){
-				wEntities[i]->draw();
-			}else{
-				break;
-			}
-		}
-		//Draw Every Wall
-		for(int i=0;i<WALL_COUNT;i++){
-			if(wWalls[i]!=NULL){
-				wWalls[i]->draw();
-			}else{
-				break;
-			}
-		}
+		//Draw non-transparent models, pushing transparent ones onto a max-heap
+		TransparencyQueue transparencyQueue;
+		drawOpaqueEntities(wEntities, GAMEENTITY_COUNT, transparencyQueue); //Draw Every GameEntity
+		drawOpaqueEntities(wWalls, WALL_COUNT, transparencyQueue); //Draw Every Wall
 
+		//Draw transparent models, furthest from camera first
+		while(!transparencyQueue.empty()) {
+			transparencyQueue.top()->draw();
+			transparencyQueue.pop();
+		}
 
 		DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj",NULL);
 		d.setTranslate(0,0,-10);
