@@ -30,28 +30,30 @@ namespace Globals{
 			DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj");
 			d.setDiffuseColor(1,0,0);
 			d.setShininess(20);
-			d.setScale(.5,.5,.5);
+			d.setAlpha(.5);
+
+			std::cout<<"TEST Trans: "<<d.isAlphaRequired()<<std::endl;
+
 
 			Globals::addEntity(pl);
 
 			PointLight* p=new PointLight(vec3(1,1,1),0,1);
 			p->translate(10,10,-10);
-			p->setFalloff(1);
+			p->setFalloff(0);
 			p->setBrightness(1);
 			addLight(p);
 
 			p=new PointLight(vec3(1,1,0),1,1);
-			p->translate(0,-5,0);
-			p->setBrightness(2);
+			p->translate(0,-12,0);
 			addLight(p);
 
 			Wall*  w=new Wall();
 			w->scale(10,10,10);
-			w->translate(0,-15,0);
+			w->translate(0,-20,0);
 			addWall(w);
 
 			w=new Wall();
-			w->scale(50,4,50);
+			w->scale(50,1,50);
 			w->translate(0,-16,0);
 			addWall(w);
 
@@ -60,17 +62,12 @@ namespace Globals{
 			w->scale(1,1,1);
 			w->translate(0,0,10);
 			w->setModel(d);
-			w->scale(3,3,3);
-
-			Wall* w2=new Wall();
-			w2->scale(2,2,2);
-			w2->setParent(NULL);
-
+			//w->scale(.1,.1,.1);
 			addWall(w);
 
 		}
 		void update(){
-			wWalls[2]->rotate(0,2,0);
+			//wWalls[2]->rotate(0,1,0);
 		}
 		bool levelEnd()const{
 			return false;
