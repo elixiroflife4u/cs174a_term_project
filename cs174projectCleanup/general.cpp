@@ -181,10 +181,15 @@ namespace Globals
 		drawOpaqueEntities(wWalls, WALL_COUNT, transparencyQueue); //Draw Every Wall
 
 		//Draw transparent models, furthest from camera first
+		//Disable updating the z-buffer, but still conduct the
+		//test so that nearer opaque objects completely occlude
+		//farther transparent objects.
+		glDepthMask(GL_FALSE);
 		while(!transparencyQueue.empty()) {
 			transparencyQueue.top()->draw();
 			transparencyQueue.pop();
 		}
+		glDepthMask(GL_TRUE);
 
 		DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj",NULL);
 		d.setTranslate(0,0,-10);
