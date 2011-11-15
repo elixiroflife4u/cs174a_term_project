@@ -52,13 +52,13 @@ bool GameEntity::removeModel(int num){
 	_models[num]=NULL;
 	return true;
 }
-DrawableEntity* GameEntity::getModel(int num)
+DrawableEntity& GameEntity::getModel(int num) const
 {
 	//returns a pointer to the indicated model so it maybe be modified for animations
 	if(num<0||num>=5){
-		return NULL;
+		throw new CException("Array out of bound");
 	}
-	return _models[num];
+	return *_models[num];
 }
 
 void GameEntity::update()
