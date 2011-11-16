@@ -19,6 +19,9 @@ public:
 		///@todo give this bullet type an id in the GameEntity.h and then compile
 		MobileEntity::setAcc(accelMag*currentDirection);
 		MobileEntity::setVel(initialVelMag*currentDirection);
+
+		///@todo Create and set an actual bullet model.
+		GameEntity::setModel(DrawableEntity(NULL,"Resources/cube.obj",this));
 	}
 	/** @brief update the position of the bullet. the bullet accelerates for numOfAcclUpdate updates
 	* before switching to a constant velocity. Each update adds the acc to current vel which is then 
