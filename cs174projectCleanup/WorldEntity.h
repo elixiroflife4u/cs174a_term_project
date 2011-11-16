@@ -26,6 +26,7 @@ public:
 	 *   its ancestors' before finally being rendered.
 	 */
 	WorldEntity(const WorldEntity* parent = NULL);
+	virtual ~WorldEntity() {}
 
 	//Translation
 	/** @brief Translates the object in addition to any previous

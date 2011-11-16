@@ -1,6 +1,7 @@
 #include "General.h"
 #include "World.h"
 #include "Engine.h"
+#include "BulletEntity.h"
 
 #include <queue>
 
@@ -112,6 +113,11 @@ namespace Globals
 				wWalls[i]->update();
 			}
 		}
+		//Update every bullet
+		for(Globals::BulletList::iterator i = Globals::wBullets.begin();
+			i != Globals::wBullets.end(); i++) {
+				(*i)->update();
+		}
 
 		//Check for collision between every gameEntity
 		for(int i=0;i<GAMEENTITY_COUNT;i++){
@@ -141,6 +147,24 @@ namespace Globals
 				}
 			}
 		}
+		//Check for collision between each bullet and every wall
+		///@todo Check against GameEntity objects too.
+		for(BulletList::iterator i = wBullets.begin(); i != wBullets.end();){
+			for(int j=0;j<WALL_COUNT;j++){
+				if(wWalls[j]!=NULL){
+					if((*i)->didCollide(*wWalls[j])){
+						(*i)->onCollide(*wWalls[j]);
+						wWalls[j]->onCollide(**i);
+
+						i = delBullet(i);
+						goto NEXT_BULLET;
+					}
+				}
+			}
+
+			i++;
+			NEXT_BULLET:;
+		}
 
 		//update everything in the level that needs to be updated
 		wScenes[currentLevel]->update();
@@ -157,6 +181,8 @@ namespace Globals
 		wEntities[0]->rotate(0,-xDelta/10,0);
 		wEntities[0]->rotate(-yDelta/10,0,0);
 
+		//Update the mouse flags
+		MOUSE_EDGE_LEFT = MOUSE_EDGE_RIGHT = false;
 	}
 	void callbackDisplay()
 	{
@@ -172,6 +198,14 @@ namespace Globals
 		TransparencyQueue transparencyQueue;
 		drawOpaqueEntities(wEntities, GAMEENTITY_COUNT, transparencyQueue); //Draw Every GameEntity
 		drawOpaqueEntities(wWalls, WALL_COUNT, transparencyQueue); //Draw Every Wall
+
+		//Draw bullets
+		//We could update drawOpaqueEntities to operate on iterators, which would work
+		//with the linked list of bullets.
+		for(Globals::BulletList::const_iterator i = Globals::wBullets.begin();
+			i != Globals::wBullets.end(); i++) {
+				(*i)->draw();
+		}
 
 		//Draw transparent models, furthest from camera first
 		//Disable updating the z-buffer, but still conduct the
@@ -239,7 +273,17 @@ namespace Globals
 
 	}
 	void callbackMouse(int button, int state, int x, int y){
-		
+		const bool down = (state == GLUT_DOWN);
+		switch(button) {
+		case GLUT_LEFT_BUTTON:
+			MOUSE_EDGE_LEFT = down && !MOUSE_LEFT;
+			MOUSE_LEFT = down;
+			break;
+		case GLUT_RIGHT_BUTTON:
+			MOUSE_EDGE_RIGHT = down && !MOUSE_RIGHT;
+			MOUSE_RIGHT = down;
+			break;
+		}
 	}
 	void callbackMotion(int x, int y){
 		Globals::mouseX = x;

@@ -22,6 +22,10 @@ namespace Globals
 	bool KEY_E=false;
 	bool KEY_SPACE=false;
 
+	//Mouse button states
+	bool MOUSE_LEFT = false, MOUSE_EDGE_LEFT = false;
+	bool MOUSE_RIGHT = false, MOUSE_EDGE_RIGHT = false;
+
 	int mouseX=0;
 	int mouseY=0;
 

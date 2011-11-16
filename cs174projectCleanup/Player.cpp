@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Engine.h"
 #include "World.h"
+#include "BulletEntity.h"
 
 #include <iostream>
 void Player::update()
@@ -24,6 +25,12 @@ void Player::update()
 
 	translate(getVel());
 
+	if(Globals::MOUSE_EDGE_LEFT) {
+		///@todo Find good values for these constants. Remember to offset the starting location
+		/// so that it doesn't instantly collide with its creator.
+		Globals::addBullet(ID_BULLET_STRAIGHT, .1, 0, getRotate(), getTranslate(), 0, 10);
+	}
+
 /*	if(abs(getVel().x)>.1){
 		setVelX(getVel().x/abs(getVel().x)*.1);
 	}
@@ -31,7 +38,24 @@ void Player::update()
 		setVelZ(getVel().z/abs(getVel().z)*.1);
 	}*/
 }
+
 void Player::onCollide(const GameEntity& g){
+	switch(g.getId()) {
+	case ID_WALL:
+		onWallCollision(g);
+		break;
+	case ID_BULLET_STRAIGHT:
+	case ID_BULLET_BOUNCEGRENADE:
+		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
+		break;
+	}
+}
+
+void Player::onBulletCollision(float damage) {
+	///@todo implement
+}
+
+void Player::onWallCollision(const GameEntity& g) {
 	///@todo implement
 	// collision detection for walls - so that the player can "land" on them and run into them
 	// perhaps abstract it to the Mobileentity level because other mobile entities will need hit detection for walls as well
