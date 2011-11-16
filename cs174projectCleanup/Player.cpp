@@ -25,6 +25,11 @@ void Player::update()
 
 	translate(getVel());
 
+	if(Globals::MOUSE_EDGE_LEFT) {
+		///@todo Find good values for these constants.
+		Globals::addBullet(ID_BULLET_STRAIGHT, .1, 0, getRotate(), getTranslate(), 0, 10);
+	}
+
 /*	if(abs(getVel().x)>.1){
 		setVelX(getVel().x/abs(getVel().x)*.1);
 	}

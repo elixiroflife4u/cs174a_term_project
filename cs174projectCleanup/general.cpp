@@ -1,6 +1,7 @@
 #include "General.h"
 #include "World.h"
 #include "Engine.h"
+#include "BulletEntity.h"
 
 #include <queue>
 
@@ -112,6 +113,11 @@ namespace Globals
 				wWalls[i]->update();
 			}
 		}
+		//Update every bullet
+		for(Globals::BulletList::iterator i = Globals::wBullets.begin();
+			i != Globals::wBullets.end(); i++) {
+				(*i)->update();
+		}
 
 		//Check for collision between every gameEntity
 		for(int i=0;i<GAMEENTITY_COUNT;i++){
@@ -174,6 +180,14 @@ namespace Globals
 		TransparencyQueue transparencyQueue;
 		drawOpaqueEntities(wEntities, GAMEENTITY_COUNT, transparencyQueue); //Draw Every GameEntity
 		drawOpaqueEntities(wWalls, WALL_COUNT, transparencyQueue); //Draw Every Wall
+
+		//Draw bullets
+		//We could update drawOpaqueEntities to operate on iterators, which would work
+		//with the linked list of bullets.
+		for(Globals::BulletList::const_iterator i = Globals::wBullets.begin();
+			i != Globals::wBullets.end(); i++) {
+				(*i)->draw();
+		}
 
 		//Draw transparent models, furthest from camera first
 		//Disable updating the z-buffer, but still conduct the
