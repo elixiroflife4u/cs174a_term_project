@@ -157,6 +157,8 @@ namespace Globals
 		wEntities[0]->rotate(0,-xDelta/10,0);
 		wEntities[0]->rotate(-yDelta/10,0,0);
 
+		//Update the mouse flags
+		MOUSE_EDGE_LEFT = MOUSE_EDGE_RIGHT = false;
 	}
 	void callbackDisplay()
 	{
@@ -239,7 +241,17 @@ namespace Globals
 
 	}
 	void callbackMouse(int button, int state, int x, int y){
-		
+		const bool down = (state == GLUT_DOWN);
+		switch(button) {
+		case GLUT_LEFT_BUTTON:
+			MOUSE_EDGE_LEFT = down && !MOUSE_LEFT;
+			MOUSE_LEFT = down;
+			break;
+		case GLUT_RIGHT_BUTTON:
+			MOUSE_EDGE_RIGHT = down && !MOUSE_RIGHT;
+			MOUSE_RIGHT = down;
+			break;
+		}
 	}
 	void callbackMotion(int x, int y){
 		Globals::mouseX = x;

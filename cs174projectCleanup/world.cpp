@@ -1,4 +1,6 @@
 #include "World.h"
+#include "GameEntity.h"
+#include "StraightBulletEntity.h"
 
 namespace Globals
 {
@@ -10,6 +12,7 @@ namespace Globals
 	GameEntity* wEntities[GAMEENTITY_COUNT]; //All other entities pointer (enemies etc)
 	PointLight* wLights[LIGHT_COUNT]; //pointer to lights inthe scene
 	Scene* wScenes[SCENE_COUNT];//Array of Scenes
+	BulletList wBullets;
 
 	bool addWall(Wall* w){
 		//Adds a wall to the scene
@@ -91,6 +94,28 @@ namespace Globals
 			}
 		}
 		return false;
+	}
+
+	bool addBullet(int bulletType, float accelMag, float initialVelMag, vec3 direction, 
+		           vec3 startPosition, float damage, int numberOfAcclUpdates) {
+		if(wBullets.size() == BULLETS_COUNT) return false;
+		switch(bulletType) {
+		case ID_BULLET_STRAIGHT:
+			wBullets.push_back(new StraightBulletEntity(accelMag, initialVelMag, direction,
+				                                        startPosition, damage, numberOfAcclUpdates));
+			break;
+		case ID_BULLET_BOUNCEGRENADE:
+			throw new CException("Bounce grenade not implemented");
+			break;
+		default:
+			throw new CException("Unknown bullet type given to addBullet()");
+			break;
+		}
+		return true;
+	}
+	BulletList::iterator delBullet(BulletList::iterator b) {
+		delete *b;
+		return wBullets.erase(b);
 	}
 
 	void deleteAllWorld(){
