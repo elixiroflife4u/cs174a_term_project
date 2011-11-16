@@ -29,7 +29,8 @@ public:
 		if(!numOfAcclUpdates)
 			MobileEntity::setAcc(0*currentDirection);
 		
-		WorldEntity::translate(MobileEntity::getAcc()+MobileEntity::getVel());
+		MobileEntity::setVel(MobileEntity::getAcc()+MobileEntity::getVel());
+		WorldEntity::translate(MobileEntity::getVel());
 
 		if(numOfAcclUpdates)
 			numOfAcclUpdates--;
