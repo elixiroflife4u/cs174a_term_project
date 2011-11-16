@@ -103,6 +103,7 @@ namespace Globals
 		case ID_BULLET_STRAIGHT:
 			wBullets.push_back(new StraightBulletEntity(accelMag, initialVelMag, direction,
 				                                        startPosition, damage, numberOfAcclUpdates));
+			std::cerr<<"Bullets alive: "<<wBullets.size()<<;
 			break;
 		case ID_BULLET_BOUNCEGRENADE:
 			throw new CException("Bounce grenade not implemented");
@@ -115,6 +116,7 @@ namespace Globals
 	}
 	BulletList::iterator delBullet(BulletList::iterator b) {
 		delete *b;
+		std::cerr<<"Bullets alive: "<<wBullets.size() - 1<<'\n';
 		return wBullets.erase(b);
 	}
 

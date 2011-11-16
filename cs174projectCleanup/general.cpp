@@ -147,6 +147,24 @@ namespace Globals
 				}
 			}
 		}
+		//Check for collision between each bullet and every wall
+		///@todo Check against GameEntity objects too.
+		for(BulletList::iterator i = wBullets.begin(); i != wBullets.end();){
+			for(int j=0;j<WALL_COUNT;j++){
+				if(wWalls[j]!=NULL){
+					if((*i)->didCollide(*wWalls[j])){
+						(*i)->onCollide(*wWalls[j]);
+						wWalls[j]->onCollide(**i);
+
+						i = delBullet(i);
+						goto NEXT_BULLET;
+					}
+				}
+			}
+
+			i++;
+			NEXT_BULLET:;
+		}
 
 		//update everything in the level that needs to be updated
 		wScenes[currentLevel]->update();

@@ -26,7 +26,8 @@ void Player::update()
 	translate(getVel());
 
 	if(Globals::MOUSE_EDGE_LEFT) {
-		///@todo Find good values for these constants.
+		///@todo Find good values for these constants. Remember to offset the starting location
+		/// so that it doesn't instantly collide with its creator.
 		Globals::addBullet(ID_BULLET_STRAIGHT, .1, 0, getRotate(), getTranslate(), 0, 10);
 	}
 

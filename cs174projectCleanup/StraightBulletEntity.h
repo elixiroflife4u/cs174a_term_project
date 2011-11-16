@@ -40,8 +40,8 @@ public:
 	}
 	void onCollide(const GameEntity& g)
 	{
-		///@todo implement
-		throw new CException("function not implemented!");
+		//This function does nothing now since Globals::animate()
+		//will remove it from the world.
 	}
 };
 #endif
