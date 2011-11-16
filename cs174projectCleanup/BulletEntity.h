@@ -22,5 +22,7 @@ public:
 	/** @brief What to do on a collision. 
 	  * Must be provided by subclasses. */
 	virtual void onCollide(const GameEntity& g)=0;
+	/** @brief Gets the bullet damage factor. */
+	float getBulletDamage() const { return bulletDamage; }
 };
 #endif

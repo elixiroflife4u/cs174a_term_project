@@ -17,6 +17,8 @@ public:
 	}
 	void update();
 	void onCollide(const GameEntity& g);
+	void onWallCollision(const GameEntity& g);
+	void onBulletCollision(float damage);
 };
 
 
