@@ -23,6 +23,12 @@ namespace Globals
 	extern bool KEY_E;
 	extern bool KEY_SPACE;
 
+	//Mouse button states
+	extern bool MOUSE_LEFT, ///< True if left mouse button is down now.
+		MOUSE_EDGE_LEFT; ///< True if left mouse button transitioned to down this frame. Updated by Globals::animate().
+	extern bool MOUSE_RIGHT, ///< True if right mouse button is down now.
+		MOUSE_EDGE_RIGHT; ///< True if right mouse button transitioned to down this frame. Updated by Globals::animate().
+
 	extern int mouseX;
 	extern int mouseY;
 

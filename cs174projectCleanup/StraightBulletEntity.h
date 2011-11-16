@@ -19,6 +19,9 @@ public:
 		///@todo give this bullet type an id in the GameEntity.h and then compile
 		MobileEntity::setAcc(accelMag*currentDirection);
 		MobileEntity::setVel(initialVelMag*currentDirection);
+
+		///@todo Create and set an actual bullet model.
+		GameEntity::setModel(DrawableEntity(NULL,"Resources/cube.obj",this));
 	}
 	/** @brief update the position of the bullet. the bullet accelerates for numOfAcclUpdate updates
 	* before switching to a constant velocity. Each update adds the acc to current vel which is then 
@@ -29,15 +32,16 @@ public:
 		if(!numOfAcclUpdates)
 			MobileEntity::setAcc(0*currentDirection);
 		
-		WorldEntity::translate(MobileEntity::getAcc()+MobileEntity::getVel());
+		MobileEntity::setVel(MobileEntity::getAcc()+MobileEntity::getVel());
+		WorldEntity::translate(MobileEntity::getVel());
 
 		if(numOfAcclUpdates)
 			numOfAcclUpdates--;
 	}
 	void onCollide(const GameEntity& g)
 	{
-		///@todo implement
-		throw new CException("function not implemented!");
+		//This function does nothing now since Globals::animate()
+		//will remove it from the world.
 	}
 };
 #endif
