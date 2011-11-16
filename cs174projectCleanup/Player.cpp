@@ -16,12 +16,26 @@ void Player::update()
 	setVelZ(0);
 
 	//std::cout<<getTranslate().y<<std::endl;
-	if(Globals::KEY_Q)increaseVel(0,-.55,0);
-	if(Globals::KEY_E)increaseVel(0,.5,0);
-	if(Globals::KEY_W)increaseVel(0,0,-.55);
-	if(Globals::KEY_S)increaseVel(0,0,.55);
-	if(Globals::KEY_D)increaseVel(.55,0,0);
-	if(Globals::KEY_A)increaseVel(-.55,0,0);
+
+	//Calculate the acceleration vector depending on user input,
+	//remembering to rotate it according to the player's local
+	//rotation transformation. For now, I only consider the player's
+	//rotation on the XZ-(horiontal)plane/Y-axis since it seems more
+	//natural to me.
+	vec4 localAccel;
+	if(Globals::KEY_Q) localAccel  = vec4(0,-.55,0,0);
+	if(Globals::KEY_E) localAccel += vec4(0,.5,0,0);
+	if(Globals::KEY_W) localAccel += vec4(0,0,-.55,0);
+	if(Globals::KEY_S) localAccel += vec4(0,0,.55,0);
+	if(Globals::KEY_D) localAccel += vec4(.55,0,0,0);
+	if(Globals::KEY_A) localAccel += vec4(-.55,0,0,0);
+	const vec3 rotation = getLocalRotate();
+	const vec4 rotatedAccel = RotateY(rotation.y) * localAccel;
+	//The below cast might look dangerous, but it is essentially the same
+	//(and _exactly_ as risky and C++-compliant) as what Angel does in
+	//vec2/3/4's operator[]. If it's good enough for the textbook's author,
+	//it's good enough for me.
+	increaseVel(*reinterpret_cast<const vec3*>(&rotatedAccel));
 
 	translate(getVel());
 
