@@ -102,7 +102,7 @@ namespace Globals
 
 	void animate(){
 		frameCount++;
-
+		///todo@ gameEntities now have a Delete flag that can be set then "animate" can delete it when needed - will work for every entity (enemies etc)
 		//Update every gameEntity
 		for(int i=0;i<GAMEENTITY_COUNT;i++){
 			if(wEntities[i]!=NULL){
@@ -173,15 +173,6 @@ namespace Globals
 		if(wScenes[currentLevel]->levelEnd()){
 
 		}
-
-		/* should be moved */
-		int xDelta=mouseX-glutGet(GLUT_WINDOW_WIDTH)/2;
-		int yDelta=mouseY-glutGet(GLUT_WINDOW_HEIGHT)/2;
-
-		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
-
-		wEntities[0]->rotate(0,-xDelta/10,0);
-		wEntities[0]->rotate(-yDelta/10,0,0);
 
 		//Update the mouse flags
 		MOUSE_EDGE_LEFT = MOUSE_EDGE_RIGHT = false;
@@ -259,6 +250,9 @@ namespace Globals
 		case ' ':
 			Globals::KEY_SPACE = val;
 			break;
+		case ';':
+			viewFullscreen();
+
 		}
 	}
 	void callbackKeyboard(unsigned char key, int x, int y){

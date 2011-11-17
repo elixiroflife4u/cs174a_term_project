@@ -4,7 +4,7 @@
 #include "Engine.h"
 #include "World.h"
 #include "Player.h"
-
+#include "Explosion.h"
 
 namespace Globals{
 
@@ -24,8 +24,7 @@ namespace Globals{
 	public:
 		void setup(){
 			Player* pl=new Player();
-			currentCamera->setParent(pl);
-			currentCamera->translate(0,2.5,5);
+			currentCamera=pl->getCamera();
 
 			DrawableEntity d=DrawableEntity(NULL,"Resources/test.obj");
 			d.setDiffuseColor(1,0,0);
@@ -64,6 +63,10 @@ namespace Globals{
 			w->setModel(d);
 			//w->scale(.1,.1,.1);
 			addWall(w);
+
+			Explosion* e=new Explosion();
+			e->setTranslate(0,-10,0);
+			addEntity(e);
 
 		}
 		void update(){

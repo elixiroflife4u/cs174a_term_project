@@ -46,7 +46,7 @@ namespace Globals
 	  * @return False if too many bullets in the world already.
 	  */
 	bool addBullet(int bulletType, float accelMag, float initialVelMag, vec3 direction, 
-		           vec3 startPosition, float damage, int numberOfAcclUpdates);
+		           vec3 startPosition, float damage=1, int numberOfAcclUpdates=5);
 	/** Deletes a bullet and removes it fromthe global list.
 	  * This is the preferred way to delete a bullet since
 	  * it is constant time.

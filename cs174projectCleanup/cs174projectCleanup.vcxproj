@@ -17,11 +17,14 @@
     <ClInclude Include="CheckError.h" />
     <ClInclude Include="CollisionBox.h" />
     <ClInclude Include="DrawableEntity.h" />
+    <ClInclude Include="EnemyEntity.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Exception.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="GlobalIncludes.h" />
+    <ClInclude Include="GrenadeEntity.h" />
     <ClInclude Include="MobileEntity.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
@@ -50,6 +53,7 @@
     <ClCompile Include="general.cpp" />
     <ClCompile Include="InitShader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mobileEntity.cpp" />
     <ClCompile Include="obj_loader\list.cpp" />
     <ClCompile Include="obj_loader\objLoader.cpp" />
     <ClCompile Include="obj_loader\objTester.cpp" />
