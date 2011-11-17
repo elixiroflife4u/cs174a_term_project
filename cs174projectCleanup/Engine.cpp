@@ -6,6 +6,7 @@ namespace Globals
 	GLuint sProgram=0;
 	CameraEntity defaultCamera;
 	CameraEntity* currentCamera=&defaultCamera;
+	unsigned int frameCount = 0;
 
 
 	vec3 lightPositions[10];

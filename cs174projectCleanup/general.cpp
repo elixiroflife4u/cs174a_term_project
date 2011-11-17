@@ -101,6 +101,8 @@ namespace Globals
 	}
 
 	void animate(){
+		frameCount++;
+
 		//Update every gameEntity
 		for(int i=0;i<GAMEENTITY_COUNT;i++){
 			if(wEntities[i]!=NULL){
