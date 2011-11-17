@@ -14,6 +14,8 @@ namespace Globals
 	extern CameraEntity defaultCamera;
 	extern CameraEntity* currentCamera;
 
+	extern unsigned int frameCount;
+
 	//Key States
 	extern bool KEY_W;
 	extern bool KEY_A;
