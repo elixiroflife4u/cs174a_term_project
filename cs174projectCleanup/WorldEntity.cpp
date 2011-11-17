@@ -1,4 +1,5 @@
 #include "WorldEntity.h"
+#include "Engine.h"
 
 WorldEntity::WorldEntity(const WorldEntity* parent)
 {
@@ -6,6 +7,7 @@ WorldEntity::WorldEntity(const WorldEntity* parent)
 	_position = vec3(0, 0, 0);
 	_rotation = vec3(0, 0, 0);
 	_scale    = vec3(1, 1, 1);
+	_positionFrameCount = 0;
 }
 
 //Translation
@@ -41,14 +43,17 @@ void WorldEntity::setTranslateZ(float z)
 }
 vec3 WorldEntity::getTranslate() const
 {
-	vec3 t;
-	if (_parent == NULL){
-		t = _position;
-	}else{
-		vec4 temp = _parent->getTransformationMatrix()*vec4(_position,1.0);
-		t=vec3(temp.x,temp.y,temp.z);
+	if(Globals::frameCount != _positionFrameCount) {
+		_positionFrameCount = Globals::frameCount;
+
+		if (_parent == NULL){
+			_worldPosition = _position;
+		}else{
+			vec4 temp = _parent->getTransformationMatrix()*vec4(_position,1.0);
+			_worldPosition=vec3(temp.x,temp.y,temp.z);
+		}
 	}
-	return t;
+	return _worldPosition;
 }
 
 

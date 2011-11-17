@@ -16,6 +16,12 @@ private:
 	vec3 _position; ///< The position of the object relative to the parent.
 	vec3 _rotation; ///< The rotation of the object relative to the parent.
 	vec3 _scale; ///< The scale of the object relative to the parent.
+	
+	//Mutable means that a const member function may change it.
+	//They can only be used for optimization purposes (like caching or memoization)
+	//and cannot ultimately affect the external behavior of the class.
+	mutable vec3 _worldPosition; ///< The last calcuated world position.
+	mutable unsigned int _positionFrameCount; ///< The frame count at the last time position was calculated.
 
 	const WorldEntity* _parent; ///< The object's parent or NULL if none.
 
