@@ -12,7 +12,7 @@ namespace Globals
 	//ENGINE BASICS//
 	extern GLuint sProgram;
 	extern CameraEntity defaultCamera;
-	extern CameraEntity* currentCamera;
+	extern CameraEntity*  currentCamera;
 
 	extern unsigned int frameCount;
 

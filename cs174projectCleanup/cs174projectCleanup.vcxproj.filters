@@ -129,9 +129,6 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Header Files\Globals</Filter>
-    </ClInclude>
     <ClInclude Include="PointLight.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
@@ -139,6 +136,18 @@
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
     <ClInclude Include="BulletEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GrenadeEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyEntity.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -202,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="mobileEntity.cpp">
+      <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

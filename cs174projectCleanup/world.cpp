@@ -1,7 +1,8 @@
 #include "World.h"
 #include "GameEntity.h"
 #include "StraightBulletEntity.h"
-
+#include "GrenadeEntity.h"
+#include "Explosion.h"
 namespace Globals
 {
 	//FOR OUR GAME//
@@ -12,7 +13,8 @@ namespace Globals
 	GameEntity* wEntities[GAMEENTITY_COUNT]; //All other entities pointer (enemies etc)
 	PointLight* wLights[LIGHT_COUNT]; //pointer to lights inthe scene
 	Scene* wScenes[SCENE_COUNT];//Array of Scenes
-	BulletList wBullets;
+
+	BulletList wBullets; ///todo@ should be made into a "soft game entities" array/list for any entity that will not be colliding with the rest of hte list
 
 	bool addWall(Wall* w){
 		//Adds a wall to the scene
@@ -105,8 +107,8 @@ namespace Globals
 				                                        startPosition, damage, numberOfAcclUpdates));
 			std::cerr<<"Bullets alive: "<<wBullets.size()<<'\n';
 			break;
-		case ID_BULLET_BOUNCEGRENADE:
-			throw new CException("Bounce grenade not implemented");
+		case ID_BULLET_GRENADE:
+			wBullets.push_back(new GrenadeEntity(startPosition,direction));
 			break;
 		default:
 			throw new CException("Unknown bullet type given to addBullet()");
