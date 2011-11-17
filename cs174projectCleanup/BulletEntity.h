@@ -6,12 +6,11 @@
 class BulletEntity: public MobileEntity{
 protected:
 	//the direction
-	vec3 currentDirection;
 	float bulletDamage;
 public:
 	//some contructor taking a vec3 of starting
-	BulletEntity(vec3 startPosition, vec3 startDirection, float damage, unsigned int id) 
-		: MobileEntity(id), currentDirection(normalize(startDirection)), bulletDamage(damage)
+	BulletEntity(vec3 startPosition, float damage, unsigned int id) 
+		: MobileEntity(id), bulletDamage(damage)
 	{
 		WorldEntity::setTranslate(startPosition.x, startPosition.y, startPosition.z);
 		//the inheriting class takes care of setting the acceleration and the velocity.
