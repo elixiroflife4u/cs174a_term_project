@@ -4,6 +4,7 @@
 #include "BulletEntity.h"
 
 #include <queue>
+#include <cassert>
 
 /** This anonymous namespace holds definitions and declarations
   * related to ordering and drawing transparent objects.
@@ -37,30 +38,6 @@ namespace {
 	};
 	/** A max-heap for transparent models to enable drawing them from farthest to nearest. */
 	typedef std::priority_queue<const DrawableEntity*, std::vector<const DrawableEntity*>, DepthComparator> TransparencyQueue;
-	/** Draws opaque models from an array of GameEntity pointers, pushing transparent
-	  * models onto a given queue.
-	  * @tparam T The actual type of GameEntities (use to permit iterating through
-	  *  an array of child class objects.
-	  * @param arr An array of GameEntity (or child class) object pointers.
-	  * @param count Length of the array.
-	  * @param transparencyQueue The queue onto which to push transparent models.
-	  */
-	template<typename T>
-	void drawOpaqueEntities(const T* const arr[], int count, TransparencyQueue& transparencyQueue) {
-		for(int i = 0; i < count; i++) {
-			if(arr[i] != NULL) {
-				for(int c = 0; c < T::MAX_MODELS; c++) {
-					const DrawableEntity& model = arr[i]->getModelConst(c);
-					if(&model != NULL) {
-						if(model.isAlphaRequired())
-							transparencyQueue.push(&model);
-						else
-							model.draw();
-					}
-				}
-			}
-		}
-	}
 }
 
 namespace Globals
@@ -78,18 +55,11 @@ namespace Globals
 		for(int i=0;i<LIGHT_COUNT;i++){
 			wLights[i]=NULL;
 		}
-		//Null Walls
-		for(int i=0;i<WALL_COUNT;i++){
-			wWalls[i]=NULL;
-		}
-		//Null GameEntities
-		for(int i=0;i<GAMEENTITY_COUNT;i++){
-			wEntities[i]=NULL;
-		}
 		//Null Scenes
 		for(int i=0;i<SCENE_COUNT;i++){
 			wScenes[i]=NULL;
 		}
+
 		//viewFullscreen();
 		glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH)/2,glutGet(GLUT_WINDOW_HEIGHT)/2);
 		glutSetCursor(GLUT_CURSOR_NONE);
@@ -100,73 +70,61 @@ namespace Globals
 		wScenes[currentLevel]->setup();
 	}
 
+	static void updateEntities(GameEntityList& list) {
+		for(GameEntityList::iterator i = list.begin(); i != list.end(); ++i) {
+			(*i)->update();
+			///@todo Check for delete flag.
+		}
+	}
+	static void checkCollisionsSelf(GameEntityList& list) {
+		for(GameEntityList::iterator i = list.begin(); i != list.end(); ++i) {
+			GameEntityList::iterator j = i;
+			for(++j; j != list.end(); ++j) {
+				//if one occurs then complete the action for both
+				if((*i)->didCollide(**j)){
+					(*i)->onCollide(**j);
+					(*j)->onCollide(**i);
+
+					///@todo Check for delete flag.
+				}
+			}
+		}
+	}
+	static void checkCollisions(GameEntityList& listA, GameEntityList& listB) {
+		assert(&listA != &listB);
+		for(GameEntityList::iterator i = listA.begin(); i != listA.end(); ++i) {
+			for(GameEntityList::iterator j = listB.begin(); j != listB.end();) {
+				//if one occurs then complete the action for both
+				if((*i)->didCollide(**j)){
+					(*i)->onCollide(**j);
+					(*j)->onCollide(**i);
+
+					///@todo Check for delete flag.
+					///The code below is a hack for bullets in lieu of a proper
+					///delete check. It relies on the fact that soft entities
+					///are given as listB and never listA.
+					switch((*j)->getId()) {
+					case ID_BULLET_STRAIGHT:
+					case ID_BULLET_GRENADE:;
+						j = deleteSoftEntity(j);
+						continue;
+					}
+				}
+				++j;
+			}
+		}
+	}
+
 	void animate(){
 		frameCount++;
-		///todo@ gameEntities now have a Delete flag that can be set then "animate" can delete it when needed - will work for every entity (enemies etc)
-		//Update every gameEntity
-		for(int i=0;i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]!=NULL){
-				wEntities[i]->update();
-			}
-		}
-		//Udpate every wall
-		for(int i=0;i<WALL_COUNT;i++){
-			if(wWalls[i]!=NULL){
-				wWalls[i]->update();
-			}
-		}
-		//Update every bullet
-		for(Globals::BulletList::iterator i = Globals::wBullets.begin();
-			i != Globals::wBullets.end(); i++) {
-				(*i)->update();
-		}
+		updateEntities(wEntities);
+		updateEntities(wWalls);
+		updateEntities(wSoftEntities);
 
-		//Check for collision between every gameEntity
-		for(int i=0;i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]!=NULL){
-				//check against every gameentity for a collision
-				for(int j=i+1;j<GAMEENTITY_COUNT;j++){
-					if(wEntities[j]!=NULL){
-						//if one occurs then complete the action for both
-						if(wEntities[i]->didCollide(*wEntities[j])){
-							wEntities[i]->onCollide(*wEntities[j]);
-							wEntities[j]->onCollide(*wEntities[i]);
-						}
-					}
-				}
-			}
-		}
-		//Check for collision between every gameEntity and a wall
-		for(int i=0;i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]!=NULL){
-				for(int j=0;j<WALL_COUNT;j++){
-					if(wWalls[j]!=NULL){
-						if(wEntities[i]->didCollide(*wWalls[j])){
-							wEntities[i]->onCollide(*wWalls[j]);
-							wWalls[j]->onCollide(*wEntities[i]);
-						}
-					}
-				}
-			}
-		}
-		//Check for collision between each bullet and every wall
-		///@todo Check against GameEntity objects too.
-		for(BulletList::iterator i = wBullets.begin(); i != wBullets.end();){
-			for(int j=0;j<WALL_COUNT;j++){
-				if(wWalls[j]!=NULL){
-					if((*i)->didCollide(*wWalls[j])){
-						(*i)->onCollide(*wWalls[j]);
-						wWalls[j]->onCollide(**i);
-
-						i = delBullet(i);
-						goto NEXT_BULLET;
-					}
-				}
-			}
-
-			i++;
-			NEXT_BULLET:;
-		}
+		checkCollisionsSelf(wEntities);
+		checkCollisions(wEntities, wWalls);
+		checkCollisions(wEntities, wSoftEntities);
+		checkCollisions(wWalls, wSoftEntities);
 
 		//update everything in the level that needs to be updated
 		wScenes[currentLevel]->update();
@@ -177,6 +135,26 @@ namespace Globals
 		//Update the mouse flags
 		MOUSE_EDGE_LEFT = MOUSE_EDGE_RIGHT = false;
 	}
+
+	/** Draws opaque models from an list of GameEntity pointers, pushing transparent
+	  * models onto a given queue.
+	  * @param list A list of GameEntity object pointers.
+	  * @param transparencyQueue The queue onto which to push transparent models.
+	  */
+	static void drawOpaqueEntities(const Globals::GameEntityList& list, TransparencyQueue& transparencyQueue) {
+		for(Globals::GameEntityList::const_iterator i = list.begin(); i != list.end(); ++i) {
+			for(int c = 0; c < GameEntity::MAX_MODELS; c++) {
+				const DrawableEntity& model = (*i)->getModelConst(c);
+				if(&model != NULL) {
+					if(model.isAlphaRequired())
+						transparencyQueue.push(&model);
+					else
+						model.draw();
+				}
+			}
+		}
+	}
+
 	void callbackDisplay()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
@@ -191,16 +169,9 @@ namespace Globals
 
 		//Draw non-transparent models, pushing transparent ones onto a max-heap
 		TransparencyQueue transparencyQueue;
-		drawOpaqueEntities(wEntities, GAMEENTITY_COUNT, transparencyQueue); //Draw Every GameEntity
-		drawOpaqueEntities(wWalls, WALL_COUNT, transparencyQueue); //Draw Every Wall
-
-		//Draw bullets
-		//We could update drawOpaqueEntities to operate on iterators, which would work
-		//with the linked list of bullets.
-		for(Globals::BulletList::const_iterator i = Globals::wBullets.begin();
-			i != Globals::wBullets.end(); i++) {
-				(*i)->draw();
-		}
+		drawOpaqueEntities(wEntities, transparencyQueue); //Draw Every GameEntity
+		drawOpaqueEntities(wWalls, transparencyQueue); //Draw Every Wall
+		drawOpaqueEntities(wSoftEntities, transparencyQueue);
 
 		//Draw transparent models, furthest from camera first
 		//Disable updating the z-buffer, but still conduct the

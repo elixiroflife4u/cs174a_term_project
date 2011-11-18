@@ -3,72 +3,43 @@
 #include "StraightBulletEntity.h"
 #include "GrenadeEntity.h"
 #include "Explosion.h"
+#include <algorithm>
+
 namespace Globals
 {
 	//FOR OUR GAME//
 
 	//transparent object heap
 
-	Wall* wWalls[WALL_COUNT]; //Wall Array
-	GameEntity* wEntities[GAMEENTITY_COUNT]; //All other entities pointer (enemies etc)
+	GameEntityList wWalls;
+	GameEntityList wEntities;
+	GameEntityList wSoftEntities;
 	PointLight* wLights[LIGHT_COUNT]; //pointer to lights inthe scene
 	Scene* wScenes[SCENE_COUNT];//Array of Scenes
 
-	BulletList wBullets; ///todo@ should be made into a "soft game entities" array/list for any entity that will not be colliding with the rest of hte list
-
 	bool addWall(Wall* w){
 		//Adds a wall to the scene
-		//Wall should be dynamically allocated
-		for(int i=0; i<WALL_COUNT;i++){
-			if(wWalls[i]==NULL){
-				wWalls[i]=w;
-				return true;
-			}
-		}
-		return false;
+		if(wWalls.size() == WALL_COUNT) return false;
+		wWalls.push_back(w);
+		return true;
 	}
-	bool deleteWall(Wall* w){
+	GameEntityList::iterator deleteWall(GameEntityList::iterator w){
 		//Removes a wall to the scene
-		if(w==NULL){
-			return false;
-		}
-
-		for(int i=0; i<WALL_COUNT;i++){
-			if(wWalls[i]==w){
-				wWalls[i]=NULL;
-				delete w;
-				return true;
-			}
-		}
-		return false;
+		delete *w;
+		return wWalls.erase(w);
 	}
 
 	bool addEntity(GameEntity* g){
 		//Adds the passed GameEntity to the scene
-		//GameEntity should be dynamically allocated
-		for(int i=0; i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]==NULL){
-				wEntities[i]=g;
-				return true;
-			}
-		}
-		return false;
+		if(wEntities.size() == GAMEENTITY_COUNT) return false;
+		wEntities.push_back(g);
+		return true;
 	}
 
-	bool deleteEntity(GameEntity* g){
+	GameEntityList::iterator deleteEntity(GameEntityList::iterator g){
 		//Removes a entities to the scene
-		if(g==NULL){
-			return false;
-		}
-
-		for(int i=0; i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]==g){
-				wEntities[i]=NULL;
-				delete g;
-				return true;
-			}
-		}
-		return false;
+		delete *g;
+		return wEntities.erase(g);
 	}
 
 	bool addLight(PointLight* pl){
@@ -100,15 +71,15 @@ namespace Globals
 
 	bool addBullet(int bulletType, float accelMag, float initialVelMag, vec3 direction, 
 		           vec3 startPosition, float damage, int numberOfAcclUpdates) {
-		if(wBullets.size() == BULLETS_COUNT) return false;
+		if(wSoftEntities.size() == SOFT_ENTITIES_COUNT) return false;
 		switch(bulletType) {
 		case ID_BULLET_STRAIGHT:
-			wBullets.push_back(new StraightBulletEntity(accelMag, initialVelMag, direction,
+			wSoftEntities.push_back(new StraightBulletEntity(accelMag, initialVelMag, direction,
 				                                        startPosition, damage, numberOfAcclUpdates));
-			std::cerr<<"Bullets alive: "<<wBullets.size()<<'\n';
+			std::cerr<<"Soft entities alive: "<<wSoftEntities.size()<<'\n';
 			break;
 		case ID_BULLET_GRENADE:
-			wBullets.push_back(new GrenadeEntity(startPosition,direction));
+			wSoftEntities.push_back(new GrenadeEntity(startPosition,direction));
 			break;
 		default:
 			throw new CException("Unknown bullet type given to addBullet()");
@@ -116,27 +87,23 @@ namespace Globals
 		}
 		return true;
 	}
-	BulletList::iterator delBullet(BulletList::iterator b) {
+	GameEntityList::iterator deleteSoftEntity(GameEntityList::iterator b) {
 		delete *b;
-		std::cerr<<"Bullets alive: "<<wBullets.size() - 1<<'\n';
-		return wBullets.erase(b);
+		std::cerr<<"Soft entities alive: "<<wSoftEntities.size() - 1<<'\n';
+		return wSoftEntities.erase(b);
+	}
+
+	template<typename T>
+	static inline void deleteAll(T& container) {
+		for(T::iterator i = container.begin(); i != container.end(); ++i)
+			delete *i;
 	}
 
 	void deleteAllWorld(){
-		//delete every wall adn set it to null
-		for(int i=0; i<WALL_COUNT;i++){
-			if(wWalls[i]!=NULL){
-				delete wEntities[i];
-				wWalls[i]=NULL;
-			}
-		}
-		//delete every entity and set it to null
-		for(int i=0; i<GAMEENTITY_COUNT;i++){
-			if(wEntities[i]!=NULL){
-				delete wEntities[i];
-				wEntities[i]=NULL;
-			}
-		}
+		deleteAll(wWalls);
+		deleteAll(wEntities);
+		deleteAll(wSoftEntities);
+
 		//delete every light and set it to null
 		for(int i=0; i<LIGHT_COUNT;i++){
 			if(wLights[i]!=NULL){
