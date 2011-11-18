@@ -22,6 +22,7 @@ private:
 	CollisionBox _hitBox;
 	DrawableEntity* _models[MAX_MODELS];
 	unsigned int _id;
+	bool _delete;
 protected:
 	/** @brief Allows access to the CollisionBox of the GameEntity
 	 */
@@ -57,6 +58,10 @@ public:
 	/** @brief Allows for hte ability to remove any model from the entity
 	 */
 	bool removeModel(int num=0);
+
+	bool toDelete()const {
+		return _delete;
+	}
 
 	virtual void update()=0;
 	virtual void draw() const;

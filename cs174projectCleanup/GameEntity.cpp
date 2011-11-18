@@ -1,7 +1,7 @@
 #include "GameEntity.h"
 
 GameEntity::GameEntity(unsigned int id)
-	:_id(id)
+	:_id(id),_delete(false)
 {
 	//sets the drawableEntity pointers to null to start
 	for(int i=0;i<5;i++){
