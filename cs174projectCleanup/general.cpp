@@ -186,6 +186,8 @@ namespace Globals
 		setPerspectiveMatrix(currentCamera->getPerspectiveMatrix());
 		setCameraPosition(currentCamera->getTranslate());
 		setLights(wLights,LIGHT_COUNT);
+		setAmbientLightColor(vec3(.1,.05,.075));
+
 
 		//Draw non-transparent models, pushing transparent ones onto a max-heap
 		TransparencyQueue transparencyQueue;

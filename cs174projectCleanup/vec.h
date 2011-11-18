@@ -334,6 +334,12 @@ struct vec4 {
 
     GLfloat& operator [] ( int i ) { return *(&x + i); }
     const GLfloat operator [] ( int i ) const { return *(&x + i); }
+	
+	//something to help with going from vec4to vec3
+	vec3 Vec4ToVec3()
+	{
+		return vec3(x, y, z);
+	}
 
     //
     //  --- (non-modifying) Arithematic Operators ---

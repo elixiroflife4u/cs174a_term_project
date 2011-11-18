@@ -20,7 +20,7 @@ namespace Globals{
 
 	class Scene_1:public Scene{
 	private:
-
+		float _count;
 	public:
 		void setup(){
 			Player* pl=new Player();
@@ -38,11 +38,11 @@ namespace Globals{
 
 			PointLight* p=new PointLight(vec3(1,1,1),0,1);
 			p->translate(10,10,-10);
-			p->setFalloff(0);
+			p->setFalloff(2);
 			p->setBrightness(1);
-			addLight(p);
+			//addLight(p);
 
-			p=new PointLight(vec3(1,1,0),1,1);
+			p=new PointLight(vec3(1,1,1),1,1);
 			p->translate(0,-12,0);
 			addLight(p);
 
@@ -67,10 +67,13 @@ namespace Globals{
 			Explosion* e=new Explosion();
 			e->setTranslate(0,-10,0);
 			addEntity(e);
-
+			_count=0;
 		}
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
+			_count+=M_PI/10;
+			//wLights[0]->translate((sin(_count)),0,sin(_count));
+			//std::cout<<sin(_count)<<std::endl;
 		}
 		bool levelEnd()const{
 			return false;

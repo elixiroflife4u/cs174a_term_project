@@ -45,7 +45,7 @@ CRenderObject* CRenderObjectManager::GetRenderObject(const std::string& strObjNa
 	m_renderObjects[strObjName] = pNewRendObj;
 	return pNewRendObj;
 }
-
+/*
 CRenderObject* CRenderObjectManager::GetRenderObject(const std::string& strObjName, point4* points, int pointsNum, 
 													  vec3* normals, int normalNum, vec2* textcoord, int textcoordNum)
 {
@@ -61,3 +61,4 @@ CRenderObject* CRenderObjectManager::GetRenderObject(const std::string& strObjNa
 	m_renderObjects[strObjName] = pNewRendObj;
 	return pNewRendObj;
 }
+*/

@@ -1,66 +1,92 @@
 #version 130
 
-//material properties
+//Constants: samplers
 uniform sampler2D diffuseMap;
+uniform sampler2D NormalMap;
+
+//Constants: material properties
 uniform vec4 diffuseColor;
 uniform float shininess;
 uniform float alpha;
 
-//pixel properties
-in vec4 fNormal;
-in vec4 fPosition;
-in vec2 fUV;
-
+//Constants:
 uniform vec2 uvScale;
-uniform vec2 uvOffset;
+uniform vec2 uvOffset; //what is this?
 
-//lighting
+//Constants: lighting
 uniform vec4 ambientColor;
 uniform vec4 lightPos[10];
 uniform float lightFalloff[10];
 uniform vec4 lightColor[10];
 uniform float lightBrightness[10];
 
-//Camera Properties
+//Constants: Camera and moodel Properties
+uniform mat4 vTransform;
 uniform mat4 camTransform;
-uniform vec4 camPos;
+uniform vec4 camPos; //camera position in worldspace
 
-//pixel color output
+//Inputs
+in vec4 fPosition_worldspace;
+in vec4 fNormal_worldspace;
+in vec2 fUV;
+in vec4 o_vertexNormal_modelspace;
+in vec4 o_vertexTangent_modelspace;
+in vec4 o_vertexBitangent_modelspace;
+
+
+//Output: pixel color output
 out vec4 fColor;
 
 void main(){
-	vec4 diffusePass=vec4(0,0,0,1);
-	vec4 specularPass=vec4(0,0,0,0);
 
-	vec4 viewVec=camPos-fPosition;
-	viewVec.w=0;
-	viewVec=normalize(viewVec);
+	mat4 TBN = transpose(mat4(vTransform * o_vertexTangent_modelspace,
+							  vTransform * o_vertexBitangent_modelspace,
+							  vTransform * o_vertexNormal_modelspace,
+							  vec4(0,0,0,0) )); //from worldspace to tbn space 4x4 since every normal is 4x4.
 
-	vec4 texColor=texture2D(diffuseMap,(fUV+uvOffset)*uvScale);
+	vec4 diffusePass  = vec4(0,0,0,1);
+	vec4 specularPass = vec4(0,0,0,0);
 
-	for(int i=0;i<10;i++){
-		vec4 lightVec=lightPos[i]-fPosition;
-		lightVec.w=0;
-		vec4 lightVecNorm=normalize(lightVec);
+	vec4 viewVec = camPos-fPosition_worldspace;
+	viewVec.w    = 0;
+	vec4 viewVec_tbn      = TBN * (normalize(viewVec)); //eye direction in tbn space
+	//viewVec      =  (normalize(viewVec)); //in tbn space
+
+	// some texture color
+	vec4 texColor = texture2D(diffuseMap, fUV); //fUV has offset and stuff already applied.
+
+	// Local normal, in tangent space. V tex coordinate is inverted because normal map is in TGA (not in DDS)
+	//vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x,-fUV.y) ).rgb * 2.0 - 1.0), 0);
+	vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x, fUV.y) ).rgb * 2.0 - 1.0), 0);
+
+	vec4 n = TextureNormal_tangentspace;
+	//vec4 n = fNormal_worldspace;
+
+	for(int i=0; i<10; i++)
+	{
+		vec4 lightVec = lightPos[i] - fPosition_worldspace;
+		lightVec.w    = 0;
+		vec4 lightVecNorm_tbn = TBN * (normalize(lightVec)); //in tbn space
+		//vec4 lightVecNorm = (normalize(lightVec)); //in tbn space
 
 		//Diffuse Pass
-		float diffuseMult=dot(fNormal,lightVecNorm);
-		diffusePass+=lightColor[i]*diffuseMult*(texColor+diffuseColor)*(1/pow(dot(lightVec,lightVec),lightFalloff[i]/2))*lightBrightness[i];
-		diffusePass=clamp(diffusePass,0.0,1.0);
+		float diffuseMult = dot(n, lightVecNorm_tbn);
+		diffusePass  += lightColor[i]* diffuseMult * (texColor + diffuseColor) * (1/pow(dot(lightVec, lightVec), lightFalloff[i]/2)) * lightBrightness[i];
+		diffusePass   = clamp(diffusePass, 0.0, 1.0);
 
 
 		//Specular Pass
 		float specularMult;
-		if(shininess<=0){
-			specularMult=0;
+		if(shininess <= 0){
+			specularMult = 0;
 		}else{
-			specularMult=pow(max(dot(viewVec,normalize(-reflect(lightVecNorm,fNormal))),0.0), shininess);
+			specularMult = pow(max(dot(viewVec_tbn, normalize(-reflect(lightVecNorm_tbn, n))) ,0.0), shininess);
 		}
-		specularPass+=lightColor[i]*specularMult*diffuseMult*lightBrightness[i];
-		specularPass=clamp(specularPass,0.0,1.0);
+		specularPass += lightColor[i] * specularMult * diffuseMult * lightBrightness[i];
+		specularPass  = clamp(specularPass,0.0,1.0);
 	}
 
-	diffusePass.w=alpha;//*texColor.w;
+	diffusePass.w = alpha;//*texColor.w;
 
-	fColor=ambientColor+diffusePass+specularPass;
+	fColor = ambientColor+diffusePass+specularPass;
 }

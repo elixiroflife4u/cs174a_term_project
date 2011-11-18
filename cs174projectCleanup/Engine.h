@@ -50,6 +50,7 @@ namespace Globals
 	extern GLuint loc_texScale;
 	extern GLuint loc_shininess;
 	extern GLuint loc_texture;
+	extern GLuint loc_normalMap;
 	extern GLuint loc_diffColor;
 	extern GLuint loc_alpha;
 
@@ -70,7 +71,9 @@ namespace Globals
 	void setTextureOffset(vec2 v);
 	void setTextureScale(vec2 v);
 	void setShininess(float f);
-	void setUseTexture(int i);
+	//void setUseNormalMap(GLuint i);
+	void setUseNormalMap(char* t);
+	void setUseTexture(GLuint i);
 	void setUseTexture(char* t);
 	void setDiffuseColor(vec3 c);
 	void setAlpha(float a);
@@ -84,6 +87,7 @@ namespace Globals
 	void setLightBrightness(float* b, GLuint num);
 
 	void setLights(PointLight** pl, GLuint num);
+
 }
 
 #endif //_ENGINE

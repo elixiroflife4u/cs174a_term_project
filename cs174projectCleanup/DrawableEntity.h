@@ -6,6 +6,7 @@
 class DrawableEntity:public WorldEntity{
 private:
 	char* _texName;
+	char* _normalMapName;
 	vec3 _diffuseColor;
 	float _alpha;
 	char* _modelName;
@@ -17,7 +18,7 @@ private:
 
 public:
 	inline DrawableEntity(char* tn, char* mn, WorldEntity* parent=NULL)
-		:WorldEntity(parent),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false)
+		:WorldEntity(parent),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false),_normalMapName("Resources/normal.bmp")
 	{
 		setTexture(tn);
 		setModel(mn);
@@ -34,10 +35,15 @@ public:
 			Globals::setUseTexture(_texName);
 			Globals::setDiffuseColor(vec3(0,0,0));
 		}else {
-			Globals::setUseTexture(0);
+			Globals::setUseTexture((GLuint)0);
 			Globals::setDiffuseColor(_diffuseColor);
 		}
 		Globals::setAlpha(_alpha);
+
+		if(_normalMapName!=NULL){
+			Globals::setUseNormalMap(_normalMapName);
+		}
+
 
 		Globals::setModelTransMatrix(getTransformationMatrix());
 

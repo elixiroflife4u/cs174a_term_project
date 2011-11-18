@@ -9,7 +9,9 @@ public:
 	Wall()
 		:GameEntity(ID_WALL)
 	{
-		setModel(DrawableEntity(NULL,"Resources/cube.obj"));
+		setModel(DrawableEntity("Resources/decal.bmp","Resources/cube.obj"));
+		//getModel().setDiffuseColor(.5,.5,.5);
+		getModel().setUVScale(10,10);
 	}
 	void update(){}
 	void onCollide(const GameEntity&){}

@@ -58,6 +58,7 @@ namespace Globals
 	GLuint loc_texScale=0;
 	GLuint loc_shininess=0;
 	GLuint loc_texture=0;
+	GLuint loc_normalMap=0;
 	GLuint loc_diffColor=0;
 	GLuint loc_alpha=0;
 
@@ -77,7 +78,12 @@ namespace Globals
 		loc_texOffset=glGetUniformLocation(p, "uvOffset");
 		loc_texScale=glGetUniformLocation(p, "uvScale");
 		loc_shininess=glGetUniformLocation(p, "shininess");
+		
 		loc_texture=glGetUniformLocation(p, "diffuseMap");
+		loc_normalMap=glGetUniformLocation(p, "NormalMap");
+		glUniform1i(loc_texture,0);
+		glUniform1i(loc_normalMap,1);
+
 		loc_diffColor=glGetUniformLocation(p, "diffuseColor");
 		loc_alpha=glGetUniformLocation(p, "alpha");
 
@@ -110,12 +116,22 @@ namespace Globals
 	void setShininess(float f){
 		glUniform1f(loc_shininess,(GLfloat)f);
 	}
-	void setUseTexture(int i){
-		glUniform1i(loc_texture,(GLuint)i);
+	void setUseTexture(GLuint i){
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D,i);
 	}
 	void setUseTexture(char* t){
-		setUseTexture(CTextureManager::GetInstance()->GetTexture(t)->getGlID());
+		glActiveTexture(GL_TEXTURE0);
+		CTextureManager::GetInstance()->GetTexture(t)->Bind();
 	}
+/*	void setUseNormalMap(GLuint i){
+
+	}*/
+	void setUseNormalMap(char* t){
+		glActiveTexture(GL_TEXTURE1);
+		CTextureManager::GetInstance()->GetTexture(t)->Bind();
+	}
+
 	void setDiffuseColor(vec3 c){
 		glUniform4f(loc_diffColor,c.x,c.y,c.z,0.0);
 	}
@@ -129,7 +145,7 @@ namespace Globals
 
 
 	void setAmbientLightColor(vec3 v){
-		glUniform4f(loc_texScale,(GLfloat)v.x,(GLfloat)v.y,(GLfloat)v.z,0.0);
+		glUniform4f(loc_ambLightColor,(GLfloat)v.x,(GLfloat)v.y,(GLfloat)v.z,1.0);
 	}
 	void setLightPositions(vec3* lightPos,GLuint num){
 		float* val=new GLfloat[num*4];
