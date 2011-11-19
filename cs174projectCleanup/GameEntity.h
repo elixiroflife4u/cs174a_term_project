@@ -30,6 +30,10 @@ protected:
 	/** @brief Allows access to any DrawableEntity for animations
 	*/
 	DrawableEntity& getModel(int num=0) const;
+	/** @brief Sets the delete flag so that Globals::animate() will delete this
+	  *  object ASAP.
+	  */
+	void setDelete() { _delete = true; }
 public:
 	/** @brief Constructs a GameEntity with id id
 	 */

@@ -29,7 +29,7 @@ public:
 		e->setTranslate(getTranslate());
 		Globals::addEntity(e);
 
-
+		setDelete();
 	}
 
 
