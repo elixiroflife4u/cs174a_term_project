@@ -71,21 +71,45 @@ namespace Globals
 	}
 
 	static void updateEntities(GameEntityList& list) {
-		for(GameEntityList::iterator i = list.begin(); i != list.end(); ++i) {
+		GameEntityList::iterator i = list.begin();
+		while(i != list.end()) {
 			(*i)->update();
-			///@todo Check for delete flag.
+			
+			if((*i)->toDelete()) {
+				delete *i;
+				i = list.erase(i);
+				continue;
+			}
+
+			++i;
 		}
 	}
 	static void checkCollisionsSelf(GameEntityList& list) {
 		for(GameEntityList::iterator i = list.begin(); i != list.end(); ++i) {
+NEXT_I:
 			GameEntityList::iterator j = i;
 			for(++j; j != list.end(); ++j) {
+NEXT_J:
 				//if one occurs then complete the action for both
 				if((*i)->didCollide(**j)){
 					(*i)->onCollide(**j);
 					(*j)->onCollide(**i);
 
-					///@todo Check for delete flag.
+					const bool deleteI = (*i)->toDelete(),
+					           deleteJ = (*j)->toDelete();
+					if(deleteJ) {
+						delete *j;
+						j = list.erase(j);
+					}
+					if(deleteI) {
+						delete *i;
+						i = list.erase(i);
+						if(i == list.end()) return;
+						goto NEXT_I;
+					} else if(deleteJ) {
+						if(j == list.end()) break;
+						goto NEXT_J;
+					}
 				}
 			}
 		}
@@ -93,24 +117,30 @@ namespace Globals
 	static void checkCollisions(GameEntityList& listA, GameEntityList& listB) {
 		assert(&listA != &listB);
 		for(GameEntityList::iterator i = listA.begin(); i != listA.end(); ++i) {
-			for(GameEntityList::iterator j = listB.begin(); j != listB.end();) {
+NEXT_I:
+			for(GameEntityList::iterator j = listB.begin(); j != listB.end(); ++j) {
+NEXT_J:
 				//if one occurs then complete the action for both
 				if((*i)->didCollide(**j)){
 					(*i)->onCollide(**j);
 					(*j)->onCollide(**i);
 
-					///@todo Check for delete flag.
-					///The code below is a hack for bullets in lieu of a proper
-					///delete check. It relies on the fact that soft entities
-					///are given as listB and never listA.
-					switch((*j)->getId()) {
-					case ID_BULLET_STRAIGHT:
-					case ID_BULLET_GRENADE:;
-						j = deleteSoftEntity(j);
-						continue;
+					const bool deleteI = (*i)->toDelete(),
+					           deleteJ = (*j)->toDelete();
+					if(deleteJ) {
+						delete *j;
+						j = listB.erase(j);
+					}
+					if(deleteI) {
+						delete *i;
+						i = listA.erase(i);
+						if(i == listA.end()) return;
+						goto NEXT_I;
+					} else if(deleteJ) {
+						if(j == listB.end()) break;
+						goto NEXT_J;
 					}
 				}
-				++j;
 			}
 		}
 	}
