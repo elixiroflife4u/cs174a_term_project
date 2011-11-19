@@ -87,6 +87,11 @@ namespace Globals
 		}
 		return true;
 	}
+	bool addSoftEntity(GameEntity* g) {
+		if(wSoftEntities.size() == SOFT_ENTITIES_COUNT) return false;
+		wSoftEntities.push_back(g);
+		return true;
+	}
 	GameEntityList::iterator deleteSoftEntity(GameEntityList::iterator b) {
 		delete *b;
 		std::cerr<<"Soft entities alive: "<<wSoftEntities.size() - 1<<'\n';

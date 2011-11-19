@@ -48,6 +48,7 @@ namespace Globals
 	  */
 	bool addBullet(int bulletType, float accelMag, float initialVelMag, vec3 direction, 
 		           vec3 startPosition, float damage=1, int numberOfAcclUpdates=5);
+	bool addSoftEntity(GameEntity* g);
 	/** Deletes a soft entity and removes it from the global list.
 	  * This is the preferred way to delete a soft entity since
 	  * it is constant time.
