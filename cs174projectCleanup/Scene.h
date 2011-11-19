@@ -42,8 +42,8 @@ namespace Globals{
 			p->setBrightness(1);
 			//addLight(p);
 
-			p=new PointLight(vec3(1,1,1),1,1);
-			p->translate(0,-12,0);
+			p=new PointLight(vec3(1,1,1),1,2);
+			p->translate(0,-10,0);
 			addLight(p);
 
 			Wall*  w=new Wall();
