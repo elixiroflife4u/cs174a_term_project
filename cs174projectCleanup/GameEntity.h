@@ -7,6 +7,7 @@
 
 enum GameEntityType {
 	ID_PLAYER = 0,
+	ID_ENEMY_TURRET,
 	ID_WALL,
 	ID_BULLET_STRAIGHT,
 	ID_BULLET_GRENADE,
@@ -23,13 +24,15 @@ private:
 	DrawableEntity* _models[MAX_MODELS];
 	unsigned int _id;
 protected:
-	/** @brief Allows access to the CollisionBox of the GameEntity
-	 */
-	void setHitbox(const CollisionBox &cb);
 	/** @brief Allows access to any DrawableEntity for animations
 	*/
 	DrawableEntity& getModel(int num=0) const;
 public:
+
+	/** @brief Allows access to the CollisionBox of the GameEntity
+	 */
+	void setHitbox(const CollisionBox &cb);
+
 	/** @brief Constructs a GameEntity with id id
 	 */
 	GameEntity(unsigned int id);

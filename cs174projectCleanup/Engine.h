@@ -73,6 +73,8 @@ namespace Globals
 	void setShininess(float f);
 	//void setUseNormalMap(GLuint i);
 	void setUseNormalMap(char* t);
+	void setNormalMapDepth(float f);
+
 	void setUseTexture(GLuint i);
 	void setUseTexture(char* t);
 	void setDiffuseColor(vec3 c);

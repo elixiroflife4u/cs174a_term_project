@@ -4,6 +4,9 @@
 uniform sampler2D diffuseMap;
 uniform sampler2D NormalMap;
 
+//Normal Map "Depth" Scaling
+uniform float normalMapDepth;
+
 //Constants: material properties
 uniform vec4 diffuseColor;
 uniform float shininess;
@@ -33,8 +36,7 @@ in vec4 o_vertexNormal_modelspace;
 in vec4 o_vertexTangent_modelspace;
 in vec4 o_vertexBitangent_modelspace;
 
-//Normal Map "Depth" Scaling
-float normalMapDepth=.5;
+
 
 //Output: pixel color output
 out vec4 fColor;
@@ -66,10 +68,7 @@ void main(){
 	/////////
 	//n = fNormal_worldspace;
 
-	float temp;
-
 	if(dot(viewVec,fNormal_worldspace)<0){
-		
 		return;
 	}
 
@@ -84,7 +83,7 @@ void main(){
 
 		//Diffuse Pass
 		float diffuseMult = dot(n, lightVecNorm_tbn);
-		diffusePass  += lightColor[i]* diffuseMult * (texColor + diffuseColor) * (1/pow(dot(lightVec, lightVec), lightFalloff[i]/2)) * lightBrightness[i];
+		diffusePass  += max(lightColor[i]* diffuseMult * (texColor + diffuseColor) * (1/pow(dot(lightVec, lightVec), lightFalloff[i]/2)) * lightBrightness[i],vec4(0,0,0,1));
 		diffusePass   = clamp(diffusePass, 0.0, 1.0);
 
 
@@ -94,7 +93,6 @@ void main(){
 			specularMult = 0;
 		}else{
 			specularMult = pow(max(dot(viewVec_tbn, normalize(-reflect(lightVecNorm_tbn, n))) ,0.0), shininess);
-			temp=specularMult;
 		}
 		specularPass += lightColor[i] * specularMult * diffuseMult * lightBrightness[i];
 		specularPass  = clamp(specularPass,0.0,1.0);
@@ -102,8 +100,13 @@ void main(){
 
 	diffusePass.w = alpha;//*texColor.w;
 
-	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
+	float fogIntensity=0;
+	float fogMult=clamp(dot(viewVec,viewVec)*.0001,0.0,1.0)*fogIntensity;
+	vec4 fogColor=vec4(.05,.075,.1,0);
+	fogColor=vec4(1,1,1,0);
 
-	//fColor=vec4(1,1,1,1)*temp;
+	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;//+fogPass;
+
+	fColor=fColor*(1-fogMult)+fogColor*fogMult;
 
 }
