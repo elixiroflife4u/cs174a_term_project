@@ -59,6 +59,7 @@ namespace Globals
 	GLuint loc_shininess=0;
 	GLuint loc_texture=0;
 	GLuint loc_normalMap=0;
+	GLuint loc_normalDepth=0;
 	GLuint loc_diffColor=0;
 	GLuint loc_alpha=0;
 
@@ -83,6 +84,7 @@ namespace Globals
 		loc_normalMap=glGetUniformLocation(p, "NormalMap");
 		glUniform1i(loc_texture,0);
 		glUniform1i(loc_normalMap,1);
+		loc_normalDepth=glGetUniformLocation(p, "normalMapDepth");
 
 		loc_diffColor=glGetUniformLocation(p, "diffuseColor");
 		loc_alpha=glGetUniformLocation(p, "alpha");
@@ -130,6 +132,9 @@ namespace Globals
 	void setUseNormalMap(char* t){
 		glActiveTexture(GL_TEXTURE1);
 		CTextureManager::GetInstance()->GetTexture(t)->Bind();
+	}
+	void setNormalMapDepth(float f){
+		glUniform1f(loc_normalDepth,f);
 	}
 
 	void setDiffuseColor(vec3 c){

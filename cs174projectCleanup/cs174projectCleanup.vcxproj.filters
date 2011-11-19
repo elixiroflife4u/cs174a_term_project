@@ -144,10 +144,13 @@
     <ClInclude Include="Explosion.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="EnemyEntity.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyEntity.h">
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files\Globals</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretEntity.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
   </ItemGroup>

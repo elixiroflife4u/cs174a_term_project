@@ -12,8 +12,8 @@ private:
 	float _health;
 
 public:
-	MobileEntity(unsigned int id)
-		:GameEntity(id),_jumpCount(0),_health(100)
+	MobileEntity(unsigned int id, float health=100)
+		:GameEntity(id),_jumpCount(0),_health(health)
 	{}
 	/** @brief Sets the acceleration, discarding the current value. */
 	void setAcc(float x, float y, float z) { _acc = vec3(x, y, z); }

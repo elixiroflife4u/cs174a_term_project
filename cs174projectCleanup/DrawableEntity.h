@@ -11,9 +11,7 @@ private:
 	vec3 _diffuseColor;
 	vec3 _highlightColor;
 
-
 	float _normalMapDepth;
-	float _textureAlpha;
 
 	float _alpha;
 	char* _modelName;
@@ -25,7 +23,7 @@ private:
 
 public:
 	inline DrawableEntity(char* tn, char* mn, WorldEntity* parent=NULL)
-		:WorldEntity(parent),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false),_normalMapName("Resources/normal.bmp"),_normalMapDepth(0),_textureAlpha(0),_highlightColor(vec3(0,0,0))
+		:WorldEntity(parent),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false),_normalMapName(NULL),_normalMapDepth(0),_highlightColor(vec3(0,0,0))
 	{
 		setTexture(tn);
 		setModel(mn);
@@ -46,14 +44,12 @@ public:
 			Globals::setDiffuseColor(_diffuseColor);
 		}
 
-		///todo@: create and implement a "texture alpha scale" value
-
 		Globals::setAlpha(_alpha);
 
 		if(_normalMapName!=NULL){
 			Globals::setUseNormalMap(_normalMapName);
 		}
-		///todo@: set the "normal map depth" value
+		Globals::setNormalMapDepth(_normalMapDepth);
 
 		if(_highlightColor!=vec3(0,0,0)){}
 		///todo@: set the ambient light color to "_highlightColor" and then switch it back after drawing
@@ -65,8 +61,7 @@ public:
 	}
 	inline void setShininess(float f){_shininess=f;}
 	inline void setTexture(char* t){_texName=t;if(t=="")_texName=NULL;}
-	inline void setTexturAlpha(float f){_textureAlpha=f;}
-	inline void setNormalMap(char* t){_normalMapName=t;if(t=="")_normalMapName==NULL;}
+	inline void setNormalMap(char* t){_normalMapName=t;if(t=="")_normalMapName=NULL;}
 	inline void setNormalMapDepth(float f){_normalMapDepth=f;}
 
 	inline void setAlpha(float a)
