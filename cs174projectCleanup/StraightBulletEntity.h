@@ -42,8 +42,7 @@ public:
 	}
 	void onCollide(const GameEntity& g)
 	{
-		//This function does nothing now since Globals::animate()
-		//will remove it from the world.
+		setDelete();
 	}
 };
 #endif
