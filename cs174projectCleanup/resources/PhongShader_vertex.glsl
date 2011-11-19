@@ -48,9 +48,9 @@ void main(){
 	o_vertexBitangent_modelspace   = vBitangent;
 	o_vertexBitangent_modelspace.w = 0;
 
-	o_vertexNormal_modelspace = normalize(o_vertexNormal_modelspace);
-	o_vertexTangent_modelspace = normalize(o_vertexTangent_modelspace);
-	o_vertexBitangent_modelspace = normalize(o_vertexBitangent_modelspace);
+	o_vertexNormal_modelspace = normalize(o_vertexNormal_modelspace*vTransform);
+	o_vertexTangent_modelspace = normalize(o_vertexTangent_modelspace*vTransform);
+	o_vertexBitangent_modelspace = normalize(o_vertexBitangent_modelspace*vTransform);
 	
 }
 

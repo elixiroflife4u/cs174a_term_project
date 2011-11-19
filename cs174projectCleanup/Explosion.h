@@ -21,7 +21,7 @@ public:
 
 	void update(){
 		float scaleVal=((float)_currTime/_frameTime);
-		float radiusVal=scaleVal*_maxRadius+.1;
+		float radiusVal=scaleVal*_maxRadius+3;
 		setScale(radiusVal,radiusVal,radiusVal);
 		getModel().setAlpha(1-scaleVal*.5);
 

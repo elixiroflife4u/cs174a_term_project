@@ -11,16 +11,16 @@ public:
 	{
 		MobileEntity::setVel(normalize(dir)*force);
 
-		setModel(DrawableEntity(NULL,"Resources/test.obj"));
+		setModel(DrawableEntity(NULL,"Resources/grenade.obj"));
 		scale(.75,.75,.75);
 		getModel().setDiffuseColor(1,0,0);
-		getModel().scale(.5,.5,.5);
+		getModel().scale(.75,.75,.75);
 		getModel().setShininess(100);
 	}
 	void update(){
 		increaseVel(Globals::grav);
 		translate(getVel());
-		rotate(0,15,0);
+		rotate(15,0,15);
 	}
 
 	void onCollide(const GameEntity& g){
