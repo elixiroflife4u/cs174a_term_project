@@ -27,9 +27,9 @@ public:
 	
 		Explosion* e=new Explosion();
 		e->setTranslate(getTranslate());
-		Globals::addEntity(e);
+		Globals::addSoftEntity(e);
 
-
+		setDelete();
 	}
 
 

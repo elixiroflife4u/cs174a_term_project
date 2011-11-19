@@ -22,6 +22,7 @@ private:
 	CollisionBox _hitBox;
 	DrawableEntity* _models[MAX_MODELS];
 	unsigned int _id;
+	bool _delete;
 protected:
 	/** @brief Allows access to the CollisionBox of the GameEntity
 	 */
@@ -29,6 +30,10 @@ protected:
 	/** @brief Allows access to any DrawableEntity for animations
 	*/
 	DrawableEntity& getModel(int num=0) const;
+	/** @brief Sets the delete flag so that Globals::animate() will delete this
+	  *  object ASAP.
+	  */
+	void setDelete() { _delete = true; }
 public:
 	/** @brief Constructs a GameEntity with id id
 	 */
@@ -57,6 +62,10 @@ public:
 	/** @brief Allows for hte ability to remove any model from the entity
 	 */
 	bool removeModel(int num=0);
+
+	bool toDelete()const {
+		return _delete;
+	}
 
 	virtual void update()=0;
 	virtual void draw() const;

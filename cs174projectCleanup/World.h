@@ -20,19 +20,20 @@ namespace Globals
 	const int GAMEENTITY_COUNT=200;
 	const int SCENE_COUNT=10;
 	const int LIGHT_COUNT=10;
-	const int BULLETS_COUNT=100;
+	const int SOFT_ENTITIES_COUNT=100;
 
-	extern Wall* wWalls[WALL_COUNT]; //Wall Array
-	extern GameEntity* wEntities[GAMEENTITY_COUNT]; //All other entities pointer (enemies etc)
+	typedef std::list<GameEntity*> GameEntityList;
+	extern GameEntityList wEntities;
+	extern GameEntityList wWalls;
+	extern GameEntityList wSoftEntities;
+
 	extern PointLight* wLights[LIGHT_COUNT];
 	extern Scene* wScenes[SCENE_COUNT];//Array of Scenes
-	typedef std::list<BulletEntity*> BulletList;
-	extern BulletList wBullets;
 	
 	bool addWall(Wall* w);
-	bool deleteWall(Wall* w);
+	GameEntityList::iterator deleteWall(GameEntityList::iterator w);
 	bool addEntity(GameEntity* g);
-	bool deleteEntity(GameEntity* g);
+	GameEntityList::iterator deleteEntity(GameEntityList::iterator g);
 	bool addLight(PointLight* pl);
 	bool deleteLight(PointLight* pl);
 	/** Attempts to construct a new bullet and add it to the world.
@@ -47,12 +48,13 @@ namespace Globals
 	  */
 	bool addBullet(int bulletType, float accelMag, float initialVelMag, vec3 direction, 
 		           vec3 startPosition, float damage=1, int numberOfAcclUpdates=5);
-	/** Deletes a bullet and removes it fromthe global list.
-	  * This is the preferred way to delete a bullet since
+	bool addSoftEntity(GameEntity* g);
+	/** Deletes a soft entity and removes it from the global list.
+	  * This is the preferred way to delete a soft entity since
 	  * it is constant time.
-	  * @return Iterator to the next bullet.
+	  * @return Iterator to the next soft entity.
 	  */
-	BulletList::iterator delBullet(BulletList::iterator b);
+	GameEntityList::iterator deleteSoftEntity(GameEntityList::iterator b);
 	void deleteAllWorld();
 	
 
