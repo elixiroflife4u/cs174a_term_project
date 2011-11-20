@@ -35,7 +35,7 @@ namespace {
 			const vec3 aToCam = camPos - a->getTranslate();
 			const vec3 bToCam = camPos - b->getTranslate();
 			
-			return dot(aToCam, aToCam) > dot(bToCam, bToCam);
+			return dot(aToCam, aToCam) < dot(bToCam, bToCam);
 		}
 	};
 	/** A max-heap for transparent models to enable drawing them from farthest to nearest. */
@@ -52,6 +52,7 @@ namespace Globals
 		initShaderVariables(sProgram);
 
 		glClearColor( .05f, .075f, .1f, 1.f );
+		glClearColor( .3f, .2f, .25f, 1.f ); //lightBlue Sky
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
@@ -199,6 +200,7 @@ NEXT_J:
 		setCameraPosition(currentCamera->getTranslate());
 		setLights(wLights,LIGHT_COUNT);
 		setAmbientLightColor(vec3(.1,.05,.075));
+		setAmbientLightColor(vec3(.1,.1,.2));
 
 
 		//Draw non-transparent models, pushing transparent ones onto a max-heap
@@ -220,8 +222,29 @@ NEXT_J:
 			transparencyQueue.pop();
 		}
 		glDepthMask(GL_TRUE);
-		glDisable(GL_BLEND);
+		
+		
 
+		//UI hack
+		setAmbientLightColor(vec3(1,1,1));
+		setCameraTransMatrix(mat4());
+		setPerspectiveMatrix(currentCamera->getOrthographicMatrix());
+		setCameraPosition(vec3(0,0,.5));
+
+		Wall w=Wall();
+		w.translate(-(.49)*(resolution.x/resolution.y),.48,-10);
+		w.scale((Globals::getPlayer()->getHealth()/Player::MAX_HEALTH)*.5,.025,.1);
+
+		DrawableEntity d=DrawableEntity(NULL,"Resources/cube.obj");
+		d.translate(.5,0,0);
+		d.setAlpha(.75);
+
+		w.setModel(d);
+		//w.getModel().translate(0,0,.5);
+		w.draw();
+
+
+		glDisable(GL_BLEND);
 		glutSwapBuffers();
 	}
 

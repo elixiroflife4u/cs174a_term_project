@@ -8,6 +8,20 @@ void Player::update()
 {
 	///@todo implement
 
+	if(getHealth()<0){
+
+		
+		Explosion* e = new Explosion(6,10);
+		e->translate(getTranslate());
+		Globals::addSoftEntity(e);
+
+		setTranslate(0,5,0);
+		setHealth(MAX_HEALTH);
+		return;
+	}
+
+
+
 	const float MAX_VEL=1;
 	const float ACCEL_AMOUNT=.15;
 
@@ -37,8 +51,10 @@ void Player::update()
 	//rotation on the XZ-(horiontal)plane/Y-axis since it seems more
 	//natural to me.
 	vec4 localAccel;
-	//if(Globals::KEY_Q) localAccel  = vec4(0,-ACCEL_AMOUNT,0,0);
-	//if(Globals::KEY_E) localAccel += vec4(0,ACCEL_AMOUNT,0,0);
+	if(Globals::KEY_Q) _currentWeapon--;
+	if(Globals::KEY_E) _currentWeapon++;
+	_currentWeapon=abs(_currentWeapon%3);
+
 	if(Globals::KEY_W) localAccel += vec4(0,0,-ACCEL_AMOUNT,0);
 	if(Globals::KEY_S) localAccel += vec4(0,0,ACCEL_AMOUNT,0);
 	if(Globals::KEY_D) localAccel += vec4(ACCEL_AMOUNT,0,0,0);
@@ -69,9 +85,27 @@ void Player::update()
 		/// so that it doesn't instantly collide with its creator.
 		vec4 dir=(getModel(1).getTransformationMatrix()*vec4(0,0,-1,0));
 
-		Globals::addBullet(ID_BULLET_GRENADE, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate(), 0, 10);
+		switch(_currentWeapon){
+		case 0: //straight
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate(), 0, 10);
+			break;
+		case 1: //grenade
+			Globals::addBullet(ID_BULLET_GRENADE, 0, 3.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate(), 0, 5);
+			break;
+		case 2: //other?
+
+			break;
+
+
+
+
+		}
+
+		
 		//Globals::a
 	}
+
+	resetHightlight();
 }
 
 void Player::onCollide(const GameEntity& g){
@@ -89,5 +123,6 @@ void Player::onCollide(const GameEntity& g){
 }
 
 void Player::onBulletCollision(float damage) {
-	///@todo implement
+	decHealth(damage);
+
 }

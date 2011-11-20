@@ -10,6 +10,7 @@ namespace Globals
 	//FOR OUR GAME//
 
 	//transparent object heap
+	GameEntity* wPlayer=NULL;
 
 	GameEntityList wWalls;
 	GameEntityList wEntities;
@@ -32,12 +33,19 @@ namespace Globals
 	bool addEntity(GameEntity* g){
 		//Adds the passed GameEntity to the scene
 		if(wEntities.size() == GAMEENTITY_COUNT) return false;
+		if(g->getId()==ID_PLAYER&&wPlayer==NULL) wPlayer=g;
+
 		wEntities.push_back(g);
 		return true;
 	}
 
 	GameEntityList::iterator deleteEntity(GameEntityList::iterator g){
 		//Removes a entities to the scene
+		
+		if((*g)==wPlayer){
+			wPlayer=NULL;
+		}
+
 		delete *g;
 		return wEntities.erase(g);
 	}
@@ -76,10 +84,10 @@ namespace Globals
 		case ID_BULLET_STRAIGHT:
 			wSoftEntities.push_back(new StraightBulletEntity(accelMag, initialVelMag, direction,
 				                                        startPosition, damage, numberOfAcclUpdates));
-			std::cerr<<"Soft entities alive: "<<wSoftEntities.size()<<'\n';
+			//std::cerr<<"Soft entities alive: "<<wSoftEntities.size()<<'\n';
 			break;
 		case ID_BULLET_GRENADE:
-			wSoftEntities.push_back(new GrenadeEntity(startPosition,direction));
+			wSoftEntities.push_back(new GrenadeEntity(startPosition,direction,initialVelMag));
 			break;
 		default:
 			throw new CException("Unknown bullet type given to addBullet()");
@@ -118,6 +126,9 @@ namespace Globals
 		}
 	}
 
+	const Player* const getPlayer(){
+		return static_cast<const Player*>(wPlayer);
+	}
 
 	vec3 grav=vec3(0,-.1,0);
 

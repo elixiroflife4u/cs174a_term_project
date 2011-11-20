@@ -1,7 +1,7 @@
 #include "CollisionBox.h"
 
-CollisionBox::CollisionBox()
-	:_dimensions(vec3(1,1,1))
+CollisionBox::CollisionBox(vec3 dim)
+	:_dimensions(dim)
 {}
 
 bool CollisionBox::didCollide(const CollisionBox& b) const

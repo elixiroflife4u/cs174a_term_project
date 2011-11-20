@@ -9,13 +9,14 @@
  */
 class Player:public MobileEntity{
 private:
+	
 	CameraEntity _playerCamera;
 	int _livesCount;
 	int _currentWeapon;
 public:
-	
+	static const int MAX_HEALTH=100;
 	Player()
-		:MobileEntity(ID_PLAYER),_livesCount(3)
+		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT)
 	{
 		setModel(DrawableEntity(NULL,"Resources/tankBase.obj",this));
 		getModel().scale(1,1,1);
@@ -28,7 +29,7 @@ public:
 		getModel(1).setShininess(50);
 
 		CollisionBox b;
-		b.scale(1.5,2.5,1.5);
+		b.scale(3,2.5,3);
 
 		GameEntity::setHitbox(b);
 

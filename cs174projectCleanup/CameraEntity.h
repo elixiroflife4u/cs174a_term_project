@@ -18,7 +18,8 @@ public:
 	void setAspectRatio(float);
 
 	Angel::mat4 getPerspectiveMatrix() const;
-	Angel::mat4 getOrthographicMatrix() const;
+	Angel::mat4 getOrthographicMatrix() const
+	{return Angel::Ortho(-.5*_aspect,.5*_aspect,-.5,.5,-1,_farClip);}
 };
 
 #endif //_CAMERAENTITY

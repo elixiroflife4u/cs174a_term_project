@@ -28,6 +28,8 @@ namespace Globals{
 			Player* pl=new Player();
 			currentCamera=pl->getCamera();
 			pl->translate(0,2,0);
+			pl->rotate(0,-90,0);
+
 
 			Globals::addEntity(pl);
 
@@ -49,8 +51,7 @@ namespace Globals{
 			addLight(p);
 
 			
-			addEntity(new TurretEntity(vec3(0,6,0)));
-
+			addEntity(new TurretEntity(vec3(10,3.5,10)));
 
 
 
@@ -74,33 +75,76 @@ namespace Globals{
 			addWall(w);
 
 			w=new Wall();
-			w->scale(70,7.5,5);
+			w->scale(80,7.5,5);
 			w->translate(10,4,-25);
 			addWall(w);
 
 			w=new Wall();
-			w->scale(70,7.5,5);
+			w->scale(80,7.5,5);
 			w->translate(10,4,35);
 			addWall(w);
 
 			
 			//Flourishes
 			w=new Wall();
-			w->scale(6,20,8);
+			w->setHitbox(CollisionBox(vec3(6,20,8)));
 			w->translate(-20,10,20);
+			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
 			addWall(w);
 
 			w=new Wall();
-			w->scale(9,10,8);
-			w->translate(-19,5,15);
+			w->setHitbox(CollisionBox(vec3(9,30,8)));
+			w->setModel(DrawableEntity(NULL,"Resources/rockMed.obj"));
+			w->translate(-19,5,-2);
+			w->rotate(0,90,0);
 			addWall(w);
 
 			w=new Wall();
-			w->scale(10,1,10);
+		//	w->scale(10,1,10);
+			w->setHitbox(CollisionBox(vec3(10,2,10)));
+			w->setModel(DrawableEntity(NULL,"Resources/rockFlat.obj"));
 			w->translate(0,1,0);
 			addWall(w);
 
 			addEntity(new WanderingEnemy(vec3(-10,9,0)));
+
+			//Trees
+			for(int i=0;i<2;i++){
+				w=new Wall();
+				DrawableEntity d= DrawableEntity("Resources/treesTest.png","Resources/plane.obj");
+				d.setHighlightColor(.1,.05,.1);
+				d.rotate(-90,0,0);
+				d.setAlphaRequired(true);
+				w->setModel(d);
+				w->translate(30-40*i,25,40);
+				w->scale(50,50,2);
+				addWall(w);
+
+				w=new Wall();
+				d.scale(1,-1,1);
+			//	d.setRotate(0,0,0);
+				w->setModel(d);
+				w->translate(30-40*i,25,-40);
+				w->scale(50,50,2);
+				addWall(w);
+			
+				w=new Wall();
+				d.setRotate(-90,0,90);
+				w->setModel(d);
+				w->translate(-30,25,-20+40*i);
+				w->scale(2,50,50);
+				addWall(w);
+
+				w=new Wall();
+				d.setRotate(-90,0,90);
+				w->setModel(d);
+				w->translate(40,25,60-120*i);
+				w->scale(2,50,50);
+				addWall(w);
+
+			}
+
+
 
 			_count=0;
 		}
