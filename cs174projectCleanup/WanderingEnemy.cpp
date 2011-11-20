@@ -45,8 +45,8 @@ void WanderingEnemy::lockOnPlayer(double xz, double distance) {
 }
 
 const double WanderingEnemy::FOV = 45 * DegreesToRadians;
-const double WanderingEnemy::MIN_DISTANCE = 7;
-const double WanderingEnemy::MAX_DISTANCE = 25;
+const double WanderingEnemy::MIN_DISTANCE = 15;
+const double WanderingEnemy::MAX_DISTANCE = 50;
 
 void WanderingEnemy::update() {
 	static const float MAX_VEL = .5;
@@ -93,6 +93,16 @@ void WanderingEnemy::update() {
 		setVelZ(horizVel.z);
 	}
 	translate(getVel());
+
+	//Check health
+	if(getHealth()<0){
+		setDelete();
+		Explosion* e = new Explosion(6,50);
+		e->translate(getTranslate());
+		Globals::addSoftEntity(e);
+	}
+
+	resetHightlight();
 }
 void WanderingEnemy::onCollide(const GameEntity& g){
 	switch(g.getId()) {
@@ -103,8 +113,13 @@ void WanderingEnemy::onCollide(const GameEntity& g){
 		MobileEntity::placeAtEdge(g);
 		break;
 	case ID_BULLET_STRAIGHT:
+		decHealth(1);
+		break;
 	case ID_BULLET_GRENADE:
-		///@todo Implement.
+		decHealth(5);
+		break;
+	case ID_EXPLOSION:
+		decHealth(1);
 		break;
 	}
 }
