@@ -14,7 +14,7 @@ public:
 	*/
 	StraightBulletEntity(float accelMag, float initialVelMag, vec3 direction, 
 		vec3 startPosition, float damage, int numberOfAcclUpdates)
-		: BulletEntity(startPosition, damage, 2), numOfAcclUpdates(numberOfAcclUpdates)
+		: BulletEntity(startPosition, damage, ID_BULLET_STRAIGHT), numOfAcclUpdates(numberOfAcclUpdates)
 	{
 		///@todo give this bullet type an id in the GameEntity.h and then compile
 		MobileEntity::setAcc(accelMag*direction);
@@ -22,8 +22,9 @@ public:
 
 		///@todo Create and set an actual bullet model.
 		GameEntity::setModel(DrawableEntity(NULL,"Resources/sphere.obj",this));
-		getModel().setDiffuseColor(1,.5,0);
-		scale(.1,.1,.1);
+		getModel().setDiffuseColor(1,.25,0);
+		scale(.25,.25,.25);
+		getModel().setHighlightColor(.5,.25,0);
 	}
 	/** @brief update the position of the bullet. the bullet accelerates for numOfAcclUpdate updates
 	* before switching to a constant velocity. Each update adds the acc to current vel which is then 
@@ -39,6 +40,12 @@ public:
 
 		if(numOfAcclUpdates)
 			numOfAcclUpdates--;
+
+		vec3 dir=Globals::getPlayer()->getTranslate()-getTranslate();
+		if(dot(dir,dir)>pow(300.0,2)){
+			setDelete();
+		}
+
 	}
 	void onCollide(const GameEntity& g)
 	{

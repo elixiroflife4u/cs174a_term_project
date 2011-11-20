@@ -28,6 +28,7 @@ public:
 		setTexture(tn);
 		setModel(mn);
 
+		
 		if(tn!=NULL)CTextureManager::GetInstance()->GetTexture(tn);
 		if(mn!=NULL)CRenderObjectManager::GetInstance()->GetRenderObject(mn)->activateObject(Globals::sProgram);
 	}
@@ -37,9 +38,11 @@ public:
 		Globals::setShininess(_shininess);
 
 		if(_texName!=NULL){
+			Globals::setHasTexture(true);
 			Globals::setUseTexture(_texName);
 			Globals::setDiffuseColor(vec3(0,0,0));
 		}else {
+			Globals::setHasTexture(false);
 			Globals::setUseTexture((GLuint)0);
 			Globals::setDiffuseColor(_diffuseColor);
 		}
@@ -51,12 +54,14 @@ public:
 		}
 		Globals::setNormalMapDepth(_normalMapDepth);
 
-		if(_highlightColor!=vec3(0,0,0)){}
-		///todo@: set the ambient light color to "_highlightColor" and then switch it back after drawing
+		vec3 origAmbLight=Globals::getAmbientColor();
+		Globals::setAmbientLightColor(this->_highlightColor+origAmbLight);
 
 		Globals::setModelTransMatrix(getTransformationMatrix());
 
 		if(_modelName!=NULL)Globals::drawModel(_modelName);
+
+		Globals::setAmbientLightColor(origAmbLight);
 
 	}
 	inline void setShininess(float f){_shininess=f;}

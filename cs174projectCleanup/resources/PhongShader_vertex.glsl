@@ -38,7 +38,7 @@ void main(){
 	fNormal_worldspace.w = 0;
 	fNormal_worldspace   = normalize(fNormal_worldspace * vTransform);
 
-	fUV = (vUV + uvOffset) * uvScale; //texture coord
+	fUV = (vUV) * uvScale+uvOffset; //texture coord
 
 	//normalizing TBN basis
 	o_vertexNormal_modelspace      = vNormal;
