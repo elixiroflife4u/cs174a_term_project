@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 
-WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wanderCount(0) {
+WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wanderCount(0), _bulletDelay(BULLET_DELAY) {
 	translate(pos);
 	setModel(DrawableEntity(NULL,"Resources/cube.obj"));
 	setModel(DrawableEntity(NULL,"Resources/cube.obj"),1);
@@ -16,6 +16,9 @@ WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wa
 }
 
 void WanderingEnemy::wander() {
+	//We aren't locked on right now, so reset bullet timer.
+	_bulletDelay = BULLET_DELAY;
+
 	//Choose destination randomly
 	if(!_wanderCount) {
 		//rand() doesn't seem to work well for floating point numbers,
@@ -35,12 +38,25 @@ void WanderingEnemy::wander() {
 }
 
 void WanderingEnemy::lockOnPlayer(double xz, double distance) {
+	//Move and rotate enemy towards player
 	///@todo Tween the rotation and slow down.
 	setRotate(0, xz / DegreesToRadians, 0);
 	if(distance > MIN_DISTANCE)	setAcc(cos(xz), 0, -sin(xz));
 	else setAcc(0, 0, 0);
 	_wanderCount = 0;
 
+	//Fire!
+	const vec4 local(1,0,0,0); //The enemy always fires from its local +X direction.
+	const vec4 direction = RotateY(xz / DegreesToRadians) * local;
+	const vec3 dirNorm = normalize(vec3(direction.x, direction.y, direction.z));
+	if(_bulletDelay) {
+		Globals::addBullet(ID_BULLET_STRAIGHT,0,1, dirNorm, getModel(1).getTranslate() + 4*dirNorm);
+
+		_bulletDelay = BULLET_DELAY;
+	} else
+		_bulletDelay--;
+
+	//Set locked-on color.
 	getModel().setDiffuseColor(1,0,0);
 }
 
