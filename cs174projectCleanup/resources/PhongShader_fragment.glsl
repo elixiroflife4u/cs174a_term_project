@@ -1,4 +1,4 @@
-#version 130
+#version 150
 
 //Constants: samplers
 uniform sampler2D diffuseMap;
@@ -6,6 +6,7 @@ uniform sampler2D NormalMap;
 
 //Normal Map "Depth" Scaling
 uniform float normalMapDepth;
+uniform bool hasTexture;
 
 //Constants: material properties
 uniform vec4 diffuseColor;
@@ -41,6 +42,8 @@ in vec4 o_vertexBitangent_modelspace;
 //Output: pixel color output
 out vec4 fColor;
 
+float tempDepth=1.0;
+
 void main(){
 
 	mat4 TBN = transpose(mat4(o_vertexTangent_modelspace,
@@ -64,13 +67,34 @@ void main(){
 	//vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x,-fUV.y) ).rgb * 2.0 - 1.0), 0);
 	vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x, fUV.y) ).rgb * 2.0 - 1.0), 0);
 
-	vec4 n = normalize(normalMapDepth*TextureNormal_tangentspace+(1-normalMapDepth)*vec4(0,0,1,0));
+
+
+
+
+
+	float depthMult=0.5;
+
+//	if(normalMapDepth==0.5){
+	//	depthMult=0.5;
+	//}else if(normalMapDepth==1.0){
+		//depthMult=1.0;
+//	}
+
+
+
+
+
+	vec4 n = normalize(normalMapDepth*TextureNormal_tangentspace+(1.0-normalMapDepth)*vec4(0,0,1,0));
 	/////////
 	//n = fNormal_worldspace;
+	//n=TextureNormal_tangentspace;
+
+	//n=normalize(vec4(0,0,1,0)*(1.0-max(normalMapDepth,0.0)));
 
 	if(dot(viewVec,fNormal_worldspace)<0){
 		return;
 	}
+
 
 	for(int i=0; i<10; i++)
 	{
@@ -98,15 +122,13 @@ void main(){
 		specularPass  = clamp(specularPass,0.0,1.0);
 	}
 
-	diffusePass.w = alpha;//*texColor.w;
+	diffusePass.w = alpha;
+	if(hasTexture){
+		diffusePass.w=alpha*texColor.w;
+	}
 
-	float fogIntensity=0;
-	float fogMult=clamp(dot(viewVec,viewVec)*.0001,0.0,1.0)*fogIntensity;
-	vec4 fogColor=vec4(.05,.075,.1,0);
-	fogColor=vec4(1,1,1,0);
-
-	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;//+fogPass;
-
-	fColor=fColor*(1-fogMult)+fogColor*fogMult;
-
+	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
+	//fColor=vec4(1,1,1,1)*normalMapDepth.z;
+	//fColor=n;
+	//fColor=TextureNormal_tangentspace;
 }

@@ -9,7 +9,7 @@ private:
 public:
 	/** @brief Constructs a new CollisionBox Object
 	 */
-	CollisionBox();
+	CollisionBox(vec3 dim=vec3(1,1,1));
 	/** @brief Returns true if this box intersects with the passed Collision box b
 	 */
 	bool didCollide(const CollisionBox& b) const;

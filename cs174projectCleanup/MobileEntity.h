@@ -10,7 +10,26 @@ private:
 	vec3 _vel; ///< The current velocity.
 	int _jumpCount;
 	float _health;
+protected:
+	void decHealth(float f){
+		_health-=f;
 
+		if(f<=0)return;
+
+		for(int i=0;i<MAX_MODELS;i++){
+			if((&getModel(i))!=NULL)
+				getModel(i).setHighlightColor(1,0,0);
+		}
+	}
+	void resetHightlight(){
+		for(int i=0;i<MAX_MODELS;i++){
+			if((&getModel(i))!=NULL)
+				getModel(i).setHighlightColor(0,0,0);
+		}
+	}
+	void setHealth(float f){
+		_health=f;
+	}
 public:
 	MobileEntity(unsigned int id, float health=100)
 		:GameEntity(id),_jumpCount(0),_health(health)

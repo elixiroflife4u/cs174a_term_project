@@ -22,6 +22,8 @@ namespace Globals
 	const int LIGHT_COUNT=10;
 	const int SOFT_ENTITIES_COUNT=100;
 
+
+	extern GameEntity* wPlayer;
 	typedef std::list<GameEntity*> GameEntityList;
 	extern GameEntityList wEntities;
 	extern GameEntityList wWalls;
@@ -36,6 +38,9 @@ namespace Globals
 	GameEntityList::iterator deleteEntity(GameEntityList::iterator g);
 	bool addLight(PointLight* pl);
 	bool deleteLight(PointLight* pl);
+
+	const Player* const getPlayer();
+
 	/** Attempts to construct a new bullet and add it to the world.
 	  * @param bulletType The type of bullet as defined in GameEntityType.
 	  * @param accelMag Magnitude of the acceleration vector.
