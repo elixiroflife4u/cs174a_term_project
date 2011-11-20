@@ -16,11 +16,25 @@ public:
 		getModel().setDiffuseColor(1,0,0);
 		getModel().scale(.75,.75,.75);
 		getModel().setShininess(100);
+		getModel().setHighlightColor(.25,0,0);
+
+		this->setHitbox(CollisionBox(vec3(1.5,1.5,1.5)));
 	}
 	void update(){
 		increaseVel(Globals::grav);
 		translate(getVel());
 		rotate(15,0,15);
+
+		vec3 dir=Globals::getPlayer()->getTranslate()-getTranslate();
+		if(dot(dir,dir)>pow(300.0,2)){
+			setDelete();
+		}
+
+
+
+
+
+
 	}
 
 	void onCollide(const GameEntity& g){

@@ -41,6 +41,7 @@ namespace Globals
 	void viewWindowed(int x, int y, int width, int height);
 	void viewFullscreen();
 
+	extern vec3 _ambColor;
 
 	extern GLuint loc_modelTransMat;
 	extern GLuint loc_camTransMat;
@@ -50,6 +51,7 @@ namespace Globals
 	extern GLuint loc_texScale;
 	extern GLuint loc_shininess;
 	extern GLuint loc_texture;
+	extern GLuint loc_hasTex;
 	extern GLuint loc_normalMap;
 	extern GLuint loc_diffColor;
 	extern GLuint loc_alpha;
@@ -70,6 +72,7 @@ namespace Globals
 
 	void setTextureOffset(vec2 v);
 	void setTextureScale(vec2 v);
+	void setHasTexture(bool t);
 	void setShininess(float f);
 	//void setUseNormalMap(GLuint i);
 	void setUseNormalMap(char* t);
@@ -83,6 +86,8 @@ namespace Globals
 	void drawModel(char* m);
 
 	void setAmbientLightColor(vec3 v);
+	vec3 getAmbientColor();
+
 	void setLightPositions(vec3* lightPos,GLuint num);
 	void setLightColors(Angel::vec3* lightCol,GLuint num);
 	void setLightFalloff(float* lightFO, GLuint num);

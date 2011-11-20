@@ -47,6 +47,8 @@ namespace Globals
 		glutFullScreen();
 	}
 
+	vec3 _ambColor;
+
 	//transformation locations
 	GLuint loc_modelTransMat=0;
 	GLuint loc_camTransMat=0;
@@ -58,6 +60,7 @@ namespace Globals
 	GLuint loc_texScale=0;
 	GLuint loc_shininess=0;
 	GLuint loc_texture=0;
+	GLuint loc_hasTex=0;
 	GLuint loc_normalMap=0;
 	GLuint loc_normalDepth=0;
 	GLuint loc_diffColor=0;
@@ -81,6 +84,7 @@ namespace Globals
 		loc_shininess=glGetUniformLocation(p, "shininess");
 		
 		loc_texture=glGetUniformLocation(p, "diffuseMap");
+		loc_hasTex=glGetUniformLocation(p, "hasTexture");
 		loc_normalMap=glGetUniformLocation(p, "NormalMap");
 		glUniform1i(loc_texture,0);
 		glUniform1i(loc_normalMap,1);
@@ -115,6 +119,9 @@ namespace Globals
 	void setTextureScale(vec2 v){
 		glUniform2f(loc_texScale,(GLfloat)v.x,(GLfloat)v.y);
 	}
+	void setHasTexture(bool t){
+		glUniform1i(loc_hasTex,t);
+	}
 	void setShininess(float f){
 		glUniform1f(loc_shininess,(GLfloat)f);
 	}
@@ -134,7 +141,7 @@ namespace Globals
 		CTextureManager::GetInstance()->GetTexture(t)->Bind();
 	}
 	void setNormalMapDepth(float f){
-		glUniform1f(loc_normalDepth,f);
+		glUniform1f(loc_normalDepth,(GLfloat)f);
 	}
 
 	void setDiffuseColor(vec3 c){
@@ -150,8 +157,11 @@ namespace Globals
 
 
 	void setAmbientLightColor(vec3 v){
+		_ambColor=v;
 		glUniform4f(loc_ambLightColor,(GLfloat)v.x,(GLfloat)v.y,(GLfloat)v.z,1.0);
 	}
+	vec3 getAmbientColor(){return _ambColor;}
+
 	void setLightPositions(vec3* lightPos,GLuint num){
 		float* val=new GLfloat[num*4];
 		for(int i=0;i<num;i++){

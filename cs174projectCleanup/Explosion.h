@@ -17,18 +17,22 @@ public:
 		setModel(DrawableEntity(NULL,"Resources/sphere.obj"));
 		scale(0,0,0);
 		getModel().setDiffuseColor(1,1,1);
+		getModel().setHighlightColor(.5,.5,.5);
 	}
 
 	void update(){
 		float scaleVal=((float)_currTime/_frameTime);
 		float radiusVal=scaleVal*_maxRadius+3;
 		setScale(radiusVal,radiusVal,radiusVal);
-		getModel().setAlpha(1-scaleVal*.5);
+		getModel().setAlpha((1-scaleVal)*1);
 
 		if((_currTime/_frameTime)>.5){
 			_harmless=true;
 		}
-		//std::cout<<radiusVal<<std::endl;
+		if(_currTime>_frameTime){
+			this->setDelete();
+		}
+
 		_currTime++;
 	}
 
@@ -40,8 +44,7 @@ public:
 			return 0;
 		}
 	}
-	void onCollide(const GameEntity& g){
-	}
+	void onCollide(const GameEntity& g){}
 
 };
 
