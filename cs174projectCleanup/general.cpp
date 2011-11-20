@@ -5,6 +5,8 @@
 
 #include <queue>
 #include <cassert>
+#include <cstdlib>
+#include <ctime>
 
 /** This anonymous namespace holds definitions and declarations
   * related to ordering and drawing transparent objects.
@@ -43,6 +45,8 @@ namespace {
 namespace Globals
 {
 	void initApp(){
+		//Seed the random number generator
+		std::srand(std::time(NULL));
 
 		sProgram=InitShader("Resources/PhongShader_vertex.glsl","Resources/PhongShader_fragment.glsl");
 		initShaderVariables(sProgram);

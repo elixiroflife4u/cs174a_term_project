@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Explosion.h"
 #include "TurretEntity.h"
+#include "WanderingEnemy.h"
 
 namespace Globals{
 
@@ -98,6 +99,8 @@ namespace Globals{
 			w->scale(10,1,10);
 			w->translate(0,1,0);
 			addWall(w);
+
+			addEntity(new WanderingEnemy(vec3(-10,9,0)));
 
 			_count=0;
 		}

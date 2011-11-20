@@ -78,6 +78,7 @@ void Player::onCollide(const GameEntity& g){
 	switch(g.getId()) {
 	case ID_WALL:
 	case ID_ENEMY_TURRET:
+	case ID_WANDERING_EMEMY:
 		MobileEntity::placeAtEdge(g);
 		break;
 	case ID_BULLET_STRAIGHT:
