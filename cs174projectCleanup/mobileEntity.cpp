@@ -67,6 +67,7 @@ void MobileEntity::placeAtEdge(const GameEntity& g)
 			if(getVel().y<0)
 			{
 				newPos.y=b2.getPoint1().y+b1.getDimensions().y/2;
+				_jumpCount=1;
 			}
 		}else{
 			if(getVel().y>0)
@@ -80,7 +81,6 @@ void MobileEntity::placeAtEdge(const GameEntity& g)
 			setVelY(0);
 		}
 		setVel(getVel()*.85);
-		_jumpCount=1;
 		if(dot(getVel(),getVel())<.01){
 			setVel(0,0,0);
 		}

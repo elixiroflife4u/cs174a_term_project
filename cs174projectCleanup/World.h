@@ -16,7 +16,7 @@ namespace Globals
 	
 	//FOR OUR GAME//
 
-	const int WALL_COUNT=40;
+	const int WALL_COUNT=100;
 	const int GAMEENTITY_COUNT=200;
 	const int SCENE_COUNT=10;
 	const int LIGHT_COUNT=10;

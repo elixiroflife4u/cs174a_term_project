@@ -29,6 +29,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="TurretEntity.h" />
     <ClInclude Include="Wall.h" />
