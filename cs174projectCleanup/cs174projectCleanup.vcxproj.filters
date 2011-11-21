@@ -159,6 +159,12 @@
     <ClInclude Include="Shield.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="CurvyBulletEntity.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_main.cpp">
@@ -226,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="WanderingEnemy.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files\Helper Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@
 #include "IL\il.h"
 
 #include "General.h"
+
 using namespace Globals;
 
 void initGlut(int& argc, char** argv)

@@ -16,6 +16,7 @@
     <ClInclude Include="CameraEntity.h" />
     <ClInclude Include="CheckError.h" />
     <ClInclude Include="CollisionBox.h" />
+    <ClInclude Include="CurvyBulletEntity.h" />
     <ClInclude Include="DrawableEntity.h" />
     <ClInclude Include="EnemyEntity.h" />
     <ClInclude Include="Engine.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="MobileEntity.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="StraightBulletEntity.h" />
@@ -63,6 +65,7 @@
     <ClCompile Include="obj_loader\obj_parser.cpp" />
     <ClCompile Include="obj_loader\string_extra.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="RenderObjectManager.cpp" />
     <ClCompile Include="test_main.cpp" />

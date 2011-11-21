@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include "BulletEntity.h"
 
 WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wanderCount(0), _bulletDelay(BULLET_DELAY) {
 	translate(pos);
@@ -162,10 +163,13 @@ void WanderingEnemy::onCollide(const GameEntity& g){
 		MobileEntity::placeAtEdge(g);
 		break;
 	case ID_BULLET_STRAIGHT:
-		decHealth(1);
+		decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
 		break;
 	case ID_BULLET_GRENADE:
-		decHealth(5);
+		decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
+		break;
+	case ID_BULLET_CURVY:
+		decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
 		break;
 	case ID_EXPLOSION:
 		decHealth(1);

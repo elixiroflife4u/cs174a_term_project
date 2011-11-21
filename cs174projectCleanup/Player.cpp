@@ -107,7 +107,7 @@ void Player::update()
 			Globals::addBullet(ID_BULLET_GRENADE, 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 5);
 			break;
 		case 2: //other?
-
+			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*1, 0, 0);
 			break;
 		}
 	}

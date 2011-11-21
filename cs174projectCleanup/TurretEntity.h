@@ -2,6 +2,7 @@
 #define _TURRETENTITY
 
 #include "MobileEntity.h"
+#include "BulletEntity.h"
 
 class TurretEntity:public MobileEntity{
 private:
@@ -62,10 +63,13 @@ public:
 	void onCollide(const GameEntity& g){
 		switch(g.getId()){
 		case ID_BULLET_STRAIGHT:
-			decHealth(1);
+			decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
 			break;
 		case ID_BULLET_GRENADE:
-			decHealth(5);
+			decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
+			break;
+		case ID_BULLET_CURVY:
+			decHealth(dynamic_cast<const BulletEntity* >(&g)->getBulletDamage());
 			break;
 		case ID_EXPLOSION:
 			decHealth(1);

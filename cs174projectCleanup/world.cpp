@@ -2,6 +2,7 @@
 #include "GameEntity.h"
 #include "StraightBulletEntity.h"
 #include "GrenadeEntity.h"
+#include "CurvyBulletEntity.h"
 #include "Explosion.h"
 #include <algorithm>
 
@@ -88,6 +89,9 @@ namespace Globals
 			break;
 		case ID_BULLET_GRENADE:
 			wSoftEntities.push_back(new GrenadeEntity(startPosition,direction,initialVelMag));
+			break;
+		case ID_BULLET_CURVY:
+			wSoftEntities.push_back(new CurvyBulletEntity(startPosition, direction, initialVelMag));
 			break;
 		default:
 			throw new CException("Unknown bullet type given to addBullet()");
