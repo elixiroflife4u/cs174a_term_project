@@ -23,13 +23,19 @@ namespace Globals{
 	class Scene_1:public Scene{
 	private:
 		float _count;
+		CollisionBox c;
 		Wall* room1Door;
+		Wall* room1Door2;
+
+		bool room1Trigger;
+		bool bossTrigger;
+
 	public:
 		void setup(){
 			Player* pl=new Player();
 			currentCamera=pl->getCamera();
 			pl->translate(0,5,0);
-			pl->translate(125,0,330);
+			//pl->translate(125,0,330);
 			pl->rotate(0,-90,0);
 
 
@@ -53,11 +59,24 @@ namespace Globals{
 			addLight(p);
 
 			
-			addEntity(new TurretEntity(vec3(10,3.5,10)));
-			addEntity(new TurretEntity(vec3(-10,3.5,10)));
-			addEntity(new TurretEntity(vec3(0,3.5,10)));
+			//addEntity(new TurretEntity(vec3(10,3.5,10)));
+			//addEntity(new TurretEntity(vec3(-10,3.5,10)));
+			//addEntity(new TurretEntity(vec3(0,3.5,10)));
+			addEntity(new TurretEntity(vec3(50,3.5,45)));
+			//addEntity(new TurretEntity(vec3(50,3.5,55)));
 
+			addEntity(new TurretEntity(vec3(95,3.5,45)));
+			//addEntity(new TurretEntity(vec3(95,3.5,55)));
 
+			addEntity(new TurretEntity(vec3(150-85,5,330-50)));
+			addEntity(new TurretEntity(vec3(150-85,5,330+60)));
+
+			addEntity(new TurretEntity(vec3(150+40,5,330-50)));
+			addEntity(new TurretEntity(vec3(150+40,5,330+60)));
+
+			TurretEntity* t=new TurretEntity(vec3(125,28,490));
+			t->scale(5,5,5);
+			addEntity(t);
 
 			//large floor
 			Wall* w=new Wall();
@@ -178,6 +197,11 @@ namespace Globals{
 			room1Door=w=new Wall();
 			w->scale(20,90,8);
 			w->translate(125,55,330+75);
+			addWall(w);
+
+			room1Door2=w=new Wall();
+			w->scale(40,50,8);
+			w->translate(80,50,250);
 			addWall(w);
 
 			//cieling
@@ -379,6 +403,18 @@ namespace Globals{
 			w->scale(50,50,2);
 			addWall(w);
 			_count=0;
+
+			w=new Wall();
+			w->scale(100,100,75);
+			w->translate(150,50,330);
+			//addWall(w);
+
+			c.scale(200,100,75);
+			c.translate(150,50,330);
+
+			room1Trigger=false;
+			bossTrigger=false;
+
 		}
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
@@ -389,6 +425,7 @@ namespace Globals{
 			if(room1Door->getTranslate().y<80)
 				room1Door->translate(0,.1,0);
 
+			if(c.didCollide(getPlayer()->getHitBox())){}//std::cout<<"TEST"<<std::endl;
 		}
 		bool levelEnd()const{
 			return false;
