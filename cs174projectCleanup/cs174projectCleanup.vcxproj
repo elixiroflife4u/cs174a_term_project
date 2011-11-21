@@ -33,6 +33,7 @@
     <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="TurretEntity.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="WanderingEnemy.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="mat.h" />
     <ClInclude Include="obj_loader\list.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="WanderingEnemy.cpp" />
     <ClCompile Include="world.cpp" />
     <ClCompile Include="WorldEntity.cpp" />
   </ItemGroup>
