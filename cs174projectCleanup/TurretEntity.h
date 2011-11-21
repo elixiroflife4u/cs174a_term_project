@@ -32,8 +32,22 @@ public:
 	
 		const GameEntity* const p=Globals::getPlayer();
 
+		if(getHealth()<0){
+			setDelete();
+			Explosion* e= new Explosion(6,50);
+			e->translate(getTranslate());
+			Globals::addSoftEntity(e);
+		}
+
+
+		resetHightlight();
+
+
 		vec3 dir=p->getTranslate()-getModel(1).getTranslate();
+		if(dot(dir,dir)>pow(80.0,2))return;
+
 		vec3 dirNorm=normalize(dir);
+
 
 		float yRotate=-(atan2(0.0,1.0)-atan2(dir.x,dir.z))-M_PI/2;
 
@@ -44,20 +58,12 @@ public:
 		}
 
 		if(_bulletDelay==0){
-			Globals::addBullet(ID_BULLET_STRAIGHT,0,1, normalize(dir),getModel(1).getTranslate()+4*dirNorm);
+			Globals::addBullet(ID_BULLET_STRAIGHT,0,1, normalize(dir),getModel(1).getTranslate()+vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
 			_bulletDelay=5;
 		}
 
 		//decHealth(3);
-		if(getHealth()<0){
-			setDelete();
-			Explosion* e= new Explosion(6,50);
-			e->translate(getTranslate());
-			Globals::addSoftEntity(e);
-		}
 
-
-		resetHightlight();
 
 	}
 	void onCollide(const GameEntity& g){
