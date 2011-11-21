@@ -42,8 +42,6 @@ in vec4 o_vertexBitangent_modelspace;
 //Output: pixel color output
 out vec4 fColor;
 
-float tempDepth=1.0;
-
 void main(){
 
 	mat4 TBN = transpose(mat4(o_vertexTangent_modelspace,
@@ -67,23 +65,6 @@ void main(){
 	//vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x,-fUV.y) ).rgb * 2.0 - 1.0), 0);
 	vec4 TextureNormal_tangentspace = vec4(normalize(texture2D( NormalMap, vec2(fUV.x, fUV.y) ).rgb * 2.0 - 1.0), 0);
 
-
-
-
-
-
-	float depthMult=0.5;
-
-//	if(normalMapDepth==0.5){
-	//	depthMult=0.5;
-	//}else if(normalMapDepth==1.0){
-		//depthMult=1.0;
-//	}
-
-
-
-
-
 	vec4 n = normalize(normalMapDepth*TextureNormal_tangentspace+(1.0-normalMapDepth)*vec4(0,0,1,0));
 	/////////
 	//n = fNormal_worldspace;
@@ -91,7 +72,8 @@ void main(){
 
 	//n=normalize(vec4(0,0,1,0)*(1.0-max(normalMapDepth,0.0)));
 
-	if(dot(viewVec,fNormal_worldspace)<0){
+	if(dot(normalize(viewVec),fNormal_worldspace)<0&&alpha!=1.0){
+		fColor.w=0;
 		return;
 	}
 
@@ -128,7 +110,4 @@ void main(){
 	}
 
 	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
-	//fColor=vec4(1,1,1,1)*normalMapDepth.z;
-	//fColor=n;
-	//fColor=TextureNormal_tangentspace;
 }

@@ -18,7 +18,7 @@ protected:
 
 		for(int i=0;i<MAX_MODELS;i++){
 			if((&getModel(i))!=NULL)
-				getModel(i).setHighlightColor(1,0,0);
+				getModel(i).setHighlightColor(1,.1,.1);
 		}
 	}
 	void resetHightlight(){

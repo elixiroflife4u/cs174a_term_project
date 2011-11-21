@@ -11,10 +11,10 @@ public:
 		:MobileEntity(ID_ENEMY_TURRET),_bulletDelay(5)
 	{
 		translate(pos);
-		setModel(DrawableEntity(NULL,"Resources/turretBase.obj"));	
-		setModel(DrawableEntity(NULL,"Resources/turretTop.obj"),1);
+		setModel(DrawableEntity("resources/turretTexture.png","resources/turretBase.obj"));	
+		setModel(DrawableEntity("resources/turretTexture.png","resources/turretTop.obj"),1);
 		getModel(1).setTranslate(0,.75,0);
-		setModel(DrawableEntity(NULL,"Resources/turretBarrel.obj"),2);
+		setModel(DrawableEntity("resources/turretTexture.png","resources/turretBarrel.obj"),2);
 		getModel(2).setTranslate(.5,0,0);
 		getModel(2).setParent(&getModel(1));
 
@@ -24,6 +24,7 @@ public:
 		scale(3.5,3.5,3.5);
 
 		this->setHitbox(b);
+
 	}
 
 	void update(){
@@ -37,7 +38,7 @@ public:
 
 		getModel(1).setRotate(0,yRotate*(360/(2*M_PI)),0);
 
-		if(dot(dir,dir)<pow(40.0,2)){
+		if(dot(dir,dir)<pow(80.0,2)){
 			_bulletDelay--;
 		}
 

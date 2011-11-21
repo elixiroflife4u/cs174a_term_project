@@ -190,6 +190,8 @@ NEXT_J:
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
 
+		glEnable( GL_BLEND );
+
 		currentCamera->setAspectRatio(resolution.x/resolution.y);
 		setCameraTransMatrix(currentCamera->getCameraTransformationMatrix());
 		setPerspectiveMatrix(currentCamera->getPerspectiveMatrix());
@@ -236,9 +238,11 @@ NEXT_J:
 		d.setAlpha(.75);
 
 		w.setModel(d);
-		//w.getModel().translate(0,0,.5);
 		w.draw();
 
+		w.translate(0,-.02,0);
+		w.setScale((Globals::getPlayer()->getShieldCharge()/Player::MAX_SHIELD)*.5,.01,.1);
+		w.draw();
 
 		glDisable(GL_BLEND);
 		glutSwapBuffers();
@@ -268,6 +272,8 @@ NEXT_J:
 		case 'Q':
 		case 'q':
 			Globals::KEY_Q = val;
+			//if(!val&&getPlayer()!=NULL)getPlayer()->decWeapon();
+
 			break;
 		case 'E':
 		case 'e':
