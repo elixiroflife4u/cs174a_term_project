@@ -27,7 +27,6 @@ public:
 	{
 		setTexture(tn);
 		setModel(mn);
-
 		
 		if(tn!=NULL)CTextureManager::GetInstance()->GetTexture(tn);
 		if(mn!=NULL)CRenderObjectManager::GetInstance()->GetRenderObject(mn)->activateObject(Globals::sProgram);
@@ -66,7 +65,7 @@ public:
 	}
 	inline void setShininess(float f){_shininess=f;}
 	inline void setTexture(char* t){_texName=t;if(t=="")_texName=NULL;}
-	inline void setNormalMap(char* t){_normalMapName=t;if(t=="")_normalMapName=NULL;}
+	inline void setNormalMap(char* t){_normalMapName=t;if(t=="")_normalMapName=NULL;else setNormalMapDepth(1.0);}
 	inline void setNormalMapDepth(float f){_normalMapDepth=f;}
 
 	inline void setAlpha(float a)

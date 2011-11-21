@@ -18,6 +18,8 @@ public:
 		scale(0,0,0);
 		getModel().setDiffuseColor(1,1,1);
 		getModel().setHighlightColor(.5,.5,.5);
+		getModel().setNormalMap("Resources/floorNormal.jpg");
+		getModel().setNormalMapDepth(.1);
 	}
 
 	void update(){

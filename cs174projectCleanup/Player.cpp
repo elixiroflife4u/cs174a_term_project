@@ -2,20 +2,21 @@
 #include "Engine.h"
 #include "World.h"
 #include "BulletEntity.h"
+#include "Shield.h"
 
 #include <iostream>
 void Player::update()
 {
 	///@todo implement
 
-	if(getHealth()<0){
+	if(getTranslate().y<-50)setHealth(0);
 
-		
-		Explosion* e = new Explosion(6,10);
+	if(getHealth()<=0){
+		Explosion* e = new Explosion(6,20);
 		e->translate(getTranslate());
 		Globals::addSoftEntity(e);
 
-		setTranslate(0,5,0);
+		setTranslate(0,10,0);
 		setHealth(MAX_HEALTH);
 		return;
 	}
@@ -51,9 +52,19 @@ void Player::update()
 	//rotation on the XZ-(horiontal)plane/Y-axis since it seems more
 	//natural to me.
 	vec4 localAccel;
-	if(Globals::KEY_Q) _currentWeapon--;
-	if(Globals::KEY_E) _currentWeapon++;
-	_currentWeapon=abs(_currentWeapon%3);
+	if(Globals::KEY_Q) Q_PRESSED=true;
+	if(Globals::KEY_E) E_PRESSED=true;
+
+	if(!Globals::KEY_Q && Q_PRESSED){
+		_currentWeapon--;
+		Q_PRESSED=false;
+	}
+	if(!Globals::KEY_E && E_PRESSED){
+		_currentWeapon++;
+		E_PRESSED=false;
+	}
+	if(_currentWeapon==-1)_currentWeapon=2;
+	_currentWeapon=_currentWeapon%3;
 
 	if(Globals::KEY_W) localAccel += vec4(0,0,-ACCEL_AMOUNT,0);
 	if(Globals::KEY_S) localAccel += vec4(0,0,ACCEL_AMOUNT,0);
@@ -83,27 +94,40 @@ void Player::update()
 	if(Globals::MOUSE_EDGE_LEFT) {
 		///@todo Find good values for these constants. Remember to offset the starting location
 		/// so that it doesn't instantly collide with its creator.
-		vec4 dir=(getModel(1).getTransformationMatrix()*vec4(0,0,-1,0));
+		vec4 dir=normalize((getModel(1).getTransformationMatrix()*vec4(0,0,-1,0)));
+		vec4 dirR=normalize((getModel(1).getTransformationMatrix()*vec4(-1,0,0,0)));
 
 		switch(_currentWeapon){
 		case 0: //straight
-			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate(), 0, 10);
+			//if(!Globals::MOUSE_LEFT)break;
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6, 0, 10);
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6, 0, 10);
 			break;
 		case 1: //grenade
-			Globals::addBullet(ID_BULLET_GRENADE, 0, 3.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate(), 0, 5);
+			Globals::addBullet(ID_BULLET_GRENADE, 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 5);
 			break;
 		case 2: //other?
 
 			break;
-
-
-
-
 		}
-
-		
-		//Globals::a
 	}
+
+	
+	if(Globals::MOUSE_EDGE_RIGHT){
+		if(_shieldCharge==MAX_SHIELD){
+			Globals::addEntity(new Shield(getTranslate(),3,30,this));
+			_shieldCharge=0;
+		}
+	}
+
+	if(_shieldCharge<MAX_SHIELD)_shieldCharge++;
+
+	float damageRatio=(MAX_HEALTH/2-getHealth())/MAX_HEALTH*5;
+	if(damageRatio<0)damageRatio=0;
+	getModel().setNormalMapDepth(damageRatio);
+	getModel(1).setNormalMapDepth(damageRatio);
+
+
 
 	resetHightlight();
 }
