@@ -3,12 +3,20 @@
 
 #include "MobileEntity.h"
 
+/** The BulletEntity abstract class is the parent of
+  * all bullet and projectile classes. It provides
+  * an interface to get the damage a bullet causes upon
+  * impact.
+  */
 class BulletEntity: public MobileEntity{
 protected:
-	//the direction
-	float bulletDamage;
+	float bulletDamage; ///< Damage caused on impact.
 public:
-	//some contructor taking a vec3 of starting
+	/** Constructs a new BulletEntity.
+	  * @param startPosition The starting position.
+	  * @param damage The damage caused to whatever the bullet hits.
+	  * @param id A GameEntity id corresponding to a concrete bullet type.
+	  */
 	BulletEntity(vec3 startPosition, float damage, unsigned int id) 
 		: MobileEntity(id), bulletDamage(damage)
 	{

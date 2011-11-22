@@ -1,16 +1,26 @@
 #ifndef guard_straightbulletentity_h
 #define guard_straightbulletentity_h
 #include "BulletEntity.h"
+/** A StraightBulletEntity is a bullet that travels in a straight
+  * line. It accelerates at a given constant rate for a given number
+  * of frames from a given starting velocity. Afterwards, it cruises
+  * at the obtained speed until it collides.
+  */
 class StraightBulletEntity: public BulletEntity
 {
 private:
-	int numOfAcclUpdates;
+	int numOfAcclUpdates; ///< Number of frames until accleration is reset to 0.
 
 public:
 	/** @brief the straight bullet types will have the id defined  GameEntity.h
 	* All straight bullets will take the accel and  initial velocity, 
 	* and multiply them with initial direction before storing them.
-	* @param numberOfAcclUpdates is the number of frames for which the bullet will accelerate for.
+	  * @param accelMag Magnitude of the acceleration vector.
+	  * @param initialVelMag Initial magnitude of the velocity vector.
+	  * @param direction Direction of bullet travel.
+	  * @param startPosition Initial position.
+	  * @param damage Damage factor.
+	  * @param numberOfAcclUpdates Number of frames until accleration is reset to 0.
 	*/
 	StraightBulletEntity(float accelMag, float initialVelMag, vec3 direction, 
 		vec3 startPosition, float damage, int numberOfAcclUpdates)

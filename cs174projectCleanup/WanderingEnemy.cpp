@@ -26,6 +26,13 @@ WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wa
 
 }
 
+/** Clamps a given value between two extremes.
+  * @tparam T The type of input and output.
+  * @param val Value to clamp.
+  * @param min Minimum.
+  * @param max Maximum.
+  * @return min if val is less; max if val is greater; val otherwise.
+  */
 template <typename T>
 static inline T clamp(T val, T min, T max) {
 	return std::max(std::min(val, max), min);
@@ -33,9 +40,9 @@ static inline T clamp(T val, T min, T max) {
 
 /** Returns the next angle that an object should face at
   * if its turning rate is limited.
-  * @param The current angle in degrees.
-  * @param The desired angle in degrees.
-  * @param The maximal difference between the current and next angle.
+  * @param current The current angle in degrees.
+  * @param desired The desired angle in degrees.
+  * @param max The maximal difference between the current and next angle.
   * @return The next angle.
   */
 static double nextDegree(double current, double desired, double max) {

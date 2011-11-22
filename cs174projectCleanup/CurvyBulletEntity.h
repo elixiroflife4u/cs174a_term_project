@@ -3,18 +3,24 @@
 #include "BulletEntity.h"
 #include "Quaternion.h"
 
+/** The CurvyBulletEntity is a bullet that travel in a flight curve
+  * in the shape of a spiral.
+  */
 class CurvyBulletEntity: public BulletEntity
 {
 private:
-	vec3 dir, pos;
-	float velocityMag;
-	float radius;
-	Quaternion rotation;
+	vec3 dir, ///< Current direction.
+		 pos; ///< Current position.
+	float velocityMag; ///< Speed.
+	float radius; ///< Radius of the flight curve.
+	Quaternion rotation; ///< Current rotation with respect to flight curve.
 
 	PointLight* p;
 public:
-	/** @brief 
-	* @param 
+	/** @brief Constructs a new CuvryBulletEntity.
+	* @param posI Initial position.
+	* @param dirI Initial direction.
+	* @param velocityMagI Initial speed.
 	*/
 	CurvyBulletEntity(vec3 posI, vec3 dirI, float velocityMagI)
 		: BulletEntity(posI, 10, ID_BULLET_CURVY), dir(dirI), pos(posI), velocityMag(velocityMagI), radius(1.2f)
@@ -47,8 +53,6 @@ public:
 		}
 		//std::cout<<"curvy destoyed"<<std::endl;
 	}
-	/** @brief  
-	*/
 	void update()
 	{
 		pos += normalize(dir)*velocityMag;
