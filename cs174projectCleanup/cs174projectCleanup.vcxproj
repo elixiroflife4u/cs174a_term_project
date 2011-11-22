@@ -116,7 +116,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;libs\SDL.lib;libs\SDLmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
