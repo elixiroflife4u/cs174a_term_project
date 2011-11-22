@@ -168,6 +168,9 @@
     <ClInclude Include="Text2D.h">
       <Filter>Header Files\Helper Classes</Filter>
     </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_main.cpp">
@@ -241,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="Text2D.cpp">
       <Filter>Source Files\Helper Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,7 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shield.h" />
+    <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="TurretEntity.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="RenderObjectManager.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Texture.cpp" />
