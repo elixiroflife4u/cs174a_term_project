@@ -19,8 +19,8 @@ private:
 	int _bulletDelay; ///< Number of frames remaining until the enemy can fire a bullet.
 	double _desiredHeading; ///< Desired wander heading in degrees
 
-	static const int WANDER_COUNT = 60; ///< Number of frames between deciding the wander direction.
-	static const int BULLET_DELAY = 5; ///< Number of frames between firing bullets.
+	static const int WANDER_COUNT = 120; ///< Number of frames between deciding the wander direction.
+	static const int BULLET_DELAY = 10; ///< Number of frames between firing bullets.
 	static const double FOV, ///< The entities field of view in the XZ plane (infitine elsewhere).
 	                    MIN_DISTANCE, ///< If closer to player than this, it will fire but not translate.
 	                    MAX_DISTANCE, ///< If farther from player than this, it will ignore the player.

@@ -14,11 +14,11 @@ public:
 	Explosion(float maxRadius=3.0, int frameTime=4, float damagePerFrame=0.0)
 		:GameEntity(ID_EXPLOSION),_maxRadius(maxRadius),_frameTime(frameTime),_currTime(0),_harmless(false),_damagePerFrame(damagePerFrame)
 	{
-		setModel(DrawableEntity(NULL,"Resources/sphere.obj"));
+		setModel(DrawableEntity(NULL,"resources/sphere.obj"));
 		scale(0,0,0);
 		getModel().setDiffuseColor(1,1,1);
 		getModel().setHighlightColor(.5,.5,.5);
-		getModel().setNormalMap("Resources/floorNormal.jpg");
+		getModel().setNormalMap("resources/floorNormal.jpg");
 		getModel().setNormalMapDepth(.1);
 	}
 
@@ -26,7 +26,7 @@ public:
 		float scaleVal=((float)_currTime/_frameTime);
 		float radiusVal=scaleVal*_maxRadius+3;
 		setScale(radiusVal,radiusVal,radiusVal);
-		getModel().setAlpha((1-scaleVal)*1);
+		getModel().setAlpha((1-scaleVal)*.6);
 
 		if((_currTime/_frameTime)>.5){
 			_harmless=true;

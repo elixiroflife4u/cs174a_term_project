@@ -15,13 +15,14 @@ namespace Globals
 	class Scene;
 	
 	//FOR OUR GAME//
+	extern bool firstPerson;
+
 
 	const int WALL_COUNT=100;
 	const int GAMEENTITY_COUNT=200;
 	const int SCENE_COUNT=10;
 	const int LIGHT_COUNT=10;
 	const int SOFT_ENTITIES_COUNT=100;
-
 
 	extern GameEntity* wPlayer;
 	typedef std::list<GameEntity*> GameEntityList;
@@ -40,7 +41,7 @@ namespace Globals
 	bool deleteLight(PointLight* pl);
 
 	const Player* const getPlayer();
-
+	GameEntity* getPlayerGE();
 	/** Attempts to construct a new bullet and add it to the world.
 	  * @param bulletType The type of bullet as defined in GameEntityType.
 	  * @param accelMag Magnitude of the acceleration vector.

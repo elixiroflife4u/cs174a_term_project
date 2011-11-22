@@ -53,6 +53,7 @@ namespace Globals
 
 		glClearColor( .05f, .075f, .1f, 1.f );
 		glClearColor( .3f, .2f, .25f, 1.f ); //lightBlue Sky
+		glClearColor( .7f, .9f, .9f, 1.f ); //lightBlue Sky
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
@@ -276,8 +277,6 @@ NEXT_J:
 		case 'Q':
 		case 'q':
 			Globals::KEY_Q = val;
-			//if(!val&&getPlayer()!=NULL)getPlayer()->decWeapon();
-
 			break;
 		case 'E':
 		case 'e':
@@ -288,7 +287,9 @@ NEXT_J:
 			break;
 		case ';':
 			viewFullscreen();
-
+			break;
+		case '\'':
+			if(!val)firstPerson=!firstPerson;
 		}
 	}
 	void callbackKeyboard(unsigned char key, int x, int y){

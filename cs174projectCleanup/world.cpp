@@ -9,6 +9,8 @@ namespace Globals
 {
 	//FOR OUR GAME//
 
+	bool firstPerson=false;
+
 	//transparent object heap
 	GameEntity* wPlayer=NULL;
 
@@ -128,6 +130,9 @@ namespace Globals
 
 	const Player* const getPlayer(){
 		return static_cast<const Player*>(wPlayer);
+	}
+	GameEntity* getPlayerGE(){
+		return wPlayer;
 	}
 
 	vec3 grav=vec3(0,-.1,0);

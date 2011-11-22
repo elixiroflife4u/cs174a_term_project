@@ -89,9 +89,11 @@ void main(){
 
 		//Diffuse Pass
 		float diffuseMult = dot(n, lightVecNorm_tbn);
+		
 		diffusePass  += max(lightColor[i]* diffuseMult * (texColor + diffuseColor) * (1/pow(dot(lightVec, lightVec), lightFalloff[i]/2)) * lightBrightness[i],vec4(0,0,0,1));
+		//diffusePass+=vec4(1,1,1,1)*diffuseMult;
 		diffusePass   = clamp(diffusePass, 0.0, 1.0);
-
+		
 
 		//Specular Pass
 		float specularMult;
@@ -110,4 +112,5 @@ void main(){
 	}
 
 	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
+
 }

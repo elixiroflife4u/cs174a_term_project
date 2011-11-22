@@ -23,7 +23,7 @@ public:
 		///@todo Create and set an actual bullet model.
 		GameEntity::setModel(DrawableEntity(NULL,"Resources/sphere.obj",this));
 		getModel().setDiffuseColor(1,.25,0);
-		scale(.25,.25,.25);
+		scale(.35,.35,.35);
 		getModel().setHighlightColor(.5,.25,0);
 	}
 	/** @brief update the position of the bullet. the bullet accelerates for numOfAcclUpdate updates

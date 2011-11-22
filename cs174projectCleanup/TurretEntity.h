@@ -33,7 +33,7 @@ public:
 
 		if(getHealth()<0){
 			setDelete();
-			Explosion* e= new Explosion(6,50);
+			Explosion* e= new Explosion(3*getScale().x,50);
 			e->translate(getTranslate());
 			Globals::addSoftEntity(e);
 		}
@@ -50,15 +50,15 @@ public:
 
 		float yRotate=-(atan2(0.0,1.0)-atan2(dir.x,dir.z))-M_PI/2;
 
-		getModel(1).setRotate(0,yRotate*(360/(2*M_PI)),0);
+		getModel(1).setRotate(0,yRotate*(360/(2*M_PI))-getRotate().y,0);
 
 		if(dot(dir,dir)<pow(80.0,2)){
 			_bulletDelay--;
 		}
 
 		if(_bulletDelay==0){
-			Globals::addBullet(ID_BULLET_STRAIGHT,0,1, normalize(dir),getModel(1).getTranslate()+vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
-			_bulletDelay=5;
+			Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, normalize(dir),getModel(1).getTranslate()+vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
+			_bulletDelay=10;
 		}
 
 		//decHealth(3);
@@ -68,10 +68,10 @@ public:
 	void onCollide(const GameEntity& g){
 		switch(g.getId()){
 		case ID_BULLET_STRAIGHT:
-			decHealth(1);
+			decHealth(2);
 			break;
 		case ID_BULLET_GRENADE:
-			decHealth(5);
+			decHealth(4);
 			break;
 		case ID_EXPLOSION:
 			decHealth(1);

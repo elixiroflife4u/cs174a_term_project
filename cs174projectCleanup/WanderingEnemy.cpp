@@ -7,12 +7,22 @@
 
 WanderingEnemy::WanderingEnemy(vec3 pos) : MobileEntity(ID_WANDERING_EMEMY), _wanderCount(0), _bulletDelay(BULLET_DELAY) {
 	translate(pos);
-	setModel(DrawableEntity(NULL,"Resources/cube.obj"));
-	setModel(DrawableEntity(NULL,"Resources/cube.obj"),1);
+	setModel(DrawableEntity("resources/wanderingTexture.png","resources/wanderingBase.obj"));
+	setModel(DrawableEntity(NULL,NULL),1);
+	setModel(DrawableEntity("resources/wanderingTexture.png","resources/wanderingTop.obj"),2);
+	getModel(2).setRotate(0,135,0);
+	getModel().rotate(0,45,0);
 	DrawableEntity& nose = getModel(1);
-	nose.setScale(1/3.0, .2, 1/3.0);
-	nose.translate(2/3.0, 0, 0);
-	scale(3,5,3);
+	scale(3,3,3);
+
+	getModel().translate(0,-.5,0);
+	getModel(1).translate(0,-.5,0);
+	getModel(2).translate(0,-.5,0);
+	//getModel(1).scale(1,2,1);
+
+	CollisionBox b=CollisionBox(vec3(1.5,2.5,1.5));
+	setHitbox(b);
+
 }
 
 template <typename T>
@@ -58,7 +68,7 @@ void WanderingEnemy::wander() {
 	} else
 		_wanderCount--;
 
-	getModel().setDiffuseColor(0,0,1);
+	//getModel().setDiffuseColor(0,0,1);
 }
 
 void WanderingEnemy::lockOnPlayer(double xz, double distance, double currentXZ) {
@@ -78,23 +88,23 @@ void WanderingEnemy::lockOnPlayer(double xz, double distance, double currentXZ) 
 	const vec4 direction = RotateY(currentXZ) * local;
 	const vec3 dirNorm = normalize(vec3(direction.x, direction.y, direction.z));
 	if(!_bulletDelay) {
-		Globals::addBullet(ID_BULLET_STRAIGHT,0,1, dirNorm, getModel(1).getTranslate() + 4*dirNorm);
+		Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, dirNorm, getModel(1).getTranslate() + 0*dirNorm);
 
 		_bulletDelay = BULLET_DELAY;
 	} else
 		_bulletDelay--;
 
 	//Set locked-on color.
-	getModel().setDiffuseColor(1,0,0);
+	//getModel().setDiffuseColor(1,0,0);
 }
 
-const double WanderingEnemy::FOV = 45 * DegreesToRadians;
+const double WanderingEnemy::FOV = 180 * DegreesToRadians;
 const double WanderingEnemy::MIN_DISTANCE = 15;
 const double WanderingEnemy::MAX_DISTANCE = 50;
 const double WanderingEnemy::MAX_ROTATE = 5;
 
 void WanderingEnemy::update() {
-	static const float MAX_VEL = .5;
+	float MAX_VEL = 1;
 
 	//Check if player is within "sight"
 	//The enemy has a FOV radian field-of-view on
@@ -105,6 +115,8 @@ void WanderingEnemy::update() {
 	if(player) {
 		const vec3 toPlayer = player->getTranslate() - getTranslate();
 		const double distance = length(toPlayer);
+
+		if(distance > MAX_DISTANCE)MAX_VEL=.2;
 
 		//The MIN_DISTANCE is tested in lockOnPlayer since
 		//we still want to lock on, just not translate.
@@ -142,7 +154,7 @@ void WanderingEnemy::update() {
 
 	//Move towards desired heading
 	setRotate(0, nextDegree(currentXZ, _desiredHeading, MAX_ROTATE), 0);
-
+	getModel().setRotate(0, -nextDegree(currentXZ, _desiredHeading, MAX_ROTATE), 0);
 	//Check health
 	if(getHealth()<0){
 		setDelete();
@@ -165,10 +177,10 @@ void WanderingEnemy::onCollide(const GameEntity& g){
 		decHealth(1);
 		break;
 	case ID_BULLET_GRENADE:
-		decHealth(5);
+		decHealth(4);
 		break;
 	case ID_EXPLOSION:
-		decHealth(1);
+		decHealth(2);
 		break;
 	}
 }
