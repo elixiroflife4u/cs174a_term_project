@@ -35,7 +35,7 @@ public:
 	*/
 	Quaternion Quaternion::getLocalQuaternion(const vec3 &v, float angle);
 
-	/**@bried Convert to Axis/Angles
+	/**@brief Convert to Axis/Angles
 	*/
 	void Quaternion::getAxisAngle(vec3& axis, float& angle);
 

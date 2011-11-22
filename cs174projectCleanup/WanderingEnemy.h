@@ -48,7 +48,7 @@ private:
 	void lockOnPlayer(double xz, double distance, double currentXZ);
 public:
 	/** Constructs a new enemy.
-	  * @pos The enemy's global position.
+	  * @param pos The enemy's global position.
 	  */
 	WanderingEnemy(vec3 pos = vec3(0,0,0));
 

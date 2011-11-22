@@ -4,9 +4,13 @@
 #include <exception>
 #include <string>
 
+/** The common exception type for all project-specific
+  * exceptions.
+  */
 class CException : public std::exception
 {
 public:
+	/** Gets the error message. */
 	const char* what() const  { return m_strMessage.c_str(); }
 
 	CException(const std::string& strMessage="") : m_strMessage(strMessage)  { }
