@@ -7,6 +7,7 @@ uniform sampler2D NormalMap;
 //Normal Map "Depth" Scaling
 uniform float normalMapDepth;
 uniform bool hasTexture;
+uniform bool hasFog;
 
 //Constants: material properties
 uniform vec4 diffuseColor;
@@ -111,6 +112,15 @@ void main(){
 		diffusePass.w=alpha*texColor.w;
 	}
 
-	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
 
+
+
+	fColor = vec4(ambientColor.xyz,0)+diffusePass+specularPass;
+	
+	if(hasFog){
+		vec4 fogColor=vec4(.35,.4,.375,0);
+		float fogMult=min(pow(dot(viewVec,viewVec),.8)*.00025,1);
+
+		fColor=fColor+fogColor*fogMult;
+	}
 }

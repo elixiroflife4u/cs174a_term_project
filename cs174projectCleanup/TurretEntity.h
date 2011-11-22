@@ -58,7 +58,7 @@ public:
 		}
 
 		if(_bulletDelay==0){
-			Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, normalize(dir),getModel(1).getTranslate()+vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
+			Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, normalize(p->getTranslate()-(getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z))),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
 			_bulletDelay=10;
 		}
 

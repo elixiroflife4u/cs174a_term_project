@@ -21,12 +21,14 @@ private:
 
 	int bulletDelay;
 
+	int _shieldTime;
+
 public:
 	static const int MAX_HEALTH=100;
-	static const int MAX_SHIELD=250;
+	static const int MAX_SHIELD=500;
 	static const int MAX_DELAY=6;
 	Player()
-		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false)
+		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false),_shieldTime(0)
 	{
 		setModel(DrawableEntity("resources/tankTexture.png","resources/tankBase.obj",this));
 		getModel().scale(.5,.5,.5);
@@ -68,6 +70,7 @@ public:
 	int getLivesNum(){return _livesCount;}
 	void incWeapon(){_currentWeapon++;}
 	void decWeapon(){_currentWeapon++;}
+	int getWeapon()const {return _currentWeapon;}
 };
 
 

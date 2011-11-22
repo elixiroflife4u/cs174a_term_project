@@ -15,6 +15,7 @@ namespace Globals
 	extern CameraEntity*  currentCamera;
 
 	extern unsigned int frameCount;
+	extern float universalNormalMapDepthMult;
 
 	//Key States
 	extern bool KEY_W;
@@ -63,6 +64,8 @@ namespace Globals
 	extern GLuint loc_lightFalloff;
 	extern GLuint loc_lightBrightness;
 
+	extern GLuint loc_hasFog;
+
 	void initShaderVariables(GLuint p);
 
 	void setModelTransMatrix(mat4 m);
@@ -95,6 +98,7 @@ namespace Globals
 
 	void setLights(PointLight** pl, GLuint num);
 
+	void setHasFog(bool f);
 }
 
 #endif //_ENGINE
