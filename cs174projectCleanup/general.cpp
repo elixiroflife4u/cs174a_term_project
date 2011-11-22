@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
+#include "Text2D.h"
 
 /** This anonymous namespace holds definitions and declarations
   * related to ordering and drawing transparent objects.
@@ -235,7 +236,7 @@ NEXT_J:
 		setCameraPosition(vec3(0,0,.5));
 
 		Wall w=Wall();
-		w.translate(-(.49)*(resolution.x/resolution.y),.48,-10);
+		w.translate(-(.4)*(resolution.x/resolution.y),.48,-10);
 		w.scale((Globals::getPlayer()->getHealth()/Player::MAX_HEALTH)*.5,.025,.1);
 
 		DrawableEntity d=DrawableEntity(NULL,"Resources/cube.obj");
@@ -248,6 +249,26 @@ NEXT_J:
 		w.translate(0,-.02,0);
 		w.setScale((Globals::getPlayer()->getShieldCharge()/Player::MAX_SHIELD)*.5,.01,.1);
 		w.draw();
+
+		Globals::setModelTransMatrix(mat4());
+		Text2D n; 
+		n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
+		n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
+
+		char* weaponText="";
+		switch(getPlayer()->getWeapon()){
+		case 2:
+			weaponText="CURVY BOOLET";
+			break;
+		case 0:
+			weaponText="MACHINE GUN";
+			break;
+		case 1:
+			weaponText="MORTAR";
+			break;
+
+		}
+		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
 
 		glDisable(GL_BLEND);
 		glutSwapBuffers();
@@ -269,7 +290,7 @@ NEXT_J:
 		case 'S':
 		case 's':
 			Globals::KEY_S = val;
-			break;
+			break;//
 		case 'D':
 		case 'd':
 			Globals::KEY_D = val;
@@ -290,6 +311,23 @@ NEXT_J:
 			break;
 		case '\'':
 			if(!val)firstPerson=!firstPerson;
+			break;
+		case 'O':
+		case 'o':
+			universalNormalMapDepthMult+=.1;
+			break;
+		case 'P':
+		case 'p':
+			universalNormalMapDepthMult-=.1;
+			break;
+		case 'k':
+		case 'K':
+			setHasFog(false);
+			break;
+		case 'l':
+		case 'L':
+			setHasFog(true);
+			break;
 		}
 	}
 	void callbackKeyboard(unsigned char key, int x, int y){

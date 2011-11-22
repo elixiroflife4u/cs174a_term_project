@@ -9,8 +9,8 @@ public:
 	Wall()
 		:GameEntity(ID_WALL)
 	{
-		setModel(DrawableEntity(NULL,"Resources/cube.obj"));
-		getModel().setDiffuseColor(.5,.5,.6);
+		setModel(DrawableEntity("Resources/mechTexture.png","Resources/cube.obj"));
+		//getModel().setDiffuseColor(.5,.5,.6);
 		getModel().setUVScale(20,20);
 		getModel().setNormalMap("Resources/mechNormal2.jpg");
 		getModel().setNormalMapDepth(1);

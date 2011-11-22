@@ -103,8 +103,8 @@ void Player::update()
 		switch(_currentWeapon){
 		case 0: //straight
 			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
-			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 0, 10);
-			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 0, 10);
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 2, 10);
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 2, 10);
 			bulletDelay=MAX_DELAY;
 			break;
 		case 1: //grenade
@@ -113,19 +113,22 @@ void Player::update()
 			bulletDelay=MAX_DELAY*2;
 			break;
 		case 2: //other?
-			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*1, 0, 0);
+			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
+			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 0);
+			bulletDelay=MAX_DELAY;
 			break;
 		}
 	//}
 
-	
+	//SHIELDING
 	if(Globals::MOUSE_EDGE_RIGHT){
 		if(_shieldCharge>=MAX_SHIELD){
-			Globals::addEntity(new Shield(getTranslate(),3,50,this));
+			Globals::addEntity(new Shield(getTranslate(),3,100,this));
 			_shieldCharge=0;
+			_shieldTime=90;
 		}
 	}
-
+	if(_shieldTime>0)_shieldTime--;
 	if(_shieldCharge<MAX_SHIELD)_shieldCharge++;
 
 	float damageRatio=(MAX_HEALTH/2-getHealth())/MAX_HEALTH*5;
@@ -145,6 +148,8 @@ void Player::update()
 }
 
 void Player::onCollide(const GameEntity& g){
+	
+
 	switch(g.getId()) {
 	case ID_WALL:
 	case ID_ENEMY_TURRET:
@@ -160,6 +165,7 @@ void Player::onCollide(const GameEntity& g){
 }
 
 void Player::onBulletCollision(float damage) {
+	if(_shieldTime>0)return;
 	decHealth(damage);
 
 }

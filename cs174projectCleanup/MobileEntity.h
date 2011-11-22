@@ -65,7 +65,7 @@ public:
 		translate(getVel());
 	}
 	virtual void onCollide(const GameEntity& g)=0;
-	void placeAtEdge(const GameEntity& g);
+	virtual void placeAtEdge(const GameEntity& g);
 	void jump(float force=1.0);
 
 	float getHealth() const{

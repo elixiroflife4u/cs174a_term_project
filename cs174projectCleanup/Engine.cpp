@@ -7,7 +7,7 @@ namespace Globals
 	CameraEntity defaultCamera;
 	CameraEntity*  currentCamera=&defaultCamera;
 	unsigned int frameCount = 0;
-
+	float universalNormalMapDepthMult=1;
 
 	vec3 lightPositions[10];
 	float lightFalloff[10];
@@ -73,6 +73,9 @@ namespace Globals
 	GLuint loc_lightFalloff=0;
 	GLuint loc_lightBrightness=0;
 
+	//fog variable location
+	GLuint loc_hasFog;
+
 	void initShaderVariables(GLuint p){
 		loc_modelTransMat=glGetUniformLocation(p, "vTransform");
 		loc_camTransMat=glGetUniformLocation(p, "camTransform");
@@ -98,6 +101,8 @@ namespace Globals
 		loc_lightColor=glGetUniformLocation(p, "lightColor");
 		loc_lightFalloff=glGetUniformLocation(p, "lightFalloff");
 		loc_lightBrightness=glGetUniformLocation(p, "lightBrightness");
+
+		loc_hasFog=glGetUniformLocation(p, "hasFog");;
 	}
 
 	void setModelTransMatrix(mat4 m){
@@ -141,7 +146,7 @@ namespace Globals
 		CTextureManager::GetInstance()->GetTexture(t)->Bind();
 	}
 	void setNormalMapDepth(float f){
-		glUniform1f(loc_normalDepth,(GLfloat)f);
+		glUniform1f(loc_normalDepth,(GLfloat)f*universalNormalMapDepthMult);
 	}
 
 	void setDiffuseColor(vec3 c){
@@ -223,6 +228,9 @@ namespace Globals
 
 	}
 
+	void setHasFog(bool f){
+		glUniform1f(loc_hasFog,f);
+	}
 
 
 }
