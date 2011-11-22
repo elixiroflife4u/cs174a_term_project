@@ -14,6 +14,8 @@ private:
 	float velocityMag; ///< Speed.
 	float radius; ///< Radius of the flight curve.
 	Quaternion rotation; ///< Current rotation with respect to flight curve.
+
+	PointLight* p;
 public:
 	/** @brief Constructs a new CuvryBulletEntity.
 	* @param posI Initial position.
@@ -21,21 +23,34 @@ public:
 	* @param velocityMagI Initial speed.
 	*/
 	CurvyBulletEntity(vec3 posI, vec3 dirI, float velocityMagI)
-		: BulletEntity(posI, 10, ID_BULLET_CURVY), dir(dirI), pos(posI), velocityMag(velocityMagI), radius(1.f)
+		: BulletEntity(posI, 10, ID_BULLET_CURVY), dir(dirI), pos(posI), velocityMag(velocityMagI), radius(1.2f)
 	{
 		//MobileEntity::setVel(normalize(dir)*velocityMag);
 
 		setModel(DrawableEntity(NULL,"Resources/grenade.obj"));
+		setModel(DrawableEntity(NULL,"Resources/sphere.obj"),1);
+
 		scale(.75f,.75f,.75f);
 		getModel().setDiffuseColor(0.9f,0.3f,0.4f);
 		getModel().scale(.75f,.75f,.75f);
 		getModel().setShininess(60);
 		getModel().setHighlightColor(.25f,.7f,.2f);
+
+		getModel(1).setAlpha(.5);
+		getModel(1).setHighlightColor(.5,1,.5);
+
 		this->setHitbox(CollisionBox(vec3(1.5f,1.5f,1.5f)));
-		rotation.FromAxis(dir, DegreesToRadians*1);
+		rotation.FromAxis(dir, DegreesToRadians*2);
+
+		p=new PointLight(vec3(0,1,0),1,3);
+		//Globals::addLight(p);
+		p->setParent(this);
 	}
 	~CurvyBulletEntity()
 	{
+		if(!Globals::deleteLight(p)){
+			delete p;
+		}
 		//std::cout<<"curvy destoyed"<<std::endl;
 	}
 	void update()

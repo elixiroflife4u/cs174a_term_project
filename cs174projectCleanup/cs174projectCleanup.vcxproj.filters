@@ -165,6 +165,9 @@
     <ClInclude Include="WanderingEnemy.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Text2D.h">
+      <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_main.cpp">
@@ -235,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="WanderingEnemy.cpp">
       <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Text2D.cpp">
+      <Filter>Source Files\Helper Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

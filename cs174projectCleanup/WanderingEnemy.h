@@ -65,6 +65,8 @@ public:
 	  * @param g The object with which the enemy collided.
 	  */
 	void onCollide(const GameEntity& g);
+
+	void placeAtEdge(const GameEntity& g);
 };
 
 #endif
