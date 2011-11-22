@@ -19,9 +19,12 @@ private:
 	bool Q_PRESSED;
 	bool E_PRESSED;
 
+	int bulletDelay;
+
 public:
 	static const int MAX_HEALTH=100;
-	static const int MAX_SHIELD=1000;
+	static const int MAX_SHIELD=250;
+	static const int MAX_DELAY=6;
 	Player()
 		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false)
 	{
@@ -51,6 +54,7 @@ public:
 		_playerCamera.translate(0,7,7);
 		_playerCamera.rotate(-15,0,0);
 
+		bulletDelay=0;
 		//Globals::addSoftEntity(new Shield(getTranslate(), 10,40,this));
 		
 	}

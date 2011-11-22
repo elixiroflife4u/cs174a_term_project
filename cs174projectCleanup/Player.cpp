@@ -91,31 +91,37 @@ void Player::update()
 	}
 	translate(getVel());
 
-	if(Globals::MOUSE_EDGE_LEFT) {
+	//if(Globals::MOUSE_EDGE_LEFT) {
 		///@todo Find good values for these constants. Remember to offset the starting location
 		/// so that it doesn't instantly collide with its creator.
 		vec4 dir=normalize((getModel(1).getTransformationMatrix()*vec4(0,0,-1,0)));
 		vec4 dirR=normalize((getModel(1).getTransformationMatrix()*vec4(-1,0,0,0)));
 
+
+		if(bulletDelay>0)bulletDelay--;
+
 		switch(_currentWeapon){
 		case 0: //straight
-			//if(!Globals::MOUSE_LEFT)break;
-			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6, 0, 10);
-			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6, 0, 10);
+			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 0, 10);
+			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 0, 10);
+			bulletDelay=MAX_DELAY;
 			break;
 		case 1: //grenade
-			Globals::addBullet(ID_BULLET_GRENADE, 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 5);
+			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
+			Globals::addBullet(ID_BULLET_GRENADE, 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*3.5, 0, 5);
+			bulletDelay=MAX_DELAY*2;
 			break;
 		case 2: //other?
 			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*1, 0, 0);
 			break;
 		}
-	}
+	//}
 
 	
 	if(Globals::MOUSE_EDGE_RIGHT){
-		if(_shieldCharge==MAX_SHIELD){
-			Globals::addEntity(new Shield(getTranslate(),3,30,this));
+		if(_shieldCharge>=MAX_SHIELD){
+			Globals::addEntity(new Shield(getTranslate(),3,50,this));
 			_shieldCharge=0;
 		}
 	}
@@ -128,6 +134,12 @@ void Player::update()
 	getModel(1).setNormalMapDepth(damageRatio);
 
 
+	//swap first person/third person view
+	if(Globals::firstPerson){
+		_playerCamera.setTranslate(0,3,1);
+	}else{
+		_playerCamera.setTranslate(0,7,7);
+	}
 
 	resetHightlight();
 }
@@ -140,6 +152,7 @@ void Player::onCollide(const GameEntity& g){
 		MobileEntity::placeAtEdge(g);
 		break;
 	case ID_BULLET_STRAIGHT:
+		onBulletCollision(3);
 	case ID_BULLET_GRENADE:
 		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
 		break;

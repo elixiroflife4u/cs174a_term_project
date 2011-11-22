@@ -25,10 +25,11 @@ namespace Globals{
 		float _count;
 		CollisionBox c;
 		Wall* room1Door;
-		Wall* room1Door2;
 
 		bool room1Trigger;
 		bool bossTrigger;
+
+		WanderingEnemy* e[10];
 
 	public:
 		void setup(){
@@ -50,6 +51,12 @@ namespace Globals{
 			p=new PointLight(vec3(1,1,1),1,15);
 			p->translate(0,20,0);
 			addLight(p);
+
+			p=new PointLight(vec3(1,1,1),1,15);
+			p->translate(80,20,0);
+			addLight(p);
+
+
 			p=new PointLight(vec3(1,1,1),2,2);
 			p->translate(-1,.1,0);
 			p->setParent(pl);
@@ -63,10 +70,10 @@ namespace Globals{
 			//addEntity(new TurretEntity(vec3(-10,3.5,10)));
 			//addEntity(new TurretEntity(vec3(0,3.5,10)));
 			addEntity(new TurretEntity(vec3(50,3.5,45)));
-			//addEntity(new TurretEntity(vec3(50,3.5,55)));
+			addEntity(new TurretEntity(vec3(50,3.5,55)));
 
 			addEntity(new TurretEntity(vec3(95,3.5,45)));
-			//addEntity(new TurretEntity(vec3(95,3.5,55)));
+			addEntity(new TurretEntity(vec3(95,3.5,55)));
 
 			addEntity(new TurretEntity(vec3(150-85,5,330-50)));
 			addEntity(new TurretEntity(vec3(150-85,5,330+60)));
@@ -74,12 +81,20 @@ namespace Globals{
 			addEntity(new TurretEntity(vec3(150+40,5,330-50)));
 			addEntity(new TurretEntity(vec3(150+40,5,330+60)));
 
-			TurretEntity* t=new TurretEntity(vec3(125,28,490));
+			TurretEntity* t=new TurretEntity(vec3(175,20,330));
 			t->scale(5,5,5);
+			t->rotate(0,-90,0);
 			addEntity(t);
 
 			//large floor
+			//Grass
+			DrawableEntity grass=DrawableEntity("resources/grassTexture.jpg","Resources/cube.obj");
+			grass.setNormalMap("Resources/floorNormal.jpg");
+			//grass.setDiffuseColor(.4,.75,.4);
+			grass.setUVScale(55,55);
+			grass.setShininess(500);
 			Wall* w=new Wall();
+			w->setModel(grass);
 			w->scale(175,1,175);
 			w->translate(50,0,0);
 			addWall(w);
@@ -97,18 +112,7 @@ namespace Globals{
 			w=new Wall();
 			w->scale(20,10,15);
 			w->translate(125, 5, 332.5+65);
-			addWall(w);
-
-			w=new Wall();
-			w->scale(10,5,15);
-			w->translate(115, 2.5, 332.5+65);
-			addWall(w);
-
-			w=new Wall();
-			w->scale(200,3,160);
-			w->translate(125,9,485);
-			addWall(w);
-
+		//	addWall(w);
 
 			//Beginning area
 			//walls
@@ -185,21 +189,11 @@ namespace Globals{
 
 			//front
 			w=new Wall();
-			w->scale(65,100,8);
-			w->translate(125-75+32.5,50,330+75);
-			addWall(w);
-
-			w=new Wall();
-			w->scale(65,100,8);
-			w->translate(125+75-32.5,50,330+75);
+			w->scale(200,100,8);
+			w->translate(125,50,330+75);
 			addWall(w);
 
 			room1Door=w=new Wall();
-			w->scale(20,90,8);
-			w->translate(125,55,330+75);
-			addWall(w);
-
-			room1Door2=w=new Wall();
 			w->scale(40,50,8);
 			w->translate(80,50,250);
 			addWall(w);
@@ -214,58 +208,27 @@ namespace Globals{
 			p->translate(125,75,330);
 			addLight(p);
 
-			//Final Room
-			w=new Wall();
-			w->scale(200,10,5);
-			w->translate(125,15,535);
-			addWall(w);
-			
-
-			DrawableEntity d= DrawableEntity("Resources/treesTest.png","Resources/plane.obj");
-			d.setHighlightColor(.1,.05,.1);
-			d.rotate(-90,0,90);
-			d.setAlphaRequired(true);
-			d.setUVScale(1,-1);
-
-			for(int i=0;i<3;i++){
-				w=new Wall();
-				w->scale(5,50,50);
-				w->translate(185,35,425+45*i);
-				addWall(w);
-				w->setModel(d);
-
-				w=new Wall();
-				w->scale(5,50,50);
-				w->translate(65,35,425+45*i);
-				addWall(w);
-				w->setModel(d);
-
-			}
-
-
-			p=new PointLight(vec3(1,1,1),1,60);
-			p->translate(125,100,555);
-			addLight(p);
-
 
 			//Flourishes
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(6,20,8)));
 			w->translate(-20,10,20);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			DrawableEntity d1=DrawableEntity(NULL,"Resources/rockTall.obj");
+			d1.setDiffuseColor(.5,.5,.5);
+			w->setModel(d1);
 			addWall(w);
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(6,20,8)));
 			w->rotate(0,270,0);
 			w->translate(-20,3,33);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(6,20,8)));
 			w->translate(100,10,20);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 			w=new Wall();
@@ -273,7 +236,7 @@ namespace Globals{
 			w->translate(95,5,15);
 			w->scale(.5,.5,.5);
 			w->rotate(0,-90,0);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 
@@ -282,7 +245,7 @@ namespace Globals{
 			w->translate(10,10,30);
 			w->scale(1.5,1.5,1.5);
 			w->rotate(15,180,0);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 			w=new Wall();
@@ -290,7 +253,7 @@ namespace Globals{
 			w->translate(55,10,70);
 			w->scale(1.5,1.5,1.5);
 			w->rotate(15,180,0);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 			w=new Wall();
@@ -298,37 +261,42 @@ namespace Globals{
 			w->translate(90,5,70);
 			w->scale(1,1,1);
 			w->rotate(0,90,0);
-			w->setModel(DrawableEntity(NULL,"Resources/rockTall.obj"));
+			w->setModel(d1);
 			addWall(w);
 
 
+			d1=DrawableEntity(NULL,"Resources/rockMed.obj");
+			d1.setDiffuseColor(.25,.25,.25);
+
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(9,30,8)));
-			w->setModel(DrawableEntity(NULL,"Resources/rockMed.obj"));
+			w->setModel(d1);
 			w->translate(-19,5,-2);
 			w->rotate(0,90,0);
 			addWall(w);
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(9,30,8)));
-			w->setModel(DrawableEntity(NULL,"Resources/rockMed.obj"));
+			w->setModel(d1);
 			w->translate(50,5,35);
 			w->rotate(0,90,0);
 			addWall(w);
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(9,30,8)));
-			w->setModel(DrawableEntity(NULL,"Resources/rockMed.obj"));
+			w->setModel(d1);
 			w->translate(45,5,75);
 			w->rotate(0,-90,0);
 			w->scale(2,2,2);
 			addWall(w);
 
+			d1=DrawableEntity(NULL,"Resources/rockFlat.obj");
+			d1.setDiffuseColor(.5,.5,.5);
 
 			w=new Wall();
 		//	w->scale(10,1,10);
 			w->setHitbox(CollisionBox(vec3(10,2,10)));
-			w->setModel(DrawableEntity(NULL,"Resources/rockFlat.obj"));
+			w->setModel(d1);
 			w->translate(0,1,0);
 			addWall(w);
 
@@ -336,7 +304,7 @@ namespace Globals{
 
 			//Trees
 
-			d= DrawableEntity("Resources/treesTest.png","Resources/plane.obj");
+			DrawableEntity d= DrawableEntity("Resources/treesTest.png","Resources/plane.obj");
 			d.setHighlightColor(.1,.05,.1);
 			d.rotate(-90,0,0);
 			d.setAlphaRequired(true);
@@ -404,17 +372,16 @@ namespace Globals{
 			addWall(w);
 			_count=0;
 
-			w=new Wall();
-			w->scale(100,100,75);
-			w->translate(150,50,330);
-			//addWall(w);
-
 			c.scale(200,100,75);
 			c.translate(150,50,330);
 
 			room1Trigger=false;
 			bossTrigger=false;
 
+			for(int i=0;i<10;i++){
+				e[i]=new WanderingEnemy(vec3(100+5*i,50,330));
+				//addEntity(e[i]);
+			}
 		}
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
@@ -422,10 +389,22 @@ namespace Globals{
 			//wLights[0]->translate((sin(_count)),0,sin(_count));
 			//std::cout<<sin(_count)<<std::endl;
 
-			if(room1Door->getTranslate().y<80)
-				room1Door->translate(0,.1,0);
+			if(c.didCollide(getPlayer()->getHitBox())&&!room1Trigger){
+				room1Trigger=true;
+				for(int i=0;i<5;i++){
+					addEntity(e[i]);
+				}
+			}else if(room1Trigger&&room1Door->getTranslate().y>25){
+				room1Door->translate(0,-2,0);
+			}
 
-			if(c.didCollide(getPlayer()->getHitBox())){}//std::cout<<"TEST"<<std::endl;
+
+			if(dot(getPlayer()->getTranslate(),getPlayer()->getTranslate())<pow(20.0,2)&&room1Trigger){
+				getPlayerGE()->setTranslate(125,10,330);
+
+			}
+
+
 		}
 		bool levelEnd()const{
 			return false;
