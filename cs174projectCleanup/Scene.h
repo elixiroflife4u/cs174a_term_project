@@ -57,13 +57,13 @@ namespace Globals{
 			addLight(p);
 
 
-			p=new PointLight(vec3(1,1,1),2,2);
-			p->translate(-1,.1,0);
+			p=new PointLight(vec3(.5,1,.7),2,3);
+			p->translate(0,.1,.6);
 			p->setParent(pl);
 			addLight(p);
 			p=new PointLight(*p);
 			p->translate(2,0,0);
-			addLight(p);
+			//addLight(p);
 
 			
 			//addEntity(new TurretEntity(vec3(10,3.5,10)));
@@ -91,7 +91,7 @@ namespace Globals{
 			DrawableEntity grass=DrawableEntity("resources/grassTexture.jpg","Resources/cube.obj");
 			grass.setNormalMap("Resources/floorNormal.jpg");
 			//grass.setDiffuseColor(.4,.75,.4);
-			grass.setUVScale(55,55);
+			grass.setUVScale(45,45);
 			grass.setShininess(500);
 			Wall* w=new Wall();
 			w->setModel(grass);
@@ -101,7 +101,7 @@ namespace Globals{
 
 			w=new Wall();
 			w->scale(40,4,200);
-			w->translate(80,1,175);
+			w->translate(78,1,175);
 			addWall(w);
 
 			w=new Wall();
@@ -123,8 +123,8 @@ namespace Globals{
 			addWall(w);
 
 			w=new Wall();
-			w->scale(5,8,150);
-			w->translate(100,4,10);
+			w->scale(5,8,120);
+			w->translate(100,4,30);
 			addWall(w);
 
 			//left
@@ -156,7 +156,7 @@ namespace Globals{
 			addWall(w);
 
 			p=new PointLight(vec3(1,1,1),2,60);;
-			p->setTranslate(75,20,115);
+			p->setTranslate(77.,20,115);
 			addLight(p);
 			p=new PointLight(*p);
 			p->translate(0,0,40);
@@ -264,14 +264,29 @@ namespace Globals{
 			w->setModel(d1);
 			addWall(w);
 
+			w=new Wall();
+			w->setHitbox(CollisionBox(vec3(6,20,8)));
+			w->translate(95,2,-20);
+			w->scale(.8,.8,.8);
+			w->rotate(0,90,-12);
+			w->setModel(d1);
+			addWall(w);
+
+			w=new Wall();
+			w->setHitbox(CollisionBox(vec3(6,20,8)));
+			w->translate(90,2,-20);
+			w->scale(.5,.5,.5);
+			w->rotate(0,180,-12);
+			w->setModel(d1);
+			addWall(w);
 
 			d1=DrawableEntity(NULL,"Resources/rockMed.obj");
-			d1.setDiffuseColor(.25,.25,.25);
+			d1.setDiffuseColor(.35,.35,.35);
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(9,30,8)));
 			w->setModel(d1);
-			w->translate(-19,5,-2);
+			w->translate(-19,5,-20);
 			w->rotate(0,90,0);
 			addWall(w);
 
@@ -382,6 +397,28 @@ namespace Globals{
 				e[i]=new WanderingEnemy(vec3(100+5*i,50,330));
 				//addEntity(e[i]);
 			}
+
+
+			//add Sun
+
+			d=DrawableEntity(NULL,"resources/sphere.obj");
+			d.setHighlightColor(1,1,1);
+			d.scale(8,8,8);
+			w=new Wall();
+			w->translate(300,200,0);
+			w->setModel(d);
+			d.setAlpha(.5);
+			d.scale(1.5,1.5,1.5);
+			w->setModel(d,1);
+			d.setScale(4,4,4);
+			d.setAlpha(.8);
+			d.translate(0,-15,-25);
+			w->setModel(d,2);
+			addWall(w);
+
+
+
+
 		}
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
@@ -391,7 +428,7 @@ namespace Globals{
 
 			if(c.didCollide(getPlayer()->getHitBox())&&!room1Trigger){
 				room1Trigger=true;
-				for(int i=0;i<5;i++){
+				for(int i=0;i<10;i++){
 					addEntity(e[i]);
 				}
 			}else if(room1Trigger&&room1Door->getTranslate().y>25){
