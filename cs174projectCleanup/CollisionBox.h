@@ -3,7 +3,7 @@
 
 #include "WorldEntity.h"
 
-/** The CollisionBox represents an object's hit box and provides
+/** @brief The CollisionBox represents an object's hit box and provides
   * collision detection between two such boxes.
   *
   * As a WorldEntity, the box's positon and orientation is controlled

@@ -336,13 +336,14 @@ NEXT_J:
 		case '\'':
 			if(!val)firstPerson=!firstPerson;
 			break;
-		case 'O':
-		case 'o':
-			universalNormalMapDepthMult+=.1;
-			break;
 		case 'P':
 		case 'p':
+			universalNormalMapDepthMult+=.1;
+			break;
+		case 'O':
+		case 'o':
 			universalNormalMapDepthMult-=.1;
+			if(universalNormalMapDepthMult<0)universalNormalMapDepthMult=0;
 			break;
 		case 'k':
 		case 'K':
