@@ -12,11 +12,20 @@
 namespace Globals{
 
 	class Scene{
+		/** @brief A scene is basically a level
+		* that is updated every frame along with the gameentities
+		* so that level specifica interaction can take place
+		*/
+
 	public:
 		bool _beaten;
+		/** @brief The setup for the level should be done here (adding the walls and entities)*/
 		virtual void setup()=0;
+		/** @brief the interaction and animation of the level should be done here (triggers etc) */
 		virtual void update()=0;
+		/** @brief this is a win condition check for the level to see if the level has been beaten*/
 		virtual bool levelEnd()const=0;
+		/** @brief this is where any values that won't deleted by the world should be deleted/cleaned up*/
 		virtual void cleanup(){
 		
 		}
@@ -39,21 +48,15 @@ namespace Globals{
 		/** @brief The entire level is set up and prepared here */
 		void setup(){
 			_beaten=false;
+			//Add the player to the world
 			Player* pl=new Player();
 			currentCamera=pl->getCamera();
 			pl->translate(0,5,0);
-			//pl->translate(125,0,330);
 			pl->rotate(0,-90,0);			
-
 			Globals::addEntity(pl);
 
-			PointLight* p=new PointLight(vec3(1,1,1),0,5);
-			p->translate(10,10,-10);
-			p->setFalloff(2);
-			p->setBrightness(1);
-			//addLight(p);
-
-			p=new PointLight(vec3(1,1,1),1,15);
+			//Add some lights
+			PointLight* p=new PointLight(vec3(1,1,1),1,15);
 			p->translate(0,20,0);
 			addLight(p);
 
@@ -486,14 +489,13 @@ namespace Globals{
 
 		/** @brief called every frame to update the level elements as needed
 		*/
-
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
 			_count+=M_PI/10;
 			//wLights[0]->translate((sin(_count)),0,sin(_count));
 			//std::cout<<sin(_count)<<std::endl;
 			
-			//Trigger event for the first room
+			//Trigger event for entering the first room
 			if(c.didCollide(getPlayer()->getHitBox())&&!room1Trigger){
 				room1Trigger=true;
 				for(int i=0;i<5;i++){

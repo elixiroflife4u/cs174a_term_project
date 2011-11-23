@@ -17,7 +17,9 @@ private:
 	int _lifeTime;
 	int _maxSize;
 public:
-	/** @brief initializes the shield entity */
+	/** @brief initializes the shield entity with the passed variables
+	* for the life of the shield, max size, and position
+	*/
 	Shield(vec3 pos, float maxSize, int lifetime=10,WorldEntity* p=NULL)
 		:GameEntity(ID_SHIELD),_currTime(0),_maxSize(maxSize),_lifeTime(lifetime)
 	{
@@ -36,7 +38,7 @@ public:
 		scale(6,6,6);
 	}
 
-	/** @brief changes the color of hte shield when it collides with somethign */
+	/** @brief changes the color of hte shield when it collides with a bullet */
 	void onCollide(const GameEntity& g){
 		switch(g.getId()){
 		case ID_BULLET_CURVY:
@@ -46,8 +48,7 @@ public:
 		}
 	}
 
-	/** @brief updates he shield to expand and dissapate every frame */
-
+	/** @brief updates the shield to expand and dissapate every frame */
 	void update(){
 
 		float scaleFactor=((float)_currTime)/_lifeTime;

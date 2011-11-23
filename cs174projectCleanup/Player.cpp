@@ -9,6 +9,7 @@ void Player::update()
 {
 	if(getTranslate().y<-50)setHealth(0);
 
+	//if the player has died
 	if(getHealth()<=0){
 		SoundPlayer::playSound("resources/death.wav", 1);
 		Explosion* e = new Explosion(6,20);
@@ -23,7 +24,6 @@ void Player::update()
 	const float MAX_VEL=1;
 	const float ACCEL_AMOUNT=.15;
 
-	/* should be moved */
 	int xDelta=Globals::mouseX-glutGet(GLUT_WINDOW_WIDTH)/2;
 	int yDelta=Globals::mouseY-glutGet(GLUT_WINDOW_HEIGHT)/2;
 

@@ -32,20 +32,21 @@ public:
 	*/
 	void update(){
 		float scaleVal=((float)_currTime/_frameTime);
-		float radiusVal=scaleVal*_maxRadius+3;
+		float radiusVal=scaleVal*_maxRadius+3; ///calculates the scale modifier based off of the current time vs life time
 		setScale(radiusVal,radiusVal,radiusVal);
 		getModel().setAlpha((1-scaleVal)*.6);
 
+		//if it has been long enough, the explosion should be harmless
 		if((_currTime/_frameTime)>.5){
 			_harmless=true;
 		}
+		//if the life time has been exhausted, then delete the object
 		if(_currTime>_frameTime){
 			this->setDelete();
 		}
-
 		_currTime++;
 	}
-
+	/** @brief returns the damage that the object is supposed to do */
 	float getDamage(){
 		if(!_harmless){
 			return _damagePerFrame;

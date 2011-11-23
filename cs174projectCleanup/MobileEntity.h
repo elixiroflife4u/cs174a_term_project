@@ -10,6 +10,9 @@ private:
 	int _jumpCount;
 	float _health;
 protected:
+	/** @brief decreases the entity's health by the passed amount and
+	* sets the highlight to red to indicate damage
+	*/
 	void decHealth(float f){
 		_health-=f;
 
@@ -20,6 +23,10 @@ protected:
 				getModel(i).setHighlightColor(1,.1,.1);
 		}
 	}
+	/** @brief resets the drawableobjects to use no highlight
+	* should be recalled every time the highlight needs to be reset
+	* like every frame
+	*/
 	void resetHightlight(){
 		for(int i=0;i<MAX_MODELS;i++){
 			if((&getModel(i))!=NULL)
@@ -63,13 +70,21 @@ public:
 		increaseVel(getAcc());
 		translate(getVel());
 	}
+	/** @brief dictates what is to be done when it collides with another
+	* gameEntity
+	*/
 	virtual void onCollide(const GameEntity& g)=0;
+	/** @brief places the entity at the edge of the passed
+	* GameEntity's hit box at a reasonable location
+	*/
 	virtual void placeAtEdge(const GameEntity& g);
 	void jump(float force=1.0);
 
+	/** @brief returns the health of the entity */
 	float getHealth() const{
 		return _health;
 	}
+	/** @brief returns whether or not the entity is alive or not */
 	bool isAlive() const{
 		if(_health>0){
 			return true;
