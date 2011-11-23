@@ -45,6 +45,7 @@ namespace {
 
 namespace Globals
 {
+	//SoundPlayerGuard spg;
 	void initApp(){
 		//Seed the random number generator
 		std::srand(std::time(NULL));
@@ -75,6 +76,7 @@ namespace Globals
 		wScenes[0]=new Scene_1();
 
 		wScenes[currentLevel]->setup();
+
 	}
 
 	static void updateEntities(GameEntityList& list) {
@@ -331,7 +333,7 @@ NEXT_J:
 		}
 	}
 	void callbackKeyboard(unsigned char key, int x, int y){
-		if(key == 27) exit(0); //quit on esc
+		if(key == 27) glutLeaveMainLoop();//exit(0); quit on esc. need the function othwerise the sound handler object acts wonky.
 		else setKey(key, true);
 	}
 	void callbackKeyboardUp(unsigned char key, int x, int y){

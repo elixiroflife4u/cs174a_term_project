@@ -132,7 +132,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;libs\SDL.lib;libs\SDLmain.lib;libs\SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

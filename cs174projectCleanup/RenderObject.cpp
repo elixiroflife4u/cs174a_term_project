@@ -5,7 +5,7 @@ CRenderObject::CRenderObject(const std::string& fileName)
 {
 	m_strTextName = fileName;
 	LoadFile(fileName);
-	cout<<"done loading"<<endl;
+	//cout<<"done loading"<<endl;
 }
 /*
 CRenderObject::CRenderObject(const std::string& fileName, point4 *points, 
@@ -27,10 +27,10 @@ void CRenderObject::LoadFile(const std::string& fileName)
 	objLoader *objData = new objLoader();
 	objData->load(cstr);
 
-	std::cout<<"num of vertices: "<<objData->vertexCount<<"Normals: "<<objData->normalCount<<"texcoord: "<<objData->textureCount<<std::endl;
-	std::cout<<"num of faces: "<<objData->faceCount<<std::endl;
+	//std::cout<<"num of vertices: "<<objData->vertexCount<<"Normals: "<<objData->normalCount<<"texcoord: "<<objData->textureCount<<std::endl;
+	//std::cout<<"num of faces: "<<objData->faceCount<<std::endl;
 	// set the size in bytes information for each of the 3 types.
-	///TODO remove the 4 below
+	
 	numPointsToDraw     = (objData->faceCount)*3;
 
 	///use vectors instead

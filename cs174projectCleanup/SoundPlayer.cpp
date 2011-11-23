@@ -47,7 +47,8 @@ namespace SoundPlayer {
 			Mix_FreeChunk(i->second);
 		chunks.clear();
 
-		Mix_CloseAudio();
+		///< need these two to be disabled otherwise the release verion of code fails here(debug works fines).
+		Mix_CloseAudio();   
 		SDL_Quit();
 	}
 

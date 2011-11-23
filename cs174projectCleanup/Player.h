@@ -5,6 +5,7 @@
 #include "MobileEntity.h"
 #include "CameraEntity.h"
 #include "Shield.h"
+
 /** @brief This concrete class encapulates all player-specific behavior and
  *         appearances.
  */

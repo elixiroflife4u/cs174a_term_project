@@ -5,7 +5,7 @@
 #include "Wall.h"
 #include "Player.h"
 #include "GameEntity.h"
-
+#include "SoundPlayer.h"
 #include <list>
 
 class BulletEntity;
@@ -13,7 +13,7 @@ class BulletEntity;
 namespace Globals
 {
 	class Scene;
-	
+
 	//FOR OUR GAME//
 	extern bool firstPerson;
 

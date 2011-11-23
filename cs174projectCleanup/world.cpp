@@ -9,7 +9,6 @@
 namespace Globals
 {
 	//FOR OUR GAME//
-
 	bool firstPerson=false;
 
 	//transparent object heap
@@ -108,7 +107,7 @@ namespace Globals
 	}
 	GameEntityList::iterator deleteSoftEntity(GameEntityList::iterator b) {
 		delete *b;
-		std::cerr<<"Soft entities alive: "<<wSoftEntities.size() - 1<<'\n';
+		//std::cerr<<"Soft entities alive: "<<wSoftEntities.size() - 1<<'\n';
 		return wSoftEntities.erase(b);
 	}
 

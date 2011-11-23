@@ -1,6 +1,5 @@
 #ifndef _MOBILEENTITY
 #define _MOBILEENTITY
-
 #include "GameEntity.h"
 
 /** @brief This abstract class provides motion for GameEntity objects. */

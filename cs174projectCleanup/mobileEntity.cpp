@@ -1,4 +1,5 @@
 #include "MobileEntity.h"
+#include "SoundPlayer.h"
 void MobileEntity::placeAtEdge(const GameEntity& g)
 {
 
@@ -116,6 +117,7 @@ void MobileEntity::placeAtEdge(const GameEntity& g)
 	vec3 v=getTranslate()-newPos;
 }
 void MobileEntity::jump(float force){
+	SoundPlayer::playSound("resources/jump.wav", 1);
 	if(_jumpCount>0){
 		_jumpCount--;
 		setVel(0,force,0);
