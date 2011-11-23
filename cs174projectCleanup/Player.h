@@ -34,14 +34,14 @@ public:
 	Player()
 		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false),_shieldTime(0)
 	{
+		//creates the models and sets the parameters for them
 		setModel(DrawableEntity("resources/tankTexture.png","resources/tankBase.obj",this));
 		getModel().scale(.5,.5,.5);
-		//getModel().setDiffuseColor(.4,.4,.5);
 		getModel().setShininess(50);
+
 		setModel(DrawableEntity("resources/tankTexture.png","resources/tankTop.obj",this),1);
 		getModel(1).translate(0,.65,.5);
 		getModel(1).scale(.5,.5,.5);
-		//getModel(1).setDiffuseColor(.4,.4,.5);
 		getModel(1).setShininess(1000);
 
 		getModel().setNormalMap("resources/floorNormal.jpg");
@@ -50,19 +50,19 @@ public:
 		getModel().setNormalMapDepth(0);
 		getModel(1).setNormalMapDepth(0);
 
+		//Create a new hitbox for the player entity
 		CollisionBox b;
 		b.scale(3,2.5,3);
 
 		GameEntity::setHitbox(b);
 
+		//initialize the camera to a resonable location
 		_playerCamera.setParent(&getModel(1));
 
 		_playerCamera.translate(0,7,7);
 		_playerCamera.rotate(-15,0,0);
 
 		bulletDelay=0;
-		//Globals::addSoftEntity(new Shield(getTranslate(), 10,40,this));
-		
 	}
 	/** @brief Updates the player's position and shoots
 	* based off of key presses

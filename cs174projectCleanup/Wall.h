@@ -13,6 +13,7 @@
 class Wall:public GameEntity{
 private:
 public:
+	/** @brief initialize the wall with basic values */
 	Wall()
 		:GameEntity(ID_WALL)
 	{
@@ -23,7 +24,9 @@ public:
 		getModel().setNormalMapDepth(1);
 		getModel().setShininess(5000);
 	}
+	/** @brief walls do not usually need to update*/
 	void update(){}
+	/** @brief walls do not need to do anything hwne something collides with them*/
 	void onCollide(const GameEntity&){}
 };
 
