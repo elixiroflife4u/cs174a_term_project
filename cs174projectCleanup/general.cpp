@@ -77,6 +77,7 @@ namespace Globals
 
 		wScenes[currentLevel]->setup();
 
+		Globals::setHasFog(true);
 	}
 
 	static void updateEntities(GameEntityList& list) {
@@ -208,7 +209,7 @@ NEXT_J:
 		setAmbientLightColor(vec3(.1,.05,.075));
 		setAmbientLightColor(vec3(.1,.1,.2));
 
-
+		//
 		//Draw non-transparent models, pushing transparent ones onto a max-heap
 		TransparencyQueue transparencyQueue;
 		drawOpaqueEntities(wEntities, transparencyQueue); //Draw Every GameEntity
@@ -260,7 +261,7 @@ NEXT_J:
 		char* weaponText="";
 		switch(getPlayer()->getWeapon()){
 		case 2:
-			weaponText="CURVY BOOLET";
+			weaponText="CURVY BULLET";
 			break;
 		case 0:
 			weaponText="MACHINE GUN";
@@ -271,6 +272,13 @@ NEXT_J:
 
 		}
 		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
+
+		if(wScenes[currentLevel]->_beaten){
+			n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
+			n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+		}
+
+
 
 		glDisable(GL_BLEND);
 		glutSwapBuffers();

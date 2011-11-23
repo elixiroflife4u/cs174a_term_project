@@ -138,6 +138,11 @@ namespace Globals
 		return wPlayer;
 	}
 
+	bool setCurrLevelWon(){
+		Globals::wScenes[Globals::currentLevel]->_beaten=true;
+		return true;
+	}
+
 	vec3 grav=vec3(0,-.1,0);
 
 	int currentLevel=0;

@@ -26,7 +26,7 @@ private:
 
 public:
 	static const int MAX_HEALTH=100;
-	static const int MAX_SHIELD=500;
+	static const int MAX_SHIELD=400;
 	static const int MAX_DELAY=6;
 	Player()
 		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false),_shieldTime(0)
