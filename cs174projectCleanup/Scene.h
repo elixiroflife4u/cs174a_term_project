@@ -12,6 +12,7 @@ namespace Globals{
 
 	class Scene{
 	public:
+		bool _beaten;
 		virtual void setup()=0;
 		virtual void update()=0;
 		virtual bool levelEnd()const=0;
@@ -31,14 +32,16 @@ namespace Globals{
 
 		WanderingEnemy* e[10];
 
+		TurretEntity* boss;
+
 	public:
 		void setup(){
+			_beaten=false;
 			Player* pl=new Player();
 			currentCamera=pl->getCamera();
 			pl->translate(0,5,0);
 			//pl->translate(125,0,330);
-			pl->rotate(0,-90,0);
-
+			pl->rotate(0,-90,0);			
 
 			Globals::addEntity(pl);
 
@@ -81,38 +84,43 @@ namespace Globals{
 			addEntity(new TurretEntity(vec3(150+40,5,330-50)));
 			addEntity(new TurretEntity(vec3(150+40,5,330+60)));
 
-			TurretEntity* t=new TurretEntity(vec3(175,20,330));
-			t->scale(5,5,5);
-			t->rotate(0,-90,0);
-			addEntity(t);
+			TurretEntity* boss=new TurretEntity(vec3(175,13,330));
+			boss->scale(4,4,4);
+			boss->rotate(0,-90,0);
+			boss->setBoss(true);
+			addEntity(boss);
 
 			//large floor
 			//Grass
-			DrawableEntity grass=DrawableEntity("resources/grassTexture.jpg","Resources/cube.obj");
-			grass.setNormalMap("Resources/floorNormal.jpg");
+			DrawableEntity floor=DrawableEntity("resources/grassTexture.jpg","Resources/cube.obj");
+			floor.setNormalMap("Resources/floorNormal.jpg");
 			//grass.setDiffuseColor(.4,.75,.4);
-			grass.setUVScale(45,45);
-			grass.setShininess(500);
+			floor.setUVScale(45,45);
+			floor.setShininess(500);
 			Wall* w=new Wall();
-			w->setModel(grass);
+			w->setModel(floor);
 			w->scale(175,1,175);
 			w->translate(50,0,0);
 			addWall(w);
 
+			//diamondplat
+			floor=DrawableEntity(NULL,"resources/cube.obj");
+			floor.setNormalMap("resources/diamondPlateNormal.jpg");
+			floor.setUVScale(20,80);
+			floor.setShininess(1000);
+			floor.setNormalMapDepth(1);
+			floor.setDiffuseColor(.25,.25,.25);
+
 			w=new Wall();
+			w->setModel(floor);
 			w->scale(40,4,200);
-			w->translate(78,1,175);
+			w->translate(78,1,175.5);
 			addWall(w);
 
 			w=new Wall();
 			w->scale(150,3,150);
 			w->translate(125,0,330);
 			addWall(w);
-
-			w=new Wall();
-			w->scale(20,10,15);
-			w->translate(125, 5, 332.5+65);
-		//	addWall(w);
 
 			//Beginning area
 			//walls
@@ -140,20 +148,41 @@ namespace Globals{
 			
 			//first hall
 			//left
+			DrawableEntity dWall=DrawableEntity("Resources/mechTexture.png","resources/wall.obj");
+			dWall.setNormalMap("Resources/mechNormal2.jpg");
+			dWall.setShininess(5000);
+			dWall.setScale(1,1,.27);
+			dWall.setUVScale(2,2);
+
 			w=new Wall();
-			w->scale(6,30,200);
+			w->scale(6,25,193);
 			w->translate(95,15,175);
-			addWall(w);
-			//right
-			w=new Wall();
-			w->scale(6,30,200);
-			w->translate(60,15,175);
-			addWall(w);
 			
+			Wall* wRight=new Wall();
+			wRight->scale(6,25,193);
+			wRight->translate(60,15,175);
+
+			for(int i=0;i<4;i++){
+				dWall.setTranslate(0,0,-.1225-.25+.25*i);
+
+				w->setModel(dWall,i);
+				wRight->setModel(dWall,i);
+			
+			}
+			addWall(w);
+			addWall(wRight);
+
+			dWall.setUVScale(25,2);
+			dWall.setScale(1,1,1);
+			dWall.setTranslate(0,0,0);
+			dWall.setDiffuseColor(.25,.25,.25);
+
 			w=new Wall();
 			w->scale(40,15,200);
 			w->translate(78,35,175);
+			w->setModel(dWall);
 			addWall(w);
+
 
 			p=new PointLight(vec3(1,1,1),2,60);;
 			p->setTranslate(77.,20,115);
@@ -169,12 +198,12 @@ namespace Globals{
 			//first Fight Room
 			//left and right walls
 			w=new Wall();
-			w->scale(3,100,150);
-			w->translate(125-68,50,330);
+			w->scale(6,100,150);
+			w->translate(125-71.5,50,330);
 			addWall(w);
 			w=new Wall();
-			w->scale(3,100,150);
-			w->translate(125+75,50,330);
+			w->scale(9,100,150);
+			w->translate(125+72,50,330);
 			addWall(w);
 
 			//back
@@ -193,13 +222,25 @@ namespace Globals{
 			w->translate(125,50,330+75);
 			addWall(w);
 
+			DrawableEntity warningDoor=DrawableEntity("resources/ClosedDoorTex.png","resources/wall.obj");
+			warningDoor.setNormalMap("resources/mechNormal2.jpg");
+			warningDoor.setNormalMapDepth(.5);
+		//	warningDoor.setShininess(100);
 			room1Door=w=new Wall();
+			room1Door->setModel(warningDoor);
 			w->scale(40,50,8);
-			w->translate(80,50,250);
+			w->translate(77.5,50,250);
 			addWall(w);
 
 			//cieling
+			dWall=DrawableEntity("Resources/mechTexture.png","resources/cube.obj");
+			dWall.setNormalMap("Resources/mechNormal2.jpg");
+			dWall.setShininess(5000);
+		//	dWall.setScale(1,1,1);
+			dWall.setUVScale(200,.5);
+
 			w=new Wall();
+			w->setModel(dWall);
 			w->scale(150,3,150);
 			w->translate(125,100,330);
 			addWall(w);
@@ -258,7 +299,7 @@ namespace Globals{
 
 			w=new Wall();
 			w->setHitbox(CollisionBox(vec3(6,20,8)));
-			w->translate(90,5,70);
+			w->translate(91,5,75);
 			w->scale(1,1,1);
 			w->rotate(0,90,0);
 			w->setModel(d1);
@@ -315,7 +356,8 @@ namespace Globals{
 			w->translate(0,1,0);
 			addWall(w);
 
-			addEntity(new WanderingEnemy(vec3(-10,9,0)));
+			addEntity(new WanderingEnemy(vec3(60,7,-10)));
+			addEntity(new WanderingEnemy(vec3(63,7, 7)));
 
 			//Trees
 
@@ -441,10 +483,9 @@ namespace Globals{
 
 			}
 
-
 		}
 		bool levelEnd()const{
-			return false;
+			return _beaten;
 		}
 	};
 }
