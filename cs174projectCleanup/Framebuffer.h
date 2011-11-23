@@ -17,8 +17,10 @@ public:
 
 	/** Constructs a new Framebuffer, allocating a framebuffer, texture, and depth
 	  * map specifically for it.
+	  * @param width Default width used by render(RenderFunc).
+	  * @param height Default height used by render(RenderFunc).
 	  */
-	Framebuffer();
+	Framebuffer(int width = 640, int height = 640);
 	/** Destroys a Framebuffer, deallocating its framebuffer, texture, and depth map. */
 	~Framebuffer();
 	/** Renders a scene into the texture.
@@ -27,7 +29,12 @@ public:
 	  * @param width The width of the viewport.
 	  * @param height The height of the viewport.
 	  */
-	void render(RenderFunc renderFunc, int width = 320, int height = 320);
+	void render(RenderFunc renderFunc, int width, int height);
+	/** @overload render(RenderFunc, int, int)
+	  * This function uses the default texture dimensions given
+	  * to the constructor.
+	  */
+	void render(RenderFunc renderFunc) { render(renderFunc, _width, _height); }
 
 	/** Returns the texture handle for this framebuffer. */
 	GLuint texture() const { return _texture; }
@@ -39,6 +46,8 @@ private:
 	GLuint _framebuffer; ///< Framebuffer handle
 	GLuint _texture; ///< Texture handle
 	GLuint _zBuffer; ///< Depth buffer handle
+	int _width; ///< Width of the texture in pixels
+	int _height; ///< Height of the texture in pixels
 };
 
 #endif
