@@ -3,6 +3,12 @@
 
 #include "GameEntity.h"
 
+/** @brief And Explosion can be created and added to the world
+  * at any point. The sphere is created and then it expands
+  * outward and grows more and more transparent
+  *
+  */
+
 class Explosion:public GameEntity{
 private:
 	float _maxRadius;
@@ -11,6 +17,7 @@ private:
 	bool _harmless;
 	float _damagePerFrame;
 public:
+	/** @brief Initializes the explosion object */
 	Explosion(float maxRadius=3.0, int frameTime=4, float damagePerFrame=0.0)
 		:GameEntity(ID_EXPLOSION),_maxRadius(maxRadius),_frameTime(frameTime),_currTime(0),_harmless(false),_damagePerFrame(damagePerFrame)
 	{
@@ -21,7 +28,8 @@ public:
 		getModel().setNormalMap("resources/floorNormal.jpg");
 		getModel().setNormalMapDepth(.1);
 	}
-
+	/** @brief Updates the entity to expand and become more transparent over time
+	*/
 	void update(){
 		float scaleVal=((float)_currTime/_frameTime);
 		float radiusVal=scaleVal*_maxRadius+3;

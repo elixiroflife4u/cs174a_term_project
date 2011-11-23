@@ -4,7 +4,7 @@
 #include "WorldEntity.h"
 #include "Engine.h"
 
-/** This class represents an object than can be directly drawn on screen.
+/** @brief This class represents an object than can be directly drawn on screen.
   * Most other rendered objects are rendered on screen only in the sense that
   * they in fact hold any number of DrawableEntity objects. Note, however,
   * that the geometry of the object and the instructions that actually push

@@ -3,7 +3,7 @@
 
 #include "MobileEntity.h"
 
-/** The BulletEntity abstract class is the parent of
+/** @brief The BulletEntity abstract class is the parent of
   * all bullet and projectile classes. It provides
   * an interface to get the damage a bullet causes upon
   * impact.

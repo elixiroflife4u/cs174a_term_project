@@ -3,6 +3,7 @@
 
 #include "MobileEntity.h"
 
+//UNUSED CLASS
 class EnemyEntity:public MobileEntity{
 private:
 public:

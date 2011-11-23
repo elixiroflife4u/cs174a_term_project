@@ -4,7 +4,7 @@
 #include "Angel.h"
 #include "WorldEntity.h"
 
-/** This class represents a render camera and provides the corresponding
+/** @brief This class represents a render camera and provides the corresponding
   * camera transformation, for both perspective and orthographic projections.
   * It is parameterized around the field of view, depth of the clipping planes,
   * and aspect ratio.
