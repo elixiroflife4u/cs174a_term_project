@@ -32,6 +32,7 @@
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shield.h" />
+    <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="TurretEntity.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="RenderObjectManager.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="test_main.cpp" />
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -116,7 +118,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs\freeglut.lib;libs\glew32.lib;libs\DevIL.lib;libs\SDL.lib;libs\SDLmain.lib;libs\SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -3,23 +3,30 @@
 
 #include "WorldEntity.h"
 #include "Engine.h"
+
+/** This class represents an object than can be directly drawn on screen.
+  * Most other rendered objects are rendered on screen only in the sense that
+  * they in fact hold any number of DrawableEntity objects. Note, however,
+  * that the geometry of the object and the instructions that actually push
+  * it down the pipeline come from the RenderObject.
+  */
 class DrawableEntity:public WorldEntity{
 private:
-	char* _texName;
-	char* _normalMapName;
+	char* _texName; ///< Pathname of the texture map.
+	char* _normalMapName; ///< Pathname of the normal map.
 
-	vec3 _diffuseColor;
-	vec3 _highlightColor;
+	vec3 _diffuseColor;  ///< Diffuse color.
+	vec3 _highlightColor;  ///< Specular color.
 
-	float _normalMapDepth;
+	float _normalMapDepth; ///< Depth of the normal map.
 
-	float _alpha;
-	char* _modelName;
-	vec2 _uvOffset;
-	vec2 _uvScale;
-	float _shininess;
+	float _alpha; ///< Entity wide alpha value. Combined with texture map for ultimate transparency.
+	char* _modelName; ///< Pathname of the model. Used to look up render object.
+	vec2 _uvOffset; ///< Offset in the texture map.
+	vec2 _uvScale; ///< Scale factor to apply to the texture map.
+	float _shininess; ///< Shininess factor used for specular highlights.
 
-	bool _alphaFlag;
+	bool _alphaFlag; ///< True if object needs special transparency treatment when drawn to ensure proper ordering.
 
 public:
 	inline DrawableEntity(char* tn, char* mn, WorldEntity* parent=NULL)

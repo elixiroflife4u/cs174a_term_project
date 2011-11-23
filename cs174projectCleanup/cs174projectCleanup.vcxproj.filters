@@ -153,9 +153,6 @@
     <ClInclude Include="TurretEntity.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="WanderingEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Header Files\gameObjects</Filter>
     </ClInclude>
@@ -165,8 +162,14 @@
     <ClInclude Include="Quaternion.h">
       <Filter>Header Files\Helper Classes</Filter>
     </ClInclude>
+    <ClInclude Include="WanderingEnemy.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
     <ClInclude Include="Text2D.h">
       <Filter>Header Files\Helper Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,14 +236,17 @@
     <ClCompile Include="mobileEntity.cpp">
       <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="WanderingEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Quaternion.cpp">
       <Filter>Source Files\Helper Classes</Filter>
     </ClCompile>
+    <ClCompile Include="WanderingEnemy.cpp">
+      <Filter>Source Files\gameObjects</Filter>
+    </ClCompile>
     <ClCompile Include="Text2D.cpp">
       <Filter>Source Files\Helper Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
