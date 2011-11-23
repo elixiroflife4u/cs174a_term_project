@@ -3,6 +3,14 @@
 
 #include "BulletEntity.h"
 
+/** @brief The grenade arcs when shot into the world
+  * with an initial velocity and creates and explosion
+  * when it collides with another solid game entity
+  * If possible, a light is attached to the grenade on creation
+  *
+  */  
+
+
 class GrenadeEntity: public BulletEntity{
 private:
 	PointLight* p;
@@ -10,6 +18,7 @@ private:
 
 
 public:
+	/** @brief Initializes the grenade with the positio and force */
 	GrenadeEntity(vec3 pos, vec3 dir, float force=5)
 		:BulletEntity(pos,20,ID_BULLET_GRENADE),_lifeCount(0)
 	{
@@ -28,11 +37,16 @@ public:
 		Globals::addLight(p);
 		p->setParent(this);
 	}
+	/** @brief Deletes the light from the entity when the grenade is destroyed
+	*/
 	~GrenadeEntity(){
 		if(!Globals::deleteLight(p)){
 			delete p;
 		}
 	}
+	/** @brief Moves the grenade and causes the arch over time 
+	* as well as the blinking of the attached light
+	*/
 	void update(){
 		increaseVel(Globals::grav);
 		translate(getVel());
@@ -56,6 +70,8 @@ public:
 		}
 	}
 
+	/** @brief when the grenade collides with something, it creates an explosion
+	*/
 	void onCollide(const GameEntity& g){
 	
 		Explosion* e=new Explosion(5);;

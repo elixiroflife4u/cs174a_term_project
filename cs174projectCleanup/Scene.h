@@ -36,6 +36,7 @@ namespace Globals{
 		TurretEntity* boss;
 
 	public:
+		/** @brief The entire level is set up and prepared here */
 		void setup(){
 			_beaten=false;
 			Player* pl=new Player();
@@ -74,16 +75,16 @@ namespace Globals{
 			//addEntity(new TurretEntity(vec3(-10,3.5,10)));
 			//addEntity(new TurretEntity(vec3(0,3.5,10)));
 			addEntity(new TurretEntity(vec3(50,3.5,45)));
-			addEntity(new TurretEntity(vec3(50,3.5,55)));
+			//addEntity(new TurretEntity(vec3(50,3.5,55)));
 
 			addEntity(new TurretEntity(vec3(95,3.5,45)));
-			addEntity(new TurretEntity(vec3(95,3.5,55)));
+			//addEntity(new TurretEntity(vec3(95,3.5,55)));
 
 			addEntity(new TurretEntity(vec3(150-85,5,330-50)));
 			addEntity(new TurretEntity(vec3(150-85,5,330+60)));
 
-			addEntity(new TurretEntity(vec3(150+40,5,330-50)));
-			addEntity(new TurretEntity(vec3(150+40,5,330+60)));
+			//addEntity(new TurretEntity(vec3(150+40,5,330-50)));
+			//addEntity(new TurretEntity(vec3(150+40,5,330+60)));
 
 			TurretEntity* boss=new TurretEntity(vec3(175,13,330));
 			boss->scale(4,4,4);
@@ -482,15 +483,20 @@ namespace Globals{
 			tvscreen->setTVCamera(*tvcamera);
 			addEntity(tvscreen);
 		}
+
+		/** @brief called every frame to update the level elements as needed
+		*/
+
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
 			_count+=M_PI/10;
 			//wLights[0]->translate((sin(_count)),0,sin(_count));
 			//std::cout<<sin(_count)<<std::endl;
-
+			
+			//Trigger event for the first room
 			if(c.didCollide(getPlayer()->getHitBox())&&!room1Trigger){
 				room1Trigger=true;
-				for(int i=0;i<10;i++){
+				for(int i=0;i<5;i++){
 					addEntity(e[i]);
 				}
 			}else if(room1Trigger&&room1Door->getTranslate().y>25){

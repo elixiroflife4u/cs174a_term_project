@@ -1,7 +1,7 @@
 #ifndef guard_straightbulletentity_h
 #define guard_straightbulletentity_h
 #include "BulletEntity.h"
-/** A StraightBulletEntity is a bullet that travels in a straight
+/** @brief A StraightBulletEntity is a bullet that travels in a straight
   * line. It accelerates at a given constant rate for a given number
   * of frames from a given starting velocity. Afterwards, it cruises
   * at the obtained speed until it collides.

@@ -43,7 +43,8 @@ namespace Globals
 	void viewFullscreen();
 
 	extern vec3 _ambColor;
-
+	
+	//transformation matrix locations
 	extern GLuint loc_modelTransMat;
 	extern GLuint loc_camTransMat;
 
@@ -66,8 +67,10 @@ namespace Globals
 
 	extern GLuint loc_hasFog;
 
+	//initializes the uniform variables
 	void initShaderVariables(GLuint p);
 
+	//Uniform variable setting functions
 	void setModelTransMatrix(mat4 m);
 	void setCameraTransMatrix(mat4 m);
 	void setPerspectiveMatrix(mat4 m);
@@ -88,6 +91,7 @@ namespace Globals
 
 	void drawModel(char* m);
 
+	//Light setting functions
 	void setAmbientLightColor(vec3 v);
 	vec3 getAmbientColor();
 

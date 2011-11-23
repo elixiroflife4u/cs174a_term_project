@@ -28,6 +28,9 @@ public:
 	static const int MAX_HEALTH=100;
 	static const int MAX_SHIELD=400;
 	static const int MAX_DELAY=6;
+
+	/** @brief initializes the player entity
+	*/
 	Player()
 		:MobileEntity(ID_PLAYER),_livesCount(3),_currentWeapon(ID_BULLET_STRAIGHT),_shieldCharge(MAX_SHIELD),Q_PRESSED(false),E_PRESSED(false),_shieldTime(0)
 	{
@@ -61,16 +64,35 @@ public:
 		//Globals::addSoftEntity(new Shield(getTranslate(), 10,40,this));
 		
 	}
+	/** @brief Updates the player's position and shoots
+	* based off of key presses
+	*/
 	void update();
+
+	/** @brief if the player collides with a wall, then it is placed at the
+	* edge. If it collides with a bullet, damage is applied
+	*/
 	void onCollide(const GameEntity& g);
 	void onBulletCollision(float damage);
+	
+	/** @brief returns the total recharge remaining for the shield
+	* -- used for the UI
+	*/
 	float getShieldCharge()const {return _shieldCharge;}
 
+	/** @brief returns the camera attached to the player
+	*/
 	CameraEntity* const getCamera(){return &_playerCamera;}
 
 	int getLivesNum(){return _livesCount;}
+
+	/* @brief Increases or decreases the weapons number being used */
 	void incWeapon(){_currentWeapon++;}
 	void decWeapon(){_currentWeapon++;}
+
+	/** @brief Returns the current weapon being used
+	* used for the UI
+	*/
 	int getWeapon()const {return _currentWeapon;}
 };
 

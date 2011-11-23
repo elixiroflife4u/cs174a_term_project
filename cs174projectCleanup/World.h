@@ -18,13 +18,14 @@ namespace Globals
 	//FOR OUR GAME//
 	extern bool firstPerson;
 
-
-	const int WALL_COUNT=100;
-	const int GAMEENTITY_COUNT=200;
+	//Sets the max number of entities of each type that can be in the world
+	const int WALL_COUNT=80;
+	const int GAMEENTITY_COUNT=50;
 	const int SCENE_COUNT=10;
 	const int LIGHT_COUNT=10;
-	const int SOFT_ENTITIES_COUNT=100;
+	const int SOFT_ENTITIES_COUNT=80;
 
+	//List of all gameEntities, soft game Entities (those that do not collide with each other) and walls etc
 	extern GameEntity* wPlayer;
 	typedef std::list<GameEntity*> GameEntityList;
 	extern GameEntityList wEntities;

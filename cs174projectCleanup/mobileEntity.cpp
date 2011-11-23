@@ -117,8 +117,8 @@ void MobileEntity::placeAtEdge(const GameEntity& g)
 	vec3 v=getTranslate()-newPos;
 }
 void MobileEntity::jump(float force){
-	SoundPlayer::playSound("resources/jump.wav", 1);
 	if(_jumpCount>0){
+		SoundPlayer::playSound("resources/jump.wav", 1);
 		_jumpCount--;
 		setVel(0,force,0);
 	}

@@ -17,8 +17,12 @@ enum GameEntityType {
 	ID_SHIELD
 };
 
+/** @brief GameEntity is the parent class for everything
+  * that is involved in the game from bullets to enemies
+  * and includes the components to draw everything to screen
+  * and for collision detection
+  */
 
-//Potential IDs
 class GameEntity:public WorldEntity{
 public:
 	static const int MAX_MODELS=5;

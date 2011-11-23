@@ -5,11 +5,19 @@
 #include "BulletEntity.h"
 #include "Scene.h"
 
+/** @brief A turretEntity is one of the enemies.
+  * It points at the player (if there is one) and shoots
+  * straight bullets when the player enters a certain radius.
+  * This same class is used as the "boss" entity by setting
+  * a variable to determine the kind of turret that it is
+  */
 class TurretEntity:public MobileEntity{
 private:
 	int _bulletDelay;
 	bool _isBoss;
 public:
+	/*@brief Initializes the turret entity
+	*/
 	TurretEntity(vec3 pos=vec3(0,0,0))
 		:MobileEntity(ID_ENEMY_TURRET),_bulletDelay(5),_isBoss(false)
 	{
@@ -29,7 +37,9 @@ public:
 		this->setHitbox(b);
 
 	}
-
+	/** @brief Updates the entity to look at the player and shoot if
+	 * it is within rang
+	 */
 	void update(){
 	
 		const GameEntity* const p=Globals::getPlayer();
@@ -77,29 +87,19 @@ public:
 			Globals::addBullet(ID_BULLET_CURVY,0,3.5, vec3(angleLeft.x,angleLeft.y,angleLeft.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
 			Globals::addBullet(ID_BULLET_CURVY,0,3.5, vec3(angleRight.x,angleRight.y,angleRight.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
 
-			if(getHealth()<25){
+			/*if(getHealth()<25){
 			
 			angleLeft=RotateY(10)*angle;
 			angleRight=RotateY(-10)*angle;
 
 			Globals::addBullet(ID_BULLET_CURVY,0,3.5, vec3(angleLeft.x,angleLeft.y,angleLeft.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
 			Globals::addBullet(ID_BULLET_CURVY,0,3.5, vec3(angleRight.x,angleRight.y,angleRight.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
-
-			
-			//angleLeft=RotateY(20)*angle;
-			//angleRight=RotateY(-20)*angle;
-
-			//Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, vec3(angleLeft.x,angleLeft.y,angleLeft.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
-			//Globals::addBullet(ID_BULLET_STRAIGHT,0,3.5, vec3(angleRight.x,angleRight.y,angleRight.z),getModel(1).getTranslate()+2*vec3(dirNorm.x*getScale().x,0,dirNorm.z*getScale().z));
-
-			}
+			}*/
 		}
-
-
-		//decHealth(3);
-
-
 	}
+
+	/** @brief If the entity collides wit ha bullet, apply damage
+	*/
 	void onCollide(const GameEntity& g){
 		float damageMult=1;
 		if(_isBoss)damageMult=.1;

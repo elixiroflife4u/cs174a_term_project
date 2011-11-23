@@ -3,7 +3,7 @@
 #include "BulletEntity.h"
 #include "Quaternion.h"
 
-/** The CurvyBulletEntity is a bullet that travel in a flight curve
+/** @brief The CurvyBulletEntity is a bullet that travel in a flight curve
   * in the shape of a spiral.
   */
 class CurvyBulletEntity: public BulletEntity

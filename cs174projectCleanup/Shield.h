@@ -3,12 +3,21 @@
 
 #include "GameEntity.h"
 
+/** @brief a shield is used for the player entity
+  * and is created and parented to the player on right click
+  * it draws a spherical glow around the player and absorbs
+  * damage by surrounding the player in a slightly larger hitbo
+  * (player is also made immune during this time)
+  *
+  */
+
 class Shield:public GameEntity{
 private:
 	int _currTime;
 	int _lifeTime;
 	int _maxSize;
 public:
+	/** @brief initializes the shield entity */
 	Shield(vec3 pos, float maxSize, int lifetime=10,WorldEntity* p=NULL)
 		:GameEntity(ID_SHIELD),_currTime(0),_maxSize(maxSize),_lifeTime(lifetime)
 	{
@@ -27,6 +36,7 @@ public:
 		scale(6,6,6);
 	}
 
+	/** @brief changes the color of hte shield when it collides with somethign */
 	void onCollide(const GameEntity& g){
 		switch(g.getId()){
 		case ID_BULLET_CURVY:
@@ -35,6 +45,8 @@ public:
 			getModel().setHighlightColor(1,1,0);
 		}
 	}
+
+	/** @brief updates he shield to expand and dissapate every frame */
 
 	void update(){
 
