@@ -33,3 +33,6 @@ Other:
 	Rendering to FrameBuffer
 	Included OBJ loader
 	Included sound
+	
+Top bar is health
+Bottom bar is shield recharge
