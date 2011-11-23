@@ -48,14 +48,15 @@ public:
 		Globals::setTextureScale(_uvScale);
 		Globals::setShininess(_shininess);
 
-		if(_texName!=NULL){
+		if(useTexId) {
 			Globals::setHasTexture(true);
-			if(useTexId)
-				Globals::setUseTexture(_texId);
-			else
-				Globals::setUseTexture(_texName);
+			Globals::setUseTexture(_texId);
 			Globals::setDiffuseColor(vec3(0,0,0));
-		}else {
+		} else if(_texName != NULL) {
+			Globals::setHasTexture(true);
+			Globals::setUseTexture(_texName);
+			Globals::setDiffuseColor(vec3(0,0,0));
+		} else {
 			Globals::setHasTexture(false);
 			Globals::setUseTexture((GLuint)0);
 			Globals::setDiffuseColor(_diffuseColor);
