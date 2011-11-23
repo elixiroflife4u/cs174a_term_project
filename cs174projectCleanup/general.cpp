@@ -2,6 +2,7 @@
 #include "World.h"
 #include "Engine.h"
 #include "BulletEntity.h"
+#include "TVScreen.h"
 
 #include <queue>
 #include <cassert>
@@ -192,7 +193,7 @@ NEXT_J:
 		}
 	}
 
-	void callbackDisplay()
+	static void render()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the draw buffer
 
@@ -271,6 +272,19 @@ NEXT_J:
 		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
 
 		glDisable(GL_BLEND);
+	}
+
+	void callbackDisplay() {
+		//Render all the TVCameras.
+		CameraEntity* const originalCamera = currentCamera;
+		for(TVCameraList::iterator i = wTVCameras.begin(); i != wTVCameras.end(); ++i) {
+			currentCamera = &(*i)->cameraEntity;
+			(*i)->framebuffer.render(&render, 160, 160);
+		}
+		currentCamera = originalCamera;
+
+		//Render to the screen.
+		render();
 		glutSwapBuffers();
 	}
 
