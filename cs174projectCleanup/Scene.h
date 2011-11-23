@@ -7,6 +7,7 @@
 #include "Explosion.h"
 #include "TurretEntity.h"
 #include "WanderingEnemy.h"
+#include "TVScreen.h"
 
 namespace Globals{
 
@@ -416,9 +417,28 @@ namespace Globals{
 			w->setModel(d,2);
 			addWall(w);
 
+			TVCamera* tvcamera = new TVCamera;
+			//This next line does not cause the TVCamera to share the camera.
+			//Instead, a copy of the camera is made. However, since the camera
+			//is moved through the parenting mechanism and since the parent
+			//relationship is copied too, the effect is essentially the same.
+			tvcamera->cameraEntity = *currentCamera;
+			//For the heck of it, let's do a top-down display!
+			tvcamera->cameraEntity.rotate(-90,0,0);
+			//Zoom out and slide the camera forward to account for the fact
+			//that it is in behind the player.
+			tvcamera->cameraEntity.translate(0,20,-10);
+			addTVCamera(tvcamera);
 
+			//We could also have set up the tvcamera entity to be a part
+			//of the UI orthographic projection, thus making some kind
+			//of automatic minimap/top-down view.
 
-
+			TVScreen* tvscreen = new TVScreen;
+			tvscreen->scale(20,20,20);
+			tvscreen->translate(33,6.75,30);
+			tvscreen->setTVCamera(*tvcamera);
+			addEntity(tvscreen);
 		}
 		void update(){
 			//wWalls[2]->rotate(0,1,0);
