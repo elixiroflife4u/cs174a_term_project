@@ -10,6 +10,7 @@ public:
 		:GameEntity(ID_WALL)
 	{
 		setModel(DrawableEntity("Resources/mechTexture.png","Resources/cube.obj"));
+		getModel().rotate(0,-90,0);
 		//getModel().setDiffuseColor(.5,.5,.6);
 		getModel().setUVScale(20,20);
 		getModel().setNormalMap("Resources/mechNormal2.jpg");

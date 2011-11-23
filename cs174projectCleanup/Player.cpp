@@ -3,15 +3,14 @@
 #include "World.h"
 #include "BulletEntity.h"
 #include "Shield.h"
-
+#include "SoundPlayer.h"
 #include <iostream>
 void Player::update()
 {
-	///@todo implement
-
 	if(getTranslate().y<-50)setHealth(0);
 
 	if(getHealth()<=0){
+		SoundPlayer::playSound("resources/death.wav", 1);
 		Explosion* e = new Explosion(6,20);
 		e->translate(getTranslate());
 		Globals::addSoftEntity(e);
@@ -20,8 +19,6 @@ void Player::update()
 		setHealth(MAX_HEALTH);
 		return;
 	}
-
-
 
 	const float MAX_VEL=1;
 	const float ACCEL_AMOUNT=.15;
@@ -105,16 +102,20 @@ void Player::update()
 			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
 			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()-vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 2, 10);
 			Globals::addBullet(ID_BULLET_STRAIGHT, 0, 4, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dirR.x,dirR.y,dirR.z)*.6+1*vec3(dir.x,dir.y,dir.z), 2, 10);
+			SoundPlayer::playSound("resources/fireball.wav",1);
 			bulletDelay=MAX_DELAY;
 			break;
 		case 1: //grenade
 			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
 			Globals::addBullet(ID_BULLET_GRENADE, 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*3.5, 0, 5);
+			SoundPlayer::playSound("resources/cannon.wav",1);
 			bulletDelay=MAX_DELAY*2;
 			break;
 		case 2: //other?
 			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
+			SoundPlayer::playSound("resources/curvy.wav",1);
 			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 0);
+			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*3, 0, 0);
 			bulletDelay=MAX_DELAY;
 			break;
 		}
@@ -159,6 +160,7 @@ void Player::onCollide(const GameEntity& g){
 	case ID_BULLET_STRAIGHT:
 		onBulletCollision(3);
 	case ID_BULLET_GRENADE:
+	case ID_BULLET_CURVY:
 		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
 		break;
 	}

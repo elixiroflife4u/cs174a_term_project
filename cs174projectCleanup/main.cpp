@@ -11,8 +11,9 @@
 //#include "GL\glew.h"
 //#include "GL\glut.h"
 #include "IL\il.h"
-
+#include "SoundPlayer.h"
 #include "General.h"
+
 
 using namespace Globals;
 
@@ -49,11 +50,24 @@ int main(int argc, char** argv){
 
 	initCallbacks();
 
+	SoundPlayerGuard spg;
+	if(spg.initialized) {
+			if(!SoundPlayer::playBackground("resources/cl1.midi"))
+				std::cerr<<"could not play file cl1.midi. \n";
+			if(!SoundPlayer::loadSound("resources/curvy.wav"))
+				std::cerr<<"could not play file curvy.way. \n";
+			if(!SoundPlayer::loadSound("resources/cannon.wav"))
+				std::cerr<<"could not play file cannon.wav. \n";
+			if(!SoundPlayer::loadSound("resources/death.wav"))
+				std::cerr<<"could not play file death.wav. \n";
+			if(!SoundPlayer::loadSound("resources/fireball.wav"))
+				std::cerr<<"could not play file fireball.wav . \n";
+			if(!SoundPlayer::loadSound("resources/jump.wav"))
+				std::cerr<<"could not play file jump.wav. \n";
+	} else {
+		std::cerr<<"SoundPlayer failed to initialize.\n";
+	}
 	//start glut main loop
 	glutMainLoop();
-	return 0;
-
-
-
 	return 0;
 }

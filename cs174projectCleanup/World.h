@@ -5,7 +5,7 @@
 #include "Wall.h"
 #include "Player.h"
 #include "GameEntity.h"
-
+#include "SoundPlayer.h"
 #include <list>
 
 class BulletEntity;
@@ -14,7 +14,7 @@ struct TVCamera;
 namespace Globals
 {
 	class Scene;
-	
+
 	//FOR OUR GAME//
 	extern bool firstPerson;
 
@@ -56,6 +56,9 @@ namespace Globals
 
 	const Player* const getPlayer();
 	GameEntity* getPlayerGE();
+
+	bool setCurrLevelWon();
+
 	/** Attempts to construct a new bullet and add it to the world.
 	  * @param bulletType The type of bullet as defined in GameEntityType.
 	  * @param accelMag Magnitude of the acceleration vector.

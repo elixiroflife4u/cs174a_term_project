@@ -7,7 +7,6 @@
 #include "Angel.h"
 #include "World.h"
 #include "RenderObjectManager.h"
-
 #include "DrawableEntity.h"
 
 namespace Globals

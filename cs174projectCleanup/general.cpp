@@ -46,6 +46,7 @@ namespace {
 
 namespace Globals
 {
+	//SoundPlayerGuard spg;
 	void initApp(){
 		//Seed the random number generator
 		std::srand(std::time(NULL));
@@ -76,6 +77,8 @@ namespace Globals
 		wScenes[0]=new Scene_1();
 
 		wScenes[currentLevel]->setup();
+
+		Globals::setHasFog(true);
 	}
 
 	static void updateEntities(GameEntityList& list) {
@@ -207,7 +210,7 @@ NEXT_J:
 		setAmbientLightColor(vec3(.1,.05,.075));
 		setAmbientLightColor(vec3(.1,.1,.2));
 
-
+		//
 		//Draw non-transparent models, pushing transparent ones onto a max-heap
 		TransparencyQueue transparencyQueue;
 		drawOpaqueEntities(wEntities, transparencyQueue); //Draw Every GameEntity
@@ -259,7 +262,7 @@ NEXT_J:
 		char* weaponText="";
 		switch(getPlayer()->getWeapon()){
 		case 2:
-			weaponText="CURVY BOOLET";
+			weaponText="CURVY BULLET";
 			break;
 		case 0:
 			weaponText="MACHINE GUN";
@@ -270,6 +273,13 @@ NEXT_J:
 
 		}
 		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
+
+		if(wScenes[currentLevel]->_beaten){
+			n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
+			n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+		}
+
+
 
 		glDisable(GL_BLEND);
 	}
@@ -345,7 +355,7 @@ NEXT_J:
 		}
 	}
 	void callbackKeyboard(unsigned char key, int x, int y){
-		if(key == 27) exit(0); //quit on esc
+		if(key == 27) glutLeaveMainLoop();//exit(0); quit on esc. need the function othwerise the sound handler object acts wonky.
 		else setKey(key, true);
 	}
 	void callbackKeyboardUp(unsigned char key, int x, int y){
