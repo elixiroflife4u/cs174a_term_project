@@ -36,6 +36,9 @@ public:
 	void setFarClip(float); ///< Set the far clipping plane.
 	void setAspectRatio(float); ///< Set the aspect ratio.
 
+	/** Gets the aspect ratio. */
+	float getAspectRatio() const  { return _aspect; }
+
 	/** Returns the perspective projection for this camera.
 	  * Please read the description for the class for important
 	  * information regarding this function.

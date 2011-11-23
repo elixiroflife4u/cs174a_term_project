@@ -12,7 +12,12 @@
   */
 class DrawableEntity:public WorldEntity{
 private:
-	char* _texName; ///< Pathname of the texture map.
+	union {
+		char* _texName; ///< Pathname of the texture map.
+		GLuint _texId;   ///< Texture ID
+	};
+	bool useTexId;
+
 	char* _normalMapName; ///< Pathname of the normal map.
 
 	vec3 _diffuseColor;  ///< Diffuse color.
@@ -30,7 +35,7 @@ private:
 
 public:
 	inline DrawableEntity(char* tn, char* mn, WorldEntity* parent=NULL)
-		:WorldEntity(parent),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false),_normalMapName(NULL),_normalMapDepth(0),_highlightColor(vec3(0,0,0))
+		:WorldEntity(parent),useTexId(false),_uvScale(vec2(1,1)),_uvOffset(vec2(0,0)),_shininess(0),_diffuseColor(vec3(0,1,0)),_alpha(1.0),_alphaFlag(false),_normalMapName(NULL),_normalMapDepth(0),_highlightColor(vec3(0,0,0))
 	{
 		setTexture(tn);
 		setModel(mn);
@@ -43,11 +48,15 @@ public:
 		Globals::setTextureScale(_uvScale);
 		Globals::setShininess(_shininess);
 
-		if(_texName!=NULL){
+		if(useTexId) {
+			Globals::setHasTexture(true);
+			Globals::setUseTexture(_texId);
+			Globals::setDiffuseColor(vec3(0,0,0));
+		} else if(_texName != NULL) {
 			Globals::setHasTexture(true);
 			Globals::setUseTexture(_texName);
 			Globals::setDiffuseColor(vec3(0,0,0));
-		}else {
+		} else {
 			Globals::setHasTexture(false);
 			Globals::setUseTexture((GLuint)0);
 			Globals::setDiffuseColor(_diffuseColor);
@@ -71,7 +80,8 @@ public:
 
 	}
 	inline void setShininess(float f){_shininess=f;}
-	inline void setTexture(char* t){_texName=t;if(t=="")_texName=NULL;}
+	inline void setTexture(char* t){useTexId=false;_texName=t;if(t=="")_texName=NULL;}
+	inline void setTexture(GLuint id){useTexId=true;_texId=id;}
 	inline void setNormalMap(char* t){_normalMapName=t;if(t=="")_normalMapName=NULL;else setNormalMapDepth(1.0);}
 	inline void setNormalMapDepth(float f){_normalMapDepth=f;}
 
