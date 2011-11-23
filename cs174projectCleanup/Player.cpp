@@ -7,8 +7,6 @@
 #include <iostream>
 void Player::update()
 {
-	///@todo implement
-
 	if(getTranslate().y<-50)setHealth(0);
 
 	if(getHealth()<=0){
@@ -21,8 +19,6 @@ void Player::update()
 		setHealth(MAX_HEALTH);
 		return;
 	}
-
-
 
 	const float MAX_VEL=1;
 	const float ACCEL_AMOUNT=.15;
@@ -164,9 +160,6 @@ void Player::onCollide(const GameEntity& g){
 	case ID_BULLET_STRAIGHT:
 		onBulletCollision(3);
 	case ID_BULLET_GRENADE:
-	case ID_BULLET_CURVY:
-		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
-		break;
 	case ID_BULLET_CURVY:
 		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
 		break;
