@@ -22,6 +22,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="GlobalIncludes.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="StraightBulletEntity.h" />
     <ClInclude Include="Text2D.h" />
     <ClInclude Include="TurretEntity.h" />
+    <ClInclude Include="TVScreen.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WanderingEnemy.h" />
     <ClInclude Include="World.h" />
@@ -56,6 +58,7 @@
     <ClCompile Include="CameraEntity.cpp" />
     <ClCompile Include="CollisionBox.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="general.cpp" />
     <ClCompile Include="InitShader.cpp" />
@@ -75,6 +78,7 @@
     <ClCompile Include="Text2D.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TVScreen.cpp" />
     <ClCompile Include="WanderingEnemy.cpp" />
     <ClCompile Include="world.cpp" />
     <ClCompile Include="WorldEntity.cpp" />
