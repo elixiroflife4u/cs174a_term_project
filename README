@@ -1,3 +1,4 @@
+Team Members: Garrett Johnson, Tarun Solanki, Michael Sechooler, Howard Lee
 Controls:
 
 'esc': quit
@@ -28,11 +29,16 @@ Advanced topics:
 	Collision Detection
 	Normal Mapping
 
-Other:
-	Implemented Multiple Lights
+Other Topics:
+	Implemented Multiple Lights with fall-off
 	Rendering to FrameBuffer
 	Included OBJ loader
 	Included sound
+	Transparency
+	Phong/Garaud/Normal shading
+	Quaternions
 	
 Top bar is health
 Bottom bar is shield recharge
+
+Please also see the HTML readme files for detailed information on classes.
