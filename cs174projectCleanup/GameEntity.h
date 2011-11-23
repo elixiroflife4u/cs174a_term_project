@@ -73,11 +73,16 @@ public:
 	 */
 	bool removeModel(int num=0);
 
+	/** @brief Returns whether or not the object is supposed to be deleted or not
+	*/
 	bool toDelete()const {
 		return _delete;
 	}
 
+	/** @brief update is called every frame on every game entity
+	* this is where animation, movement etc can be done */
 	virtual void update()=0;
+
 	virtual void draw() const;
 };
 

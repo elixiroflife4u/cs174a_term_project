@@ -14,13 +14,17 @@ private:
 	float _falloff;
 	float _brightness;
 public:
+	/** @brief initializes the light with the passed color, falloff, and brightness variables */
 	PointLight(vec3 c=vec3(1,1,1), float f=0.0, float b=1.0)
 		:_color(c),_falloff(f),_brightness(b)
 	{}
 
-	/** @brief These functions are used for setting the color
-	*/
+	/** @brief increases the current color by the passed amount */
 	void incColor(vec3 c){_color+=c;}
+
+	/** @brief These functions are used for setting the color
+	* and discard the previous value
+	*/
 	void setColor(vec3 c){_color=c;}
 	void setColor(float r, float g, float b){setColor(vec3(r,g,b));}
 	void setColorR(float r){_color.x=r;}
@@ -34,8 +38,11 @@ public:
 	*/
 	void setBrightness(float b){_brightness=b;}
 
+	/** @brief returns the color of the light */
 	vec3 getColor()const{return _color;}
+	/** @brief returns the falloff of the light */
 	float getFalloff() const{return _falloff;}
+	/** @brief returns the color of the light */
 	float getBrightness() const{return _brightness;}
 };
 
