@@ -26,11 +26,9 @@ public:
 		vec3 startPosition, float damage, int numberOfAcclUpdates)
 		: BulletEntity(startPosition, damage, ID_BULLET_STRAIGHT), numOfAcclUpdates(numberOfAcclUpdates)
 	{
-		///@todo give this bullet type an id in the GameEntity.h and then compile
 		MobileEntity::setAcc(accelMag*direction);
 		MobileEntity::setVel(initialVelMag*direction);
 
-		///@todo Create and set an actual bullet model.
 		GameEntity::setModel(DrawableEntity(NULL,"Resources/sphere.obj",this));
 		getModel().setDiffuseColor(1,.25,0);
 		scale(.35,.35,.35);

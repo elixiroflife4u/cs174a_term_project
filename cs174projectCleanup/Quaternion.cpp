@@ -83,7 +83,6 @@ void Quaternion::getAxisAngle(vec3& axis, float& angle)
 	axis.z = z / scale;
 	angle = acos(w) * 2.0f;
 }
-////todo fix this if needed.
 mat4 Quaternion::getMatrix() const
 {
 	float x2 = x * x;

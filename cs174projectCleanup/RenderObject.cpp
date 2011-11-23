@@ -126,7 +126,7 @@ void CRenderObject::activateObject(GLuint linkedShaderProgram) const
 {
 	//make the vao and bo the current ones
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer); //TODO: is this the right command and do we even need it??
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
 	//define the position of vertex in buffer and enable the attribute
 	GLuint vPosition   = glGetAttribLocation(linkedShaderProgram, "vPosition");
