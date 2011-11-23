@@ -114,7 +114,7 @@ void Player::update()
 			break;
 		case 2: //other?
 			if(!Globals::MOUSE_LEFT||bulletDelay!=0)break;
-			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*2, 0, 0);
+			Globals::addBullet(ID_BULLET_CURVY  , 0, 2.5, vec3(dir.x,dir.y,dir.z), getModel(1).getTranslate()+vec3(dir.x,dir.y,dir.z)*3, 0, 0);
 			bulletDelay=MAX_DELAY;
 			break;
 		}
@@ -159,6 +159,7 @@ void Player::onCollide(const GameEntity& g){
 	case ID_BULLET_STRAIGHT:
 		onBulletCollision(3);
 	case ID_BULLET_GRENADE:
+	case ID_BULLET_CURVY:
 		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
 		break;
 	}
