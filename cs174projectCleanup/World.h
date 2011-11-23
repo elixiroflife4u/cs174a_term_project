@@ -9,6 +9,7 @@
 #include <list>
 
 class BulletEntity;
+struct TVCamera;
 
 namespace Globals
 {
@@ -29,6 +30,8 @@ namespace Globals
 	extern GameEntityList wEntities;
 	extern GameEntityList wWalls;
 	extern GameEntityList wSoftEntities;
+	typedef std::list<TVCamera*> TVCameraList;
+	extern TVCameraList wTVCameras;
 
 	extern PointLight* wLights[LIGHT_COUNT];
 	extern Scene* wScenes[SCENE_COUNT];//Array of Scenes
@@ -39,6 +42,17 @@ namespace Globals
 	GameEntityList::iterator deleteEntity(GameEntityList::iterator g);
 	bool addLight(PointLight* pl);
 	bool deleteLight(PointLight* pl);
+
+	/** Adds a TV camera to the global list so it is rendered each frame.
+	  * @param tvCamera Pointer to tvCamera. Global list will take ownership.
+	  * @return True if enough room (currently, there is no bound on number of cameras).
+	  */
+	bool addTVCamera(TVCamera* tvCamera);
+	/** Deletes a TV camera from the global list.
+	  * @param tvCamera Iterator pointing at tvCamera.
+	  * @return True if found.
+	  */
+	TVCameraList::iterator deleteTVCamera(TVCameraList::iterator b);
 
 	const Player* const getPlayer();
 	GameEntity* getPlayerGE();

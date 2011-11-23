@@ -4,6 +4,7 @@
 #include "GrenadeEntity.h"
 #include "CurvyBulletEntity.h"
 #include "Explosion.h"
+#include "TVScreen.h"
 #include <algorithm>
 
 namespace Globals
@@ -18,8 +19,18 @@ namespace Globals
 	GameEntityList wWalls;
 	GameEntityList wEntities;
 	GameEntityList wSoftEntities;
+	TVCameraList wTVCameras;
 	PointLight* wLights[LIGHT_COUNT]; //pointer to lights inthe scene
 	Scene* wScenes[SCENE_COUNT];//Array of Scenes
+
+	bool addTVCamera(TVCamera* tvCamera) {
+		wTVCameras.push_back(tvCamera);
+		return true;
+	}
+	TVCameraList::iterator deleteTVCamera(TVCameraList::iterator b) {
+		delete *b;
+		return wTVCameras.erase(b);
+	}
 
 	bool addWall(Wall* w){
 		//Adds a wall to the scene
@@ -122,6 +133,7 @@ namespace Globals
 		deleteAll(wWalls);
 		deleteAll(wEntities);
 		deleteAll(wSoftEntities);
+		deleteAll(wTVCameras);
 
 		//delete every light and set it to null
 		for(int i=0; i<LIGHT_COUNT;i++){
