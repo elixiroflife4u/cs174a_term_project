@@ -8,7 +8,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
-#include "Text2D.h"
+//#include "Text2D.h"
 
 /** This anonymous namespace holds definitions and declarations
   * related to ordering and drawing transparent objects.
@@ -255,9 +255,9 @@ NEXT_J:
 		w.draw();
 
 		Globals::setModelTransMatrix(mat4());
-		Text2D n; 
-		n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
-		n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
+		//Text2D n; 
+		//n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
+		//n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
 
 		char* weaponText="";
 		switch(getPlayer()->getWeapon()){
@@ -272,12 +272,12 @@ NEXT_J:
 			break;
 
 		}
-		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
+		//n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
 
-		if(wScenes[currentLevel]->_beaten){
-			n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
-			n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
-		}
+		//if(wScenes[currentLevel]->_beaten){
+			//n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
+			//n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+		//}
 
 
 

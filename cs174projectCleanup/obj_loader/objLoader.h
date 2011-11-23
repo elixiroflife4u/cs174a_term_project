@@ -2,7 +2,8 @@
 #define OBJ_LOADER_H
 
 #include "obj_parser.h"
-
+/** @brief Helper class to parse the obj and mtl files.
+*/
 class objLoader
 {
 public:

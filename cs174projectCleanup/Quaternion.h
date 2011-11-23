@@ -1,7 +1,8 @@
 #ifndef guard_quaternion
 #define guard_quaternion
 #include "GlobalIncludes.h"
-
+/** @brief Class that implements quaternion
+*/
 class Quaternion
 {
 public:
@@ -10,10 +11,12 @@ public:
 	
 	Quaternion getConjugate(){ return Quaternion(-x, -y, -z, w); }
 
+	/** @brief Normalize the auternion. doesn't normalize if square is within a threshold */
 	void normalise();
 	/** @brief Multiplying q1 with q2 applies the rotation q2 to q1
 	*/
 	Quaternion operator* (const Quaternion &rq) const;
+	/** @brief Deep copy constructor */
 	Quaternion& Quaternion::operator=(const Quaternion &q)
 	{
 		x = q.x;
@@ -32,6 +35,7 @@ public:
 	void Quaternion::FromAxis(const vec3 &v, float angle);
 	
 	/** @brief Generate and return a local quaternion based on the vector to rotate about and angle to rotate by
+	* this function is outdated and needs to be removed.
 	*/
 	Quaternion Quaternion::getLocalQuaternion(const vec3 &v, float angle);
 

@@ -53,6 +53,9 @@ public:
 		}
 		//std::cout<<"curvy destoyed"<<std::endl;
 	}
+	/** @brief uses quaternion to rotate the position about the dir of motion. Sets the newly calculated position
+	* as the position of the bullet.
+	*/
 	void update()
 	{
 		pos += normalize(dir)*velocityMag;
@@ -67,24 +70,14 @@ public:
 		vec3 vectorToNewPoint = normalize((rotation.getMatrix()*vec4(perpToMotion, 0)).Vec4ToVec3());
 		WorldEntity::setTranslate(pos + radius*vectorToNewPoint);
 		
-		//problems: hit detection box?? 
-		//perhaps should use collisionbox settranslate??
-
-
-		//vec3 printAxis;
-		//float printAngle;
-		//rotation.getAxisAngle(printAxis, printAngle);
-		//std::cout<<printAxis.x<<printAxis.y<<printAxis.z<<printAngle<<std::endl;
-
-		//MobileEntity::setVel(MobileEntity::getAcc()+MobileEntity::getVel());
-		//WorldEntity::translate(MobileEntity::getVel());
-		//vec3 dir=Globals::getPlayer()->getTranslate()-getTranslate();
 		vec3 dis=Globals::getPlayer()->getTranslate()-getTranslate();
 		if(dot(dis,dis)>pow(300.0,2)){
 			setDelete();
 		}
 
 	}
+	/** @brief What the bullet should do when it collides, here it sets there delete flag
+	*/
 	void onCollide(const GameEntity& g)
 	{
 		//std::cout<<this<<std::endl<<"COLLIDED CURVY"<<std::endl;

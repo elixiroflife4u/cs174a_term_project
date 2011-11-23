@@ -12,7 +12,8 @@
 #include "vec.h"
 #include "Angel.h"
 
-
+/** @brief Helper class for 2-D text display. Doesn't work on some computers
+*/
 class Text2D
 {
 	public:

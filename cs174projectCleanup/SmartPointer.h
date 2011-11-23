@@ -5,7 +5,8 @@
 #ifndef NULL
 #define NULL 0
 #endif
-
+/** @brief Helper Templated smart pointer class
+*/
 template<class T>
 class SmartPntr
 {
@@ -13,32 +14,36 @@ class SmartPntr
 public:
 	SmartPntr(): pntrInfo(NULL) {}
 
-	// Contructor with a pointer to track. pPointee is the pointer to keep 
-	// track of. Note that the smart pointer will keep ownership of this 
-	// pointer and will delete it itself, so don't delete it  yourself.
+	/** @briefContructor with a pointer to track. pPointee is the pointer to keep 
+	* track of. Note that the smart pointer will keep ownership of this 
+	* pointer and will delete it itself, so don't delete it  yourself.
+	*/
 	SmartPntr(T* dataPntr);
 	
 
-	// Copy constructor. The argument is a smart pointer to make a copy of. 
-	// The smart pointer will increment the reference counter of the pointed object.
+	/** @brief Copy constructor. The argument is a smart pointer to make a copy of. 
+	* The smart pointer will increment the reference counter of the pointed object.
+	*/
 	SmartPntr(const SmartPntr<T>& rhs);
 	
 
-	// Assignment operator. The argument is a smart pointer to make a copy of. 
-	// The smart pointer will increment the reference counter of the pointed 
-	// object. If the smart pointer was already tracking a variable, the reference 
-	// counter for this variable will be decremented (and the pointer destroyed 
-	// if it becomes 0).
+	/** @brief Assignment operator. The argument is a smart pointer to make a copy of. 
+	* The smart pointer will increment the reference counter of the pointed 
+	* object. If the smart pointer was already tracking a variable, the reference 
+	* counter for this variable will be decremented (and the pointer destroyed 
+	* if it becomes 0).
+	*/
 	SmartPntr<T>& operator=(const SmartPntr<T>& rhs);
 
-	// Destructor. It decrements the shared reference counter. 
-	// If it becomes 0, the pointed variable is destroyed.
+	/** @brief Destructor. It decrements the shared reference counter. 
+	* If it becomes 0, the pointed variable is destroyed.
+	*/
 	~SmartPntr();
 	
-	// Overloading of the * operator to access the contents of the pointed variable.
+	/** @brief Overloading of the * operator to access the contents of the pointed variable. */
 	T& operator* () const;
 
-	// Overloading of the -> operator that returns the pointer to the variable.
+	/** @brief Overloading of the -> operator that returns the pointer to the variable. */
 	T* operator->() const;
 
 	// Check to see if the pointer to the variable is NULL.
