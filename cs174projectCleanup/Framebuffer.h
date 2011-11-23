@@ -2,7 +2,6 @@
 #define FRAMEBUFFER_H
 
 #include "Angel.h"
-#include "General.h"
 
 /** The Framebuffer object enables capturing a render into a texture.
   * The texture can then be used for a couple of reasons, primarily for
@@ -28,15 +27,7 @@ public:
 	  * @param width The width of the viewport.
 	  * @param height The height of the viewport.
 	  */
-	void render(RenderFunc renderFunc, int width, int height);
-	/** @overload render(RenderFunc, int, int)
-	  * This function differs from render(RenderFunc, int, int) because
-	  * it calculates the height based on the current camera's aspect
-	  * ratio.
-	  */
-	void render(RenderFunc renderFunc, int width = 320) {
-		render(renderFunc, width, width / Globals::currentCamera->getAspectRatio());
-	}
+	void render(RenderFunc renderFunc, int width = 320, int height = 320);
 
 	/** Returns the texture handle for this framebuffer. */
 	GLuint texture() const { return _texture; }
