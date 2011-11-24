@@ -123,6 +123,7 @@ void Player::update()
 	//SHIELDING
 	if(Globals::MOUSE_EDGE_RIGHT){
 		if(_shieldCharge>=MAX_SHIELD){
+			SoundPlayer::playSound("resources/shield.wav");
 			Globals::addEntity(new Shield(getTranslate(),3,100,this));
 			_shieldCharge=0;
 			_shieldTime=90;
