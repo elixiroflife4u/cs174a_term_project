@@ -230,10 +230,25 @@ NEXT_J:
 			transparencyQueue.pop();
 		}
 		glDepthMask(GL_TRUE);
-		
-		
+
+		glDisable(GL_BLEND);
+	}
+
+	void callbackDisplay() {
+		//Render all the TVCameras.
+		CameraEntity* const originalCamera = currentCamera;
+		for(TVCameraList::iterator i = wTVCameras.begin(); i != wTVCameras.end(); ++i) {
+			currentCamera = &(*i)->cameraEntity;
+			(*i)->framebuffer.render(&render, 160, 160);
+		}
+		currentCamera = originalCamera;
+
+		//Render to the screen.
+		render();
 
 		//UI hack
+		glEnable(GL_BLEND);
+
 		setAmbientLightColor(vec3(1,1,1));
 		setCameraTransMatrix(mat4());
 		setPerspectiveMatrix(currentCamera->getOrthographicMatrix());
@@ -255,19 +270,6 @@ NEXT_J:
 		w.draw();
 
 		glDisable(GL_BLEND);
-	}
-
-	void callbackDisplay() {
-		//Render all the TVCameras.
-		CameraEntity* const originalCamera = currentCamera;
-		for(TVCameraList::iterator i = wTVCameras.begin(); i != wTVCameras.end(); ++i) {
-			currentCamera = &(*i)->cameraEntity;
-			(*i)->framebuffer.render(&render, 160, 160);
-		}
-		currentCamera = originalCamera;
-
-		//Render to the screen.
-		render();
 
 		//Draw UI Text
 		Globals::setModelTransMatrix(mat4());
