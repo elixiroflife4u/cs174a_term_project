@@ -27,8 +27,10 @@ struct TVCamera {
   */
 class TVScreen : public GameEntity {
 public:
-	/** Constructs a TVScreen, loading and preparing the tvcube model. */
-	TVScreen();
+	/** Constructs a TVScreen, loading and preparing the tvcube model.
+	  * @param id GameEntity id. Defaults to a normal wall.
+	  */
+	TVScreen(int id = ID_WALL);
 
 	/** Set the framebuffer to use as a texture.
 	  * Ideally, use a TVCamera and the corresponding

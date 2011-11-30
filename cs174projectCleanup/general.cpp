@@ -230,10 +230,25 @@ NEXT_J:
 			transparencyQueue.pop();
 		}
 		glDepthMask(GL_TRUE);
-		
-		
+
+		glDisable(GL_BLEND);
+	}
+
+	void callbackDisplay() {
+		//Render all the TVCameras.
+		CameraEntity* const originalCamera = currentCamera;
+		for(TVCameraList::iterator i = wTVCameras.begin(); i != wTVCameras.end(); ++i) {
+			currentCamera = &(*i)->cameraEntity;
+			(*i)->framebuffer.render(&render, 160, 160);
+		}
+		currentCamera = originalCamera;
+
+		//Render to the screen.
+		render();
 
 		//UI hack
+		glEnable(GL_BLEND);
+
 		setAmbientLightColor(vec3(1,1,1));
 		setCameraTransMatrix(mat4());
 		setPerspectiveMatrix(currentCamera->getOrthographicMatrix());
@@ -255,44 +270,33 @@ NEXT_J:
 		w.draw();
 
 		glDisable(GL_BLEND);
-	}
-
-	void callbackDisplay() {
-		//Render all the TVCameras.
-		CameraEntity* const originalCamera = currentCamera;
-		for(TVCameraList::iterator i = wTVCameras.begin(); i != wTVCameras.end(); ++i) {
-			currentCamera = &(*i)->cameraEntity;
-			(*i)->framebuffer.render(&render, 160, 160);
-		}
-		currentCamera = originalCamera;
-
-		//Render to the screen.
-		render();
 
 		//Draw UI Text
-		Globals::setModelTransMatrix(mat4());
-		Text2D n; 
-		n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
-		n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
+		if(useText) {
+			Globals::setModelTransMatrix(mat4());
+			Text2D n; 
+			n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
+			n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
 
-		char* weaponText="";
-		switch(getPlayer()->getWeapon()){
-		case 2:
-			weaponText="CURVY BULLET";
-			break;
-		case 0:
-			weaponText="MACHINE GUN";
-			break;
-		case 1:
-			weaponText="MORTAR";
-			break;
+			char* weaponText="";
+			switch(getPlayer()->getWeapon()){
+			case 2:
+				weaponText="CURVY BULLET";
+				break;
+			case 0:
+				weaponText="MACHINE GUN";
+				break;
+			case 1:
+				weaponText="MORTAR";
+				break;
 
-		}
-		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
+			}
+			n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
 
-		if(wScenes[currentLevel]->_beaten){
-			n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
-			n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+			if(wScenes[currentLevel]->_beaten){
+				n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
+				n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+			}
 		}
 
 		glutSwapBuffers();

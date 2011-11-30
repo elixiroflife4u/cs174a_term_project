@@ -2,6 +2,8 @@
 
 namespace Globals
 {	
+	bool useText = false;
+
 //ENGINE BASICS//
 	GLuint sProgram=0;
 	CameraEntity defaultCamera;

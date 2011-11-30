@@ -177,6 +177,9 @@
     <ClInclude Include="TVScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Header Files\gameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_main.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="TVScreen.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Source Files\gameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

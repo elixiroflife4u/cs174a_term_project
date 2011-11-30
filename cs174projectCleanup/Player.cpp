@@ -4,6 +4,7 @@
 #include "BulletEntity.h"
 #include "Shield.h"
 #include "SoundPlayer.h"
+#include "Teleporter.h"
 #include <iostream>
 void Player::update()
 {
@@ -162,6 +163,9 @@ void Player::onCollide(const GameEntity& g){
 	case ID_BULLET_GRENADE:
 	case ID_BULLET_CURVY:
 		onBulletCollision(static_cast<const BulletEntity*>(&g)->getBulletDamage());
+		break;
+	case ID_TELEPORTER:
+		static_cast<const Teleporter*>(&g)->teleport(this);
 		break;
 	}
 }
