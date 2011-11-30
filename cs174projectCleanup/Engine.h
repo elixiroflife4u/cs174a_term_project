@@ -9,6 +9,8 @@
 
 namespace Globals
 {
+	extern bool useText;
+
 	//ENGINE BASICS//
 	extern GLuint sProgram;
 	extern CameraEntity defaultCamera;

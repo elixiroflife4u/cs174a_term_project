@@ -13,6 +13,7 @@
 #include "IL\il.h"
 #include "SoundPlayer.h"
 #include "General.h"
+#include <cstring>
 
 
 using namespace Globals;
@@ -49,6 +50,14 @@ int main(int argc, char** argv){
 	initApp();
 
 	initCallbacks();
+
+	//Enable text if command line parameter present
+	for(int i = 1; i < argc; ++i) {
+		if(strcmp(argv[i], "--text") == 0) {
+			Globals::useText = true;
+			break;
+		}
+	}
 
 	SoundPlayerGuard spg;
 	if(spg.initialized) {

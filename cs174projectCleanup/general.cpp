@@ -272,29 +272,31 @@ NEXT_J:
 		glDisable(GL_BLEND);
 
 		//Draw UI Text
-		Globals::setModelTransMatrix(mat4());
-		Text2D n; 
-		n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
-		n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
+		if(useText) {
+			Globals::setModelTransMatrix(mat4());
+			Text2D n; 
+			n.draw_stuff("HEALTH",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .4725 );
+			n.draw_stuff("SHIELD",vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449 );
 
-		char* weaponText="";
-		switch(getPlayer()->getWeapon()){
-		case 2:
-			weaponText="CURVY BULLET";
-			break;
-		case 0:
-			weaponText="MACHINE GUN";
-			break;
-		case 1:
-			weaponText="MORTAR";
-			break;
+			char* weaponText="";
+			switch(getPlayer()->getWeapon()){
+			case 2:
+				weaponText="CURVY BULLET";
+				break;
+			case 0:
+				weaponText="MACHINE GUN";
+				break;
+			case 1:
+				weaponText="MORTAR";
+				break;
 
-		}
-		n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
+			}
+			n.draw_stuff(weaponText,vec4(1,1,1,1), -0.495*(resolution.x/resolution.y), .449-(.4725-.449) );
 
-		if(wScenes[currentLevel]->_beaten){
-			n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
-			n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+			if(wScenes[currentLevel]->_beaten){
+				n.draw_stuff("You Won!!",vec4(1,1,1,1),-.025,.05);
+				n.draw_stuff("Press 'esc' to quit",vec4(1,1,1,1),-.1,0);
+			}
 		}
 
 		glutSwapBuffers();
