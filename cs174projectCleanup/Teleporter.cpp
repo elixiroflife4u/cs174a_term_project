@@ -71,7 +71,7 @@ void Teleporter::update() {
 	//back later when the global rotation is calculated.
 	//Also, we have to add 90 degrees because the the above equations use +x as 0 degrees,
 	//but we use the normal (locally the -z axis) as 0 degrees.
-	_pair->_camera->cameraEntity.setRotate(pitch / DegreesToRadians, yaw / DegreesToRadians + 90 - curY, 0);
+	_pair->_camera->cameraEntity.setRotate(0/*pitch / DegreesToRadians*/, yaw / DegreesToRadians + 90 - curY, 0);
 }
 
 void Teleporter::unpair() {
