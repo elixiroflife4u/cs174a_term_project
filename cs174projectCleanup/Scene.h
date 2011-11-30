@@ -8,6 +8,7 @@
 #include "TurretEntity.h"
 #include "WanderingEnemy.h"
 #include "TVScreen.h"
+#include "Teleporter.h"
 
 namespace Globals{
 
@@ -43,6 +44,8 @@ namespace Globals{
 		WanderingEnemy* e[10];
 
 		TurretEntity* boss;
+
+		Teleporter *outsideTele1, *outsideTele2, *insideTele1, *insideTele2;
 
 	public:
 		/** @brief The entire level is set up and prepared here */
@@ -463,6 +466,7 @@ namespace Globals{
 			w->setModel(d,2);
 			addWall(w);
 
+#if 0
 			TVCamera* tvcamera = new TVCamera;
 			//This next line does not cause the TVCamera to share the camera.
 			//Instead, a copy of the camera is made. However, since the camera
@@ -485,6 +489,33 @@ namespace Globals{
 			tvscreen->translate(33,6.75,30);
 			tvscreen->setTVCamera(*tvcamera);
 			addEntity(tvscreen);
+#endif
+
+			outsideTele1 = new Teleporter;
+			outsideTele1->scale(20,20,20);
+			outsideTele1->translate(33,6.75,30);
+			addEntity(outsideTele1);
+
+			outsideTele2 = new Teleporter;
+			outsideTele2->scale(20,20,20);
+			outsideTele2->translate(33,6.75,-21);
+			outsideTele2->rotate(0,180,0);
+			addEntity(outsideTele2);
+
+			Teleporter::setPair(outsideTele1, outsideTele2);
+
+			insideTele1 = new Teleporter;
+			insideTele1->scale(20,20,20);
+			insideTele1->translate(127.862,7.75,399.5);
+			addEntity(insideTele1);
+
+			insideTele2 = new Teleporter;
+			insideTele2->scale(20,20,20);
+			insideTele2->translate(127.862,7.75,258);
+			insideTele2->rotate(0,180,0);
+			addEntity(insideTele2);
+
+			Teleporter::setPair(insideTele1, insideTele2);
 		}
 
 		/** @brief called every frame to update the level elements as needed
@@ -509,6 +540,11 @@ namespace Globals{
 			if(dot(getPlayer()->getTranslate(),getPlayer()->getTranslate())<pow(20.0,2)&&room1Trigger){
 				getPlayerGE()->setTranslate(125,10,330);
 
+			}
+
+			if(_beaten) {
+				Teleporter::setPair(insideTele1, outsideTele2);
+				Teleporter::setPair(outsideTele1, insideTele2);
 			}
 
 		}

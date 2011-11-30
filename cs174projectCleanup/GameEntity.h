@@ -14,7 +14,8 @@ enum GameEntityType {
 	ID_BULLET_CURVY,
 	ID_EXPLOSION,
 	ID_WANDERING_EMEMY,
-	ID_SHIELD
+	ID_SHIELD,
+	ID_TELEPORTER
 };
 
 /** @brief GameEntity is the parent class for everything
