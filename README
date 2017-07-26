@@ -1,0 +1,38 @@
+Controls:
+
+'esc': quit
+
+'W' 'w': move forward
+'A' 'a': move left
+'D' 'd': move right
+'S' 's': move back
+
+'Q' 'q' 'E' 'e': cycle weapon
+'space': jump
+
+Move Mouse: Change direction
+
+Left Click: Shoot
+Right Click: Enable shield
+
+'P' 'p': Increase depth of normal maps
+'O' 'o': Decrease depth of normal maps
+
+'L' 'l': enable fog layer
+'K' 'k': disable fog layer
+
+';' : enter full screen (cannot get out, must exit with 'esc')
+'"' : Enter first person view
+
+Advanced topics:
+    Collision Detection
+    Normal Mapping
+
+Other:
+    Implemented Multiple Lights
+    Rendering to FrameBuffer
+    Included OBJ loader
+    Included sound
+    
+Top bar is health
+Bottom bar is shield recharge
